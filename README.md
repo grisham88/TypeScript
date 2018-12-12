@@ -858,9 +858,22 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     zahlen.forEach(value => console.log(value));
     // 2, 3, 4, 5
 </script>
-``` 
+```
 
 ### Promises -> Chains
+- Synchron
+    - https://developer.mozilla.org/en-US/docs/Glossary/Callback_function
+    - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+    - Function-Call
+    - ein Wert bzw. Array als Rückgabewert
+- Asynchron
+    - https://developer.mozilla.org/en-US/docs/Glossary/Promise
+    - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise
+    - cb -> Callback
+    - Promise -> .then (cb)
+        - Ist ein Wert sofort vorhanden, verhält es sich wie synchron
+    - Observable mit .subscribe (cb) als Rückgabewert
+
 ### fetch-API
     Ablösung von XML-HTTP Request Objekt
 ### Generatoren
