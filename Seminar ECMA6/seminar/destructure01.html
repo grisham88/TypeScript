@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destructuring</title>
+    <script>
+        let blumen = ['Rosen', 'Tulpen', 'Nelken'];
+
+        // let rosen = blumen[0];
+
+        // einfacher mit Destructuring -> Neue Variablen entstehen direkt
+        let [rose, /*Tulpen wird übersprungen*/, nelke] = blumen;
+        console.log(rose); // Rosen
+        console.log(nelke); // Nelken
+
+        let zahlen = [4, 6, 2, 9, 5, 12, 9, 14];
+        console.log(zahlen); // (8) [4, 6, 2, 9, 5, 12, 9, 14]
+        //Zusammenfassung der restlichen Wert in eine Variable mittels Spread (...rest)
+        let [zahl1, zahl2, zahl3, ...rest] = zahlen;
+        console.log(zahl1); // 4
+        console.log(rest); // (5) [9, 5, 12, 9, 14]
+
+        // was ist möglich?
+        let [body] = document.getElementsByTagName('body'); //Body wird in einem Array an erster Stelle zurückgeliefert
+    </script>
+</head>
+
+<body>
+    <h1>Destructuring</h1>
+</body>
+
+</html>

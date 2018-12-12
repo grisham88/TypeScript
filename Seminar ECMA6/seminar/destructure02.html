@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destructuring</title>
+    <script>
+        let myObjX = {
+            x: "X",
+            y: "Y",
+            z: "Z"
+        }
+
+        //Zugriff mittels Propertyname
+        let { x, z } = myObjX;
+        console.log(x); // X
+        console.log(z); // Z
+
+        //Zugriff mittels falschem Propertyname
+        let { f } = myObjX;
+        console.log(f); // undefined
+
+        //Zugriff mittels falschem Propertyname
+        let { g = 'geht...' } = myObjX;
+        console.log(g); // geht...
+
+        //let { x, y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
+
+        //Alias:
+        let { x: anderesX, y: y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
+        console.log(anderesX); // X
+
+        let myObjA = {
+            a: "A",
+            b: "B",
+            c: "C",
+            d: "D"
+        }
+
+        //Automatisch für alle Variablen erzeugen lassen
+        let { a, c, ...rest } = myObjA;
+        console.log(rest); // {b: "B", d: "D"}
+    </script>
+</head>
+
+<body>
+    <h1>Destructuring</h1>
+</body>
+
+</html>

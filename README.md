@@ -132,7 +132,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 
 ##### var
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/var
-```javascript
+```html
 <script>
     //linearer Codeablauf
     console.log("Wir betrachten die neuen Keywords für Deklarationen");
@@ -156,7 +156,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 
 ##### let 
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/let
-```javascript
+```html
 <script>
     // ECMA6: let, const
 
@@ -189,7 +189,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 
 ##### const
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/const
-```javascript
+```html
 <script>
     // ECMA 6: const
     const test3 = "Das ist wieder ein Test!";
@@ -230,7 +230,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 - Verwandelt durch ... ein Array in eine Sequenz, also in einzelne Übergabewerte
 - Arrays
-    ```javascript
+    ```html
     <script>
         let zahlen = [2, 3, 4];
         let addiere = function (a, b, c) {
@@ -262,7 +262,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     </script>
     ```
 - Objects
-    ```javascript
+    ```html
     <script>
          let myObjX = {
             x: "X",
@@ -304,7 +304,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 ##### Rest
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Functions/rest_parameter
 - Verwandelt durch ... eine Sequenz in ein Array (Funktionsparameter), also aus einzelnen Übergabewerten
-```javascript
+```html
 <script>
     let addiere2 = function (...args) {
         // Mit Funktionsparmeter als Sequenz -> Array
@@ -331,6 +331,71 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 ```
 
 #### Destructuring
+- https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Destrukturierende_Zuweisung  
+- Array
+    ```html
+    <script>
+        let blumen = ['Rosen', 'Tulpen', 'Nelken'];
+
+        // let rosen = blumen[0];
+
+        // einfacher mit Destructuring -> Neue Variablen entstehen direkt
+        let [rose, /*Tulpen wird übersprungen*/, nelke] = blumen;
+        console.log(rose); // Rosen
+        console.log(nelke); // Nelken
+        
+        let zahlen = [4, 6, 2, 9, 5, 12, 9, 14];
+        console.log(zahlen); // (8) [4, 6, 2, 9, 5, 12, 9, 14]
+        //Zusammenfassung der restlichen Wert in eine Variable mittels Spread (...rest)
+        let [zahl1, zahl2, zahl3, ...rest] = zahlen;
+        console.log(zahl1); // 4
+        console.log(rest); // (5) [9, 5, 12, 9, 14]
+        
+        // was ist möglich?
+        let [body] = document.getElementsByTagName('body'); //Body wird in einem Array an erster Stelle zurückgeliefert
+    </script>
+    ```
+- Object
+    ```html
+    <script>
+        let myObjX = {
+            x: "X",
+            y: "Y",
+            z: "Z"
+        }
+
+        //Zugriff mittels Propertyname
+        let { x, z } = myObjX;
+        console.log(x); // X
+        console.log(z); // Z
+
+        //Zugriff mittels falschem Propertyname
+        let { f } = myObjX;
+        console.log(f); // undefined
+
+        //Zugriff mittels falschem Propertyname
+        let { g = 'geht...' } = myObjX;
+        console.log(g); // geht...        
+
+        let { x, y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
+
+        //Alias:
+        let { x: anderesX, y: y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
+        console.log(anderesX); // X  
+        
+        let myObjA = {
+            a: "A",
+            b: "B",
+            c: "C",
+            d: "D"
+        }
+
+        //Automatisch für alle Variablen erzeugen lassen
+        let { a, c, ...rest } = myObjA;
+        console.log(rest); // {b: "B", d: "D"}   
+    </script>
+    ```
+
 #### Objektliterale
 #### Symbols
 #### Arrays
