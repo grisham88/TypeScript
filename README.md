@@ -379,7 +379,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 
         let { x, y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
 
-        //Alias:
+        //Alias: -> Name des neuen Objekts
         let { x: anderesX, y: y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
         console.log(anderesX); // X  
         
@@ -390,13 +390,42 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
             d: "D"
         }
 
-        //Automatisch für alle Variablen erzeugen lassen
+        //Automatisch für alle Variablen erzeugen lassen, rest enthält nicht zugewiesene Variablen
         let { a, c, ...rest } = myObjA;
         console.log(rest); // {b: "B", d: "D"}   
     </script>
     ```
+- Object (Deep Structures)
+    ```html
+    <script>
+        let deepObject = {
+            e1: {
+                e2: "E2",
+                e3: {
+                    e4: "E4"
+                }
+            }
+        };
+
+        // Zerlegen, sodass
+        // let e2 = deepObject.e1.e2;
+        // und
+        // let e4 = deepObject.e1.e3.e4;
+
+        let { e1: { e2: neuesE2, e3: { e4: neuesE4 } } } = deepObject;
+        // Durch: nach e1, kann auf das e2 Property mittels {} zugegriffen  und daraus eine neue Variable neuesE2 erzeugt werden
+        // Durch ein weiteres Komma, kann auf die nächste Property e3 zugegriffen werden und mittels weiterem : auf deren Property e4, 
+        // wobei daraus eine neue Variable neuesE4 deklariert wird
+        console.log(neuesE2); // E2
+        console.log(neuesE4); // E4  
+    </script>
+    ```
 
 #### Objektliterale
+
+##### Templateliterale
+- https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings
+
 #### Symbols
 #### Arrays
 #### Iterables -> Iterator
