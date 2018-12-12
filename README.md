@@ -226,6 +226,110 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 ```
 
 #### Spread- & Rest-Operationen
+##### Spread
+- https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+- Verwandelt durch ... ein Array in eine Sequenz, also in einzelne Übergabewerte
+- Arrays
+    ```javascript
+    <script>
+        let zahlen = [2, 3, 4];
+        let addiere = function (a, b, c) {
+            return a + b + c;
+        }
+
+        let erg = addiere(5, 7, 8);
+        console.log('erg:', erg); // erg: 20
+
+        erg = addiere(zahlen);
+        console.log('erg:', erg); // erg: 2,3,4undefinedundefined
+            
+        erg = addiere(...zahlen); // Spread: Array -> Sequenz (Verwandelt)
+        console.log('erg:', erg); // erg: 9
+
+        let mehrzahlen = [7, 3, 9, 3];
+        // Neues Array allezahlen -> allezahlen: (7) [2, 3, 4, 7, 3, 9, 3]
+        let allezahlen = zahlen.concat(mehrzahlen);
+        console.log('allezahlen:', allezahlen);
+
+        let allezahlen2 = [2, 3, 4, allezahlen];
+        console.log('allezahlen2:', allezahlen2); // allezahlen2: (4) [2, 3, 4, Array(7)]
+            
+        allezahlen2 = [...zahlen, ...allezahlen]; // Spread: Array -> Sequenz (Verwandelt)
+        console.log('allezahlen2:', allezahlen2); // allezahlen2: (10) [2, 3, 4, 2, 3, 4, 7, 3, 9, 3]
+
+        let zahlenClone = [...zahlen];
+        console.log('zahlenClone:', zahlenClone); // zahlenClone: (3) [2, 3, 4]
+    </script>
+    ```
+- Objects
+    ```javascript
+    <script>
+         let myObjX = {
+            x: "X",
+            y: "Y",
+            z: "Z"
+        }
+
+        console.log(myObjX); // {x: "X", y: "Y", z: "Z"}
+
+        let myObjA = {
+            a: "A",
+            b: "B"
+        }
+
+        let myObjXClone = { ...myObjX };
+        console.log(myObjXClone); // {x: "X", y: "Y", z: "Z"}
+        console.log(myObjXClone === myObjX); // false
+
+        myObjXClone = myObjX;
+        console.log(myObjXClone); // {x: "X", y: "Y", z: "Z"}
+        console.log(myObjXClone === myObjX); // true
+
+        let myMergedObject = { ...myObjX, ...myObjA };
+        console.log(myMergedObject); // {x: "X", y: "Y", z: "Z", a: "A", b: "B"}
+
+        //Bereits vorhandes Property des Objekts kann überschrieben werden
+        myMergedObject = { ...myObjX, ...myObjA, z: "Anders Z" };
+        console.log(myMergedObject); // {x: "X", y: "Y", z: "Anders Z", a: "A", b: "B"}
+
+        //Erzeugt ein neues Object
+        function configurable(conf) {
+            let defaults = {}
+            let myConf = { ...defaults, ...conf };
+            return myConf;
+        }
+    </script>
+    ```
+
+##### Rest
+- https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Functions/rest_parameter
+- Verwandelt durch ... eine Sequenz in ein Array (Funktionsparameter), also aus einzelnen Übergabewerten
+```javascript
+<script>
+    let addiere2 = function (...args) {
+        // Mit Funktionsparmeter als Sequenz -> Array
+        console.log('args:', args);
+        return args.reduce(function (a, b) {
+            return a + b;
+        })
+    }
+
+    let erg2 = addiere2(5, 8, 2, 9);  // args: (4) [5, 8, 2, 9]
+    console.log('erg2:', erg2); // erg2: 24
+
+    let addiere3 = function () {
+        // ohne Funktionsparameter (Kein Rest)
+        console.log(arguments) // Arguments(4) [5, 8, 2, 9, callee: (...), Symbol(Symbol.iterator): ƒ]
+        return Array.prototype.reduce.call(arguments, function (a, b) {
+            return a + b;
+        });
+    }
+
+    let erg3 = addiere3(5, 8, 2, 9);  // Arguments(4) [5, 8, 2, 9, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    console.log('erg3:', erg2); // erg2: 24
+</script>
+```
+
 #### Destructuring
 #### Objektliterale
 #### Symbols

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rest- und Spread-Operator</title>
+    <script>
+        // Spread: IRGENDWAS -> Sequenz
+
+        let myObjX = {
+            x: "X",
+            y: "Y",
+            z: "Z"
+        }
+
+        console.log(myObjX); // {x: "X", y: "Y", z: "Z"}
+
+        let myObjA = {
+            a: "A",
+            b: "B"
+        }
+
+        let myObjXClone = { ...myObjX };
+        console.log(myObjXClone); // {x: "X", y: "Y", z: "Z"}
+        console.log(myObjXClone === myObjX); // false
+
+        myObjXClone = myObjX;
+        console.log(myObjXClone); // {x: "X", y: "Y", z: "Z"}
+        console.log(myObjXClone === myObjX); // true
+
+        let myMergedObject = { ...myObjX, ...myObjA };
+        console.log(myMergedObject); // {x: "X", y: "Y", z: "Z", a: "A", b: "B"}
+
+        //Bereits vorhandes Property des Objekts kann überschrieben werden
+        myMergedObject = { ...myObjX, ...myObjA, z: "Anders Z" };
+        console.log(myMergedObject); // {x: "X", y: "Y", z: "Anders Z", a: "A", b: "B"}
+
+        //Erzeugt ein neues Object
+        function configurable(conf) {
+            let defaults = {}
+            let myConf = { ...defaults, ...conf };
+            return myConf;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Spread- und Rest: ...</h1>
+</body>
+
+</html>
