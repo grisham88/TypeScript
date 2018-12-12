@@ -8,13 +8,11 @@ Angular bietet somit auch die Vorzüge von ES6:
 - Generatoren im Stil von Python
 - Reflexion
 
-
 ## Markdown (.md) Formatierungsregeln
 * [Markdown Tutorial Git](http://agea.github.io/tutorial.md/)
 * [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 * [Markdown Navigation](https://github.com/AlanWalk/markdown-navigation)
-
 
 ## Visual Studio Code
 * Live Server als Extension installieren
@@ -53,6 +51,11 @@ Angular bietet somit auch die Vorzüge von ES6:
     - Wenn > hinterlegt ist, werden Funktionen aufgeführt
     - Ohne > kann man nach Dateien suchen
 - STRG + B für Explorer links zuklappen
+
+## Debugging
+- F5 bestätigen, dann stoppen und in der neuen launch.json den korrekten Port hinterlegen
+- F1 bestätigen, suchen nach User Settings, dann dort nach Debugging und die Einstellung "Allow Breakpoints Everywhere" aktivieren
+- Breakpoints setzen und mit F5 Debugging starten und zur gewünschten Datei hinwechseln
 
 ## Seminarablauf
 
