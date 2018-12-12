@@ -415,11 +415,11 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     // let e4 = deepObject.e1.e3.e4;
 
     let { e1: { e2: neuesE2, e3: { e4: neuesE4 } } } = deepObject;
-    // Durch: nach e1, kann auf das e2 Property mittels {} zugegriffen 
-    // und daraus eine neue Variable neuesE2 erzeugt werden
-    // Durch ein weiteres Komma, kann auf die nächste Property e3 zugegriffen werden und 
-    // mittels weiterem : auf deren Property e4, wobei daraus 
-    // eine neue Variable neuesE4 deklariert wird
+    // Durch ":" nach "e1", kann auf das "e2" Property mittels "{}" zugegriffen 
+    // und daraus eine neue Variable "neuesE2" erzeugt werden
+    // Durch ein weiteres ",", kann auf die nächste Property "e3" zugegriffen
+    // werden und mittels weiterem ":" auf deren Property "e4", 
+    // wobei daraus  eine neue Variable "neuesE4" deklariert wird
     console.log(neuesE2); // E2
     console.log(neuesE4); // E4  
 </script>
@@ -666,6 +666,51 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 
 #### Iterables -> Iterator
 ##### for ... of
+```html
+<script>
+    let myArray = ['dies', 'das', 'jenes'];
+
+    // for, forEach
+
+    // ... weil ein Array ein "Iterable" ist:
+    for (let value of myArray) { // for..of: Iterable -> Iterator
+        console.log(value);
+    }
+    // dies
+    // das
+    // jenes
+
+    // wir machen jetzt SELBST einen Iterator:
+    let myArrayIterator = myArray.entries();
+    console.log('myArrayIterator: ', myArrayIterator);
+    // myArrayIterator:  
+    // Array Iterator {}:Array Iterator
+    // next:ƒ next()
+    // Symbol(Symbol.toStringTag):"Array Iterator"
+    // __proto__:
+    // Symbol(Symbol.iterator):ƒ [Symbol.iterator]()
+    // __proto__:Object
+
+    let valueObj1 = myArrayIterator.next();
+    console.log('valueObj1: ', valueObj1);
+    // valueObj1:  {value: Array(2), done: false, value:(2) [0, "dies"]}
+    let valueObj2 = myArrayIterator.next();
+    console.log('valueObj2: ', valueObj2);
+    // valueObj2:  {value: Array(2), done: false, value:(2) [1, "das"]}
+    let valueObj3 = myArrayIterator.next();
+    console.log('valueObj3: ', valueObj3);
+    // valueObj3:  {value: Array(2), done: false, value:(2) [2, "jenes"]}
+
+    //Ende wird angegeben mit done: true
+    let valueObj4 = myArrayIterator.next();
+    console.log('valueObj4: ', valueObj4);
+    // valueObj4: {value: undefined, done: true}
+
+    // ACHTUNG
+    // .next().next() nicht möglich, da der Rückgabetyp kein Iterator ist
+    let valueObj5 = myArrayIterator.next().next();
+</script>
+```
 
 ### Funktionen vs. Arrow-Funktionen
 ### Promises -> Chains

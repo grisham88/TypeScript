@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Arrays und so weiter...for..of-Schleife</title>
+    <script>
+        let myArray = ['dies', 'das', 'jenes'];
+
+        // for, forEach
+
+        // ... weil ein Array ein "Iterable" ist:
+        for (let value of myArray) { // for..of: Iterable -> Iterator
+            console.log(value);
+        }
+        // dies
+        // das
+        // jenes
+
+        // wir machen jetzt SELBST einen Iterator:
+        let myArrayIterator = myArray.entries();
+        console.log('myArrayIterator: ', myArrayIterator);
+        // myArrayIterator:  
+        // Array Iterator {}:Array Iterator
+        // next:ƒ next()
+        // Symbol(Symbol.toStringTag):"Array Iterator"
+        // __proto__:
+        // Symbol(Symbol.iterator):ƒ [Symbol.iterator]()
+        // __proto__:Object
+
+        let valueObj1 = myArrayIterator.next();
+        console.log('valueObj1: ', valueObj1);
+        // valueObj1:  {value: Array(2), done: false, value:(2) [0, "dies"]}
+        let valueObj2 = myArrayIterator.next();
+        console.log('valueObj2: ', valueObj2);
+        // valueObj2:  {value: Array(2), done: false, value:(2) [1, "das"]}
+        let valueObj3 = myArrayIterator.next();
+        console.log('valueObj3: ', valueObj3);
+        // valueObj3:  {value: Array(2), done: false, value:(2) [2, "jenes"]}
+
+        //Ende wird angegeben mit done: true
+        let valueObj4 = myArrayIterator.next();
+        console.log('valueObj4: ', valueObj4);
+        // valueObj4: {value: undefined, done: true}
+
+        // ACHTUNG
+        // .next().next() nicht möglich, da der Rückgabetyp kein Iterator ist
+        // let valueObj5 = myArrayIterator.next().next();
+
+        console.log(...myArray);
+        // dies das jenes
+    </script>
+</head>
+
+<body>
+
+</body>
+<h1>Arrays: for..of-Schleife</h1>
+
+</html>
