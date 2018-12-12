@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Objectliterals</title>
+    <script>
+        let b = "B";
+        let c = "C";
+        let hallo = function () {
+            console.log("Hallo");
+        }
+        let defObj = {
+            d: "D",
+            e: "E",
+            f: "F"
+        }
+
+        let myObject = {
+            a: "A",
+            b: b,
+            huhu: function () {
+                console.log("huhu");
+            },
+            // "concise" Property (wenn eine Variable mit gleichem Namen wie das Proprety existiert, wird diese automatisch übernommen)
+            c,
+            hallo, //Function, aber als Prop!!!
+            ...defObj, //Keys d, e, f werden als eigenständige Properties übernommen, nicht defObj selbst
+            // concise Method
+            hohoho() {
+                console.log("hohoho");
+            }
+        };
+
+        console.log('myObject:', myObject);
+        // myObject: {a: "A", b: "B", c: "C"}
+        myObject.huhu();    // huhu
+        myObject.hallo();   // Hallo
+        myObject.hohoho();  // hohoho
+
+        console.log(myObject.d); // D
+    </script>
+</head>
+
+<body>
+    <h1>Objectliterals</h1>
+</body>
+
+</html>

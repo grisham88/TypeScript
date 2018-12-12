@@ -510,8 +510,122 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 ```
 
 ##### Objektliterale
+- https://www.peterkropff.de/site/javascript/objektliterale.htm
+```html
+<script>
+    let b = "B";
+    let c = "C";
+    let hallo = function () {
+        console.log("Hallo");
+    }
+    let defObj = {
+        d: "D",
+        e: "E",
+        f: "F"
+    }
 
-#### Symbols
+    let myObject = {
+        a: "A",
+        b: b,
+        huhu: function () {
+            console.log("huhu");
+        },
+        // "concise" Property (wenn eine Variable mit gleichem Namen wie das Proprety existiert, wird diese automatisch übernommen)
+        c,
+        hallo, //Function, aber als Prop!!!
+        ...defObj, //Keys d, e, f werden als eigenständige Properties übernommen, nicht defObj selbst
+        // concise Method
+        hohoho() {
+            console.log("hohoho");
+        }
+    };
+
+    console.log('myObject:', myObject);
+    // myObject: {a: "A", b: "B", c: "C"}
+    myObject.huhu();    // huhu
+    myObject.hallo();   // Hallo
+    myObject.hohoho();  // hohoho
+
+    console.log(myObject.d); // D
+</script>
+```
+
+##### Objektliterale
+- Properties sind nichts anderes als Strings, deswegen können diese auch zur Laufzeit hinzugefügt werden, mittels String, String-Variable oder Rückgabewert einer Funktion
+```html
+<script>
+    let eKey = 'e';
+    let generateKey = function () {
+        return 'f';
+    }
+
+    let myObject = {
+        'egal': 'Egal',
+        '': 'Echt jetzt?',
+        a: "A",
+        // computed Property
+        [eKey]: "E",
+        [generateKey()]: "F"
+    };
+
+    // erweitern, so:
+    myObject.b = "B";
+    // ... oder so:
+    myObject['c'] = "c";
+    // ... daher geht auch:
+    let dKey = 'd';
+    myObject[dKey] = "D";
+
+    console.log('myObject:', myObject);
+    // myObject: {egal: "Egal", "": "Echt jetzt?", 
+    // a: "A", b: "B", c: "c", d: "D", e: "E", f: "F"}
+
+    console.log(myObject['']); //Echt jetzt?
+</script>
+```
+
+##### Symbols
+- https://developer.mozilla.org/en-US/docs/Glossary/Symbol
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol
+```html
+<script>
+    // Symbol hat eine IDENTITY! Ist aber KEIN Object
+    let mySymbol = Symbol();
+    console.log('mySymbol:', mySymbol); // mySymbol: Symbol()
+    let myOtherSymbol = Symbol();
+    console.log('myOtherSymbol', myOtherSymbol); // myOtherSymbol: Symbol()
+    console.log('myOtherSymbol===mySymbol', myOtherSymbol === mySymbol);
+    // myOtherSymbol===mySymbol false
+        
+    // ... und ein Payload
+    let myThirdSymbol = Symbol('3. Symbol');
+    console.log('myThirdSymbol', myThirdSymbol); // myThirdSymbol Symbol(3. Symbol)
+    let nochEinSymbol = Symbol('3. Symbol');
+    console.log('nochEinSymbol===myThirdSymbol', nochEinSymbol === myThirdSymbol);
+    // nochEinSymbol===myThirdSymbol false
+    // Identity und Payload ergeben keine Eindeutigkeit des Symbols
+
+    let myObject = {
+        'egal': 'Egal',
+        // [{}]: 'Object als Key'  // führt zu nichts
+        // aber so:
+        [mySymbol]: 'Ich bin rein symbolisch!'
+    };
+    
+    // Stringkeys:
+    let dieKeys = Object.keys(myObject);
+    console.log('dieKeys:', dieKeys);
+    // dieKeys: (8) ["egal"]
+
+    // Schleife for..in: -> Keys greifen nicht auf die Symbols zu, überspringen Sie
+    // Keys sind offen zugänglich, Symbols nicht
+    for (let key in myObject) {
+        console.log('key', myObject[key]);
+    }
+    // key Egal
+</script>
+```
+
 #### Arrays
 #### Iterables -> Iterator
 ##### for ... of
