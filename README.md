@@ -346,13 +346,14 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
         
         let zahlen = [4, 6, 2, 9, 5, 12, 9, 14];
         console.log(zahlen); // (8) [4, 6, 2, 9, 5, 12, 9, 14]
-        //Zusammenfassung der restlichen Wert in eine Variable mittels Spread (...rest)
+        // Zusammenfassung der restlichen Wert in eine Variable mittels Spread (...rest)
         let [zahl1, zahl2, zahl3, ...rest] = zahlen;
         console.log(zahl1); // 4
         console.log(rest); // (5) [9, 5, 12, 9, 14]
         
         // was ist möglich?
-        let [body] = document.getElementsByTagName('body'); //Body wird in einem Array an erster Stelle zurückgeliefert
+        let [body] = document.getElementsByTagName('body');
+        // Body wird in einem Array an erster Stelle zurückgeliefert
     </script>
     ```
 - Object
@@ -413,9 +414,11 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
         // let e4 = deepObject.e1.e3.e4;
 
         let { e1: { e2: neuesE2, e3: { e4: neuesE4 } } } = deepObject;
-        // Durch: nach e1, kann auf das e2 Property mittels {} zugegriffen  und daraus eine neue Variable neuesE2 erzeugt werden
-        // Durch ein weiteres Komma, kann auf die nächste Property e3 zugegriffen werden und mittels weiterem : auf deren Property e4, 
-        // wobei daraus eine neue Variable neuesE4 deklariert wird
+        // Durch: nach e1, kann auf das e2 Property mittels {} zugegriffen 
+        // und daraus eine neue Variable neuesE2 erzeugt werden
+        // Durch ein weiteres Komma, kann auf die nächste Property e3 zugegriffen werden und 
+        // mittels weiterem : auf deren Property e4, wobei daraus 
+        // eine neue Variable neuesE4 deklariert wird
         console.log(neuesE2); // E2
         console.log(neuesE4); // E4  
     </script>
@@ -530,7 +533,8 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
         huhu: function () {
             console.log("huhu");
         },
-        // "concise" Property (wenn eine Variable mit gleichem Namen wie das Proprety existiert, wird diese automatisch übernommen)
+        // "concise" Property (wenn eine Variable mit gleichem Namen wie das Proprety existiert, 
+        //wird diese automatisch übernommen)
         c,
         hallo, //Function, aber als Prop!!!
         ...defObj, //Keys d, e, f werden als eigenständige Properties übernommen, nicht defObj selbst
