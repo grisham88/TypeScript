@@ -53,6 +53,7 @@ Angular bietet somit auch die Vorzüge von ES6:
 - STRG + B für Explorer links zuklappen
 
 ## Debugging
+- Extension Chrome Debugger installieren
 - F5 bestätigen, dann stoppen und in der neuen launch.json den korrekten Port hinterlegen
 - F1 bestätigen, suchen nach User Settings, dann dort nach Debugging und die Einstellung "Allow Breakpoints Everywhere" aktivieren
 - Breakpoints setzen und mit F5 Debugging starten und zur gewünschten Datei hinwechseln
@@ -818,7 +819,9 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
         // console.log('arguments', arguments); 
         // arguments is not defined at luxusAddArrow
 
-        console.log('luxusAddArrow:', this); // OriginalKontext bleibt bei der Arrow-Function erhalten, .call ist nicht notwendig, bzw. schon implementiert
+        console.log('luxusAddArrow:', this); 
+        // OriginalKontext bleibt bei der Arrow-Function erhalten,
+        // .call ist nicht notwendig, bzw. schon implementiert
         return a + b;
     }
 
