@@ -631,6 +631,40 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 ```
 
 #### Arrays
+```html
+<script>
+    // neue STATISCHE Methoden für Array
+
+    // bekannt ist (vielleicht):
+    let myArray = [];
+    console.log('Array.isArray(myArray):', Array.isArray(myArray));
+    // Array.isArray(myArray): true
+
+    // bekannt ist (sicher):
+    let zahlen = new Array(3);
+    console.log('zahlen', zahlen);
+    // oops! -> zahlen (3) [empty × 3]
+
+    // ... dafür gibt's jetzt:
+    let myOfArray = Array.of(3, true, 'bla', 17, undefined, null);
+    console.log('myOfArray', myOfArray);
+    // myOfArray [3, true, "bla", 17, undefined, null]
+
+    // ... was nehme ich, wenn ich KEINE Sequenz habe
+    // Array.from(ARRAYAEHNLICH)!!!
+
+    let keinArray = {
+        x: "X",
+        length: 5,      // length MUSS enthalten sein
+        '2': 'die Zwei' // mindestens einen num Key
+    }
+
+    let myFromArray = Array.from(keinArray);
+    console.log('myFromArray:', myFromArray);
+    // myFromArray: [undefined, undefined, "die Zwei", undefined, undefined]
+</script>
+```
+
 #### Iterables -> Iterator
 ##### for ... of
 
