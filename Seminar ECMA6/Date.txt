@@ -1,0 +1,14 @@
+cl.Bis = moment.utc(this.befristDate, "DD.MM.YYYY").toDate();
+var dateP = moment.utc(d, "YYYY-MM-DD");
+        var dateVerg = DateHelper.parseDate("30.12.9999", "DD.MM.YYYY");
+rolle.Bis === moment.utc("01.01.0001", "DD.MM.YYYY").toDate())
+ 
+public static parseDate(value: string, format: string): Date {
+        var momentObj = moment.utc(value, format, true); // expliziten strict mode anschalten
+ 
+        if (!momentObj.isValid()) {
+            throw Error('Parsen des Datums fehlgeschlagen.');
+        }
+ 
+        return momentObj.toDate();
+    }
