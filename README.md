@@ -553,8 +553,6 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     console.log(myObject.d); // D
 </script>
 ```
-
-##### Objektliterale
 - Properties sind nichts anderes als Strings, deswegen können diese auch zur Laufzeit hinzugefügt werden, mittels String, String-Variable oder Rückgabewert einer Funktion
 ```html
 <script>
