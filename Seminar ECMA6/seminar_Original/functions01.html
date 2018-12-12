@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Functions vs. Arrow-Functions</title>
+    <script>
+        "use strict";
+
+        // bei Functions wurde ein wenig nachgebessert
+        let addiere = function(a, b=0, c=0) {  
+            // impliziter Param 1:
+            console.log(arguments); // haben wir!
+            // impliziter Param 2:
+            console.log(this); // undefined im Strict Mode
+            return a + b;
+        };
+        let erg = addiere(4);
+        console.log(erg);
+
+        let myObj = {
+            x:"X",
+            arrMeth: () => {
+                console.log('arrMeth:',this); // ?
+            },
+            meth:function(){
+                console.log('meth:',this);
+                // Douglas Crockford:
+                // let that = this;
+
+                let innen = function() {
+                    console.log('innen:', this);
+                    // console.log('x:', that.x);
+                }
+                // innen(); // call in meth!!
+                innen.call(this);
+
+                let innenArrow = () => {
+                    console.log('innenArrow:', this);
+                }
+                innenArrow();
+            }
+        }
+        myObj.meth();
+
+    </script>
+</head>
+<body>
+    <h1>Functions</h1>
+</body>
+</html>

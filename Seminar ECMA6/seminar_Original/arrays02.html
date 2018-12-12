@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Arrays und so weiter...for..of-Schleife</title>
+    <script>
+    
+        let myArray = ['dies', 'das', 'jenes'];
+        console.log(myArray);
+        // for, forEach
+
+        // ... weil ein Array ein "Iterable" ist:
+        for(let value of myArray) { // for..of: Iterable -> Iterator
+            console.log(value);
+        }
+
+        // wir machen jetzt SELBST einen Iterator:
+        let myArrayIterator = myArray.entries();
+        console.log(myArrayIterator);
+        let valueObj1 = myArrayIterator.next();
+        console.log(valueObj1);
+        let valueObj2 = myArrayIterator.next();
+        console.log(valueObj2);
+        let valueObj3 = myArrayIterator.next();
+        console.log(valueObj3);
+        let valueObj4 = myArrayIterator.next();
+        console.log(valueObj4);  
+
+        console.log(...myArray)
+
+    </script>
+</head>
+<body>
+    <h1>Arrays: for..of-Schleife</h1>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destructuring</title>
+    <script>
+    
+        let blumen = ['Rosen','Tulpen','Nelken'];
+
+       //  let rosen = blumen[0];
+
+       // einfacher mit Destructuring:
+       let [rose, tulpe, nelke] = blumen;
+       console.log(rose);
+       // console.log(tulpe);
+       console.log(nelke);
+
+       let zahlen = [4,6,2,9,5,12,9,14];
+       console.log(zahlen);
+       let [zahl1, zahl2, zahl3, ...rest] = zahlen;
+       console.log(rest);
+
+       // was geht?
+       let [body] = document.getElementsByTagName('body');
+
+    </script>
+</head>
+<body>
+    <h1>Destructuring</h1>
+</body>
+</html>

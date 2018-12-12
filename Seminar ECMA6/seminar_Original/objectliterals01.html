@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Objectliterals</title>
+    <script>
+    
+    let b = "B";
+    let c = "C"
+    let hallo = function() {
+        // Hallo!!!
+    }
+    let defObj = {
+        d:"D",
+        e:"E",
+        f:"F"
+    }
+
+    let myObject = {
+        a:"A",
+        b: b,
+        huhu: function() {
+            // Huhu!
+        },
+        // "concise" Property
+        c,
+        hallo, // Function, aber als Prop!!
+        ...defObj, // Keys: d, e, f !!
+        // concise Method:
+        hohoho() {
+            // Ho ho ho!
+        } 
+    };
+
+
+    console.log('myObject:', myObject);
+    </script>
+</head>
+<body>
+    <h1>Objectliterals</h1>
+</body>
+</html>

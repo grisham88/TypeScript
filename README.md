@@ -713,6 +713,147 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 ```
 
 ### Funktionen vs. Arrow-Funktionen
+
+#### Functions
+```html
+<script>
+    // bei Functions wurde ein wenig nachgebessert
+    let addiere = function (a, b = 0, c = 0) {
+        // b = b || 0; // Alternativ zu b=0
+
+        // Enthält nicht die Defaultwerte, enthält nur die wirklich übergebenen Werte
+        // impliziter Param 1:
+        console.log(arguments); // haben wir
+
+        // impliziter Param 2:            
+        console.log(this);
+
+        return a + b;
+    };
+
+    let erg = addiere(4);
+    console.log('Ergebnis:', erg);
+    // Ergebnis: NaN wenn keine Defaultparameter vorhanden sind,
+    // mit Default -> Ergebnis: 4
+
+    let myObj = {
+        x: "X",
+        arrMeth: () => {
+            // Originalkontext bleibt in Arrow-Functions bestehen
+            console.log('arrMeth:',this); 
+        },
+        meth: function () {
+            console.log('meth:', this);
+            // Douglas Crockford (Speichern des Original Kontexts):
+            let that = this;
+
+            // ACHTUNG 
+            // Function-Functions verlieren ihren Originakontext, außer durch vorherige Speicherung
+            let innen = function () {
+                console.log('x:', that.x);
+            }
+            innen(); // call in meth
+
+            let innenMitOriginalKontext = function () {
+                console.log('innenMitOriginalKontext:', this);
+            }
+            innenMitOriginalKontext.call(this);
+
+            let innenNeuerKontext = function () {
+                console.log('innen:', this);
+            }
+            innenNeuerKontext(); // call in meth
+            
+            let innenArrow = () => {
+                // Originalkontext bleibt in Arrow-Functions bestehen
+                console.log('innenArrow:', this);
+            }
+            innenArrow();
+        }
+    }
+    myObj.meth();
+    // meth: {x: "X", meth: ƒ}
+    // x: X
+    // innenMitOriginalKontext: {x: "X", meth: ƒ}
+    // innen: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+    // innenArrow: {x: "X", meth: ƒ}
+</script>
+```
+
+#### Arrow-Functions
+- kann keinen Namen haben
+- ist viel Kompakter als eine normale Function
+- hat einen Returnwert
+- Originalkontext (this) bleibt bestehen
+- Keine Übergabe des Kontexts (this) mittels .call möglich
+```html
+<script>    
+    "use strict";
+    console.log('global:', this);
+    // global: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+
+    //Normale function Mit Name
+    let test = function myTest() {
+        console.log('this test:', this);
+        return 'Test';
+    };
+    console.log(test()); // Test
+
+    let testArrow = () => 'Test';
+    console.log(testArrow()); // Test
+
+    // Speicherung der Arrow-Function in einer Variable
+    // x ist der Inputparameter
+    let identArrow = (x) => 2 * x;
+    console.log(identArrow(5)); // 10
+
+    // a und b sind die Inputparameter
+    // mehere Parameter müssen mit () umrandet sein
+    let addArrow = (a, b) => a + b;
+
+    let luxusAddArrow = (a, b) => {
+        // console.log('arguments', arguments); 
+        // arguments is not defined at luxusAddArrow
+
+        console.log('luxusAddArrow:', this); // OriginalKontext bleibt bei der Arrow-Function erhalten, .call ist nicht notwendig, bzw. schon implementiert
+        return a + b;
+    }
+
+    console.log('typeof test:', typeof test);
+    // typeof test: function
+    console.log('typeof test.call:', typeof test.call);
+    // typeof test.call: function
+    console.log('typeof luxusAddArrow:', typeof luxusAddArrow);
+    // typeof luxusAddArrow: function
+    console.log('typeof luxusAddArrow.call:', typeof luxusAddArrow.call);
+    // typeof luxusAddArrow.call: function
+
+    let testObj = { a: "A" };
+    // Keine Übergabe des Kontexts mittels .call möglich
+    test.call(testObj);
+    luxusAddArrow.call(testObj);
+    // this test: {a: "A"}
+    // luxusAddArrow: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+
+    let erg = luxusAddArrow(5, 7);
+    console.log(erg);
+    // this: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+    // 12
+
+    let zahlen = [2, 3, 4, 5];
+
+    // Nutzung von Functions
+    zahlen.forEach(function (value, index, arrRef) {
+        console.log(value);
+    });
+    // 2, 3, 4, 5
+
+    // Nutzung von Arrow-Functions
+    zahlen.forEach(value => console.log(value));
+    // 2, 3, 4, 5
+</script>
+``` 
+
 ### Promises -> Chains
 ### fetch-API
     Ablösung von XML-HTTP Request Objekt

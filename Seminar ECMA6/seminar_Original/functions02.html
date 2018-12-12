@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Arrow Functions</title>
+    <script>
+    "use strict";
+    console.log('global:', this);
+    
+    let test = function myTest(){
+        console.log('this test:', this);
+        return 'Test';
+    };
+    console.log(test());
+
+    let testArrow = () => 'Test';
+    console.log(testArrow());
+    let identArrow = x => 2*x;
+    let addArrow = (a,b) => a + b;
+
+    let luxusAddArrow = (a,b) => {
+        // console.log('arguments:', arguments); // oops
+        console.log('luxusAddArrow:', this);
+        return a + b;
+    }
+    console.log('typeof test:', typeof test);
+    console.log('typeof test.call:', typeof test.call);
+    console.log('typeof luxusAddArrow:', typeof luxusAddArrow);
+    console.log('typeof luxusAddArrow.call:', typeof luxusAddArrow.call); // ??
+
+    let testObj = { a:"A"};
+    test.call(testObj);
+    luxusAddArrow.call(testObj);
+
+    let erg = luxusAddArrow(5,7);
+    console.log(erg);
+
+    let zahlen = [2,3,4,5];
+    zahlen.forEach(function(value, index, arrRef){
+        console.log(value);
+    });
+    zahlen.forEach(value => console.log(value));
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

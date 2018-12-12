@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Arrow Functions</title>
+    <script>
+        "use strict";
+        console.log('global:', this);
+        // global: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+
+        //Normale function Mit Name
+        let test = function myTest() {
+            console.log('this test:', this);
+            return 'Test';
+        };
+        console.log(test()); // Test
+
+        let testArrow = () => 'Test';
+        console.log(testArrow()); // Test
+
+        // Speicherung der Arrow-Function in einer Variable
+        // x ist der Inputparameter
+        let identArrow = (x) => 2 * x;
+        console.log(identArrow(5)); // 10
+
+        // a und b sind die Inputparameter
+        // mehere Parameter müssen mit () umrandet sein
+        let addArrow = (a, b) => a + b;
+
+        let luxusAddArrow = (a, b) => {
+            // console.log('arguments', arguments); 
+            // arguments is not defined at luxusAddArrow
+
+            console.log('luxusAddArrow:', this); // OriginalKontext bleibt bei der Arrow-Function erhalten, .call ist nicht notwendig, bzw. schon implementiert
+            return a + b;
+        }
+
+        console.log('typeof test:', typeof test);
+        // typeof test: function
+        console.log('typeof test.call:', typeof test.call);
+        // typeof test.call: function
+        console.log('typeof luxusAddArrow:', typeof luxusAddArrow);
+        // typeof luxusAddArrow: function
+        console.log('typeof luxusAddArrow.call:', typeof luxusAddArrow.call);
+        // typeof luxusAddArrow.call: function
+
+        let testObj = { a: "A" };
+        // Keine Übergabe des Kontexts mittels .call möglich
+        test.call(testObj);
+        luxusAddArrow.call(testObj);
+        // this test: {a: "A"}
+        // luxusAddArrow: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+
+        let erg = luxusAddArrow(5, 7);
+        console.log(erg);
+        // this: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+        // 12
+
+        let zahlen = [2, 3, 4, 5];
+
+        // Nutzung von Functions
+        zahlen.forEach(function (value, index, arrRef) {
+            console.log(value);
+        });
+        // 2, 3, 4, 5
+
+        // Nutzung von Arrow-Functions
+        zahlen.forEach(value => console.log(value));
+        // 2, 3, 4, 5
+    </script>
+</head>
+
+<body>
+    <h1>Arrow Functions</h1>
+</body>
+
+</html>

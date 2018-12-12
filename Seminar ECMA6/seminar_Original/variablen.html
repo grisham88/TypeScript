@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA6 Variablen</title>
+    <script>
+    // linearer Codeablauf    
+    console.log("Wir betrachten die neuen Keywords für Deklarationen");
+
+    console.log(test); // kein RefErr wg. Hoisting!  
+    var test = "var: Das ist ein Test.";
+    console.log(test);
+
+    // var und Schleife:
+    for(var i = 0; i < 3; i++) {
+        var temp = i * 2;
+        console.log('var:',temp);
+    }
+    console.log('oops...:', i, temp);
+
+
+    // ECMA6: let
+    // console.log(test2); // TDZ
+    let test2 = "let: Auch ein Test...";
+    console.log(test2);
+        // im Block
+    if(true) {
+        let iftest = "let: Ich bin im Block!";
+        console.log(iftest);
+    }
+    // console.log(iftest); // TDZ
+
+        // let und Schleife:
+    for(let j = 0; j < 3; j++) {
+        let temp2 = j * 2;
+        console.log('let:', temp2);
+    }
+    // console.log('oops...?:', j, temp2); // TDZ!!
+
+
+    // ECMA6: const
+
+    const test3 = "Das ist wieder ein Test!";
+    console.log('const:', test3);
+    // test3 = "Was anderes?";  // Ändern geht nicht! TypeError!
+    // const weissnicht;        // Initialisierung MUSS!
+    const werte = [];
+    werte.push(5);
+    console.log('const Array:', werte);
+    const tool = function() {
+        // tue was Wichtiges...
+    };
+    var tool2 = function tool2(){
+        // tue auch was Wichtiges...
+    };
+
+    // const und Schleife:
+    for(let k = 0; k < 3; k++) {
+        const temp3 = k * 2;
+        console.log('let:', temp3);
+    }
+
+
+    </script>
+</head>
+<body>
+    <h1>let und const</h1>
+</body>
+</html>

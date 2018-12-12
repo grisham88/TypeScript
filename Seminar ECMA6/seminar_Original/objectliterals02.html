@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Objectliterals (2)</title>
+    <script>
+    
+    let eKey = 'e';
+    let generateKey = function() {
+        return 'f';
+    }
+
+    // Symbol hat eine IDENTITY! Ist aber KEIN Object (to be proved! :-)
+    let mySymbol = Symbol();
+    console.log('mySymbol:', mySymbol);
+    let myOtherSymbol = Symbol();
+    console.log('myOtherSymbol', myOtherSymbol);
+    console.log('myOtherSymbol===mySymbol', myOtherSymbol===mySymbol);
+    // ... und eine Payload:
+    let myThirdSymbol = Symbol('3. Symbol');
+    console.log('myThirdSymbol:', myThirdSymbol);
+    let nochEinSymbol = Symbol('3. Symbol');
+    console.log('myThirdSymbol===nochEinSymbol:', myThirdSymbol===nochEinSymbol);
+
+    let myObject = {
+        // 'egal': 'Egal',
+        // '':'Echt jetzt?',
+         a: "A",
+         // computed Property
+         [eKey]: "E",
+         [generateKey()]: "F",
+         // [{}]: 'Object als Key' // führt zu nichts!
+         // aber so:
+         [mySymbol]:'Ich bin rein symbolisch!',
+         [myOtherSymbol]: '...ich auch!'
+    };
+    // erweitern, so:
+    myObject.b = "B";
+    // ... oder so:
+    myObject['c']= "C";
+    // ... daher geht auch:
+    let dKey = 'd';
+    myObject[dKey] = "D";
+
+    console.log('myObject:', myObject);
+
+    // Stringkeys:
+    let dieKeys = Object.keys(myObject);
+    console.log('dieKeys:', dieKeys);
+    // Schleife for..in:
+    for(let key in myObject){
+        console.log('key:', myObject[key]);
+    }
+    // den Value des Symbols:
+    console.log('Value des Symbols:', myObject[mySymbol]);
+    // Symbolkeys:
+    let dieSymbols = Object.getOwnPropertySymbols(myObject);
+    console.log('dieSymbols:', dieSymbols);
+    </script>
+</head>
+<body>
+    <h1>Objectliterals (2)</h1>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Arrays und so weiter...</title>
+    <script>
+    
+    // neue STATISCHE Methoden für Array
+
+    // bekannt ist (vielleicht):
+    let myArray = [];
+    console.log('Array.isArray(myArray):', Array.isArray(myArray));
+
+    // Bekannt ist (sicher)
+    let zahlen = new Array(3);
+    console.log('zahlen', zahlen); // oops!
+
+    // ... dafür gibt's jetzt:
+    let myOfArray = Array.of(3, true, 'bla',17,undefined,null);
+    console.log('myOfArray', myOfArray);
+
+    // ... was nehme ich, wenn ich KEINE Sequenz habe?? 
+    // Array.from(ARRAYAEHNLICH) !!!
+
+    let keinArray = {
+        x: "X",
+        length: 5,        // yep, length MUSS
+        '2': 'die Zwei'   // yep, mindestens ein num Key
+    }
+
+    let myFromArray = Array.from(keinArray);
+    console.log('myFromArray', myFromArray);
+    
+    </script>
+</head>
+<body>
+    <h1>Arrays</h1>
+</body>
+</html>

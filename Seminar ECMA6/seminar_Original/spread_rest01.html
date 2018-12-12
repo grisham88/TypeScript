@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rest- und Spread-Operator</title>
+    <script>
+    
+    let zahlen = [2,3,4];
+
+    let addiere = function(a, b, c) {
+        return a + b + c;
+    }
+    
+// Spread: Array -> Sequenz
+    let erg = addiere(5,7,8);
+    console.log('erg:', erg);
+    erg = addiere(...zahlen); 
+    console.log('erg:', erg);
+
+    let mehrzahlen = [7,3,9,3];
+    let allezahlen = zahlen.concat(mehrzahlen);
+    console.log('allezahlen:', allezahlen);   
+    let allezahlen2 = [...zahlen, 99, ...allezahlen];
+    console.log('allezahlen2:', allezahlen2);  
+    let zahlenClone = [...zahlen];
+
+// Rest: Sequenz -> Array
+    let addiere2 = function(...args) {
+        console.log('arguments (Object):', arguments);
+
+        // Beachte - Object-Spread ist relativ NEU!! Daher Vorsicht...
+        // Prinzipielle Lösung:
+        console.log('[...arguments]:', [...arguments]); // Geht, aber... !
+        
+        // Bisher nötig:
+        // return Array.prototype.reduce.call(arguments, function(a,b){
+        //     return a + b;
+        // });
+
+        // Substitution durch einen Restparam:
+        console.log('args (echtes Array):', args);
+        return args.reduce(function(a,b){
+            return a + b;
+        });
+    }
+
+    let erg2 = addiere2(5,8,2,9,7);
+    console.log('erg2:', erg2);
+
+    </script>
+</head>
+<body>
+    <h1>Spread- und Rest: ...</h1>
+</body>
+</html>

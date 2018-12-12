@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destructuring</title>
+    <script>
+    
+    let foo = "foo", bar, etc;
+
+    let myObjX = {
+        x:"X",
+        y:"Y",
+        z:"Z"
+    }
+    // zerlegen (es macht nichts, wenn ein Key nicht existiert!):
+    let {x = 'wird überschrieben', z, f, g = 'geht...'} = myObjX;
+    console.log(x);
+    console.log(f);
+    console.log(g);
+
+    // Alias:
+    let {x: anderesX, y: y} = myObjX;
+    console.log(anderesX); // X
+
+    let myObjA = {
+        a:"A",
+        b:"B",
+        c:"C",
+        d:"D"
+    }
+    // Keys eleminieren:
+    let {a, c, ...restObj} = myObjA;
+    console.log(restObj) // ohne a- und c-Key !!
+
+    let deepObject = {
+        e1: {
+            e2: "E2",
+            e3: {
+                e4: "E4"
+            }
+        } 
+    };
+
+    // Zerlegen, sodass 
+    // let e2 = deepObject.e1.e2
+    // und 
+    // let e4 = deepObject.e1.e3.e4
+
+    let { e1 : { e2, e3 : { e4 } } } = deepObject;
+    console.log(e2);
+    console.log(e4);
+
+
+    </script>
+</head>
+<body>
+    <h1>Destructuring</h1>
+</body>
+</html>
