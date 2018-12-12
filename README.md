@@ -421,10 +421,95 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     </script>
     ```
 
-#### Objektliterale
+#### Literale
 
 ##### Templateliterale
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings
+```html
+<script>
+    let string1 = "Das ist ein einzeiliger String";
+    let string2 = 'Das ist ein einzeiliger String';
+    // neu:
+    let string3 = `Das ist ein String.`;
+    let string4 = `Es ist aber
+                    ein mehrzeiliger 
+                    String!`;
+
+    let johnHtml = `
+        <p>Name:John Doe</p>
+        <p>Alter:42</p>
+        `;
+
+    let vorname = "Peter";
+    let nachname = "Panter";
+    let alter = 33;
+
+    //Template-Variablen nutzen
+    let peterHtml = `
+        <p>Name: ${vorname} ${nachname}<p>
+        <p>Alter ${alter}</p>
+        `;
+    console.log(peterHtml);
+    // <p>Name: Peter Panter<p>
+    // <p>Alter 33</p>
+
+    vorname = "Paulchen";
+    //Kein Binding der Variable, Variableninhalt wurde fest in peterHtml übernommen
+    console.log(peterHtml);
+    // <p>Name: Peter Panter<p>
+    // <p>Alter 33</p>
+
+    function personHtml(vorname, nachname, alter) {
+        return `
+        <p>Name: ${vorname} ${nachname}<p>
+        <p>Alter ${alter}</p>
+        `;
+    }
+
+    let joe = personHtml('Joe', 'Cool', 55);
+    console.log(joe);
+    // <p>Name: Joe Cool<p>
+    // <p>Alter 55</p>
+
+    let mickeyObj = {
+        vorname: 'Mickey',
+        nachname: 'Mouse',
+        alter: 90,
+        kinder: 'unbekannt'
+    }
+
+    //Destructuring mit Defaultparameter
+    function betterPersonHtml({ vorname, nachname, haustier = 'Pluto' }) {
+        return `
+        <p>Name: ${vorname} ${nachname}<p>
+        <p>Haustier ${haustier}</p>
+        `;
+    }
+        
+    let mickey = betterPersonHtml(mickeyObj);
+    console.log(mickey);
+    // <p>Name: Mickey Mouse<p>
+    // <p>Haustier Pluto</p>
+
+    //Mittels Spread nicht möglich
+    function evenBetterPersonHtml(...inputObj) {
+        return `
+        <p>Name: ${vorname} ${nachname}<p>
+        <p>Alter ${alter}</p>
+        `;
+    }
+
+    let mickey2 = evenBetterPersonHtml(mickeyObj);
+    console.log(mickey2);
+    // ACHTUNG  
+    // Propertynamen sind nicht bekannt, zugriff hier auf die globalen Variablen: 
+    // vorname, nachname und alter
+    // <p>Name: Paulchen Panter<p>
+    // <p>Alter 33</p>
+</script>
+```
+
+##### Objektliterale
 
 #### Symbols
 #### Arrays
