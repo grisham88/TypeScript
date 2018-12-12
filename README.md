@@ -332,8 +332,8 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 
 #### Destructuring
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Destrukturierende_Zuweisung  
-- Array
-    ```html
+##### Array
+ ```html
     <script>
         let blumen = ['Rosen', 'Tulpen', 'Nelken'];
 
@@ -355,74 +355,75 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
         let [body] = document.getElementsByTagName('body');
         // Body wird in einem Array an erster Stelle zurückgeliefert
     </script>
-    ```
-- Object
-    ```html
-    <script>
-        let myObjX = {
-            x: "X",
-            y: "Y",
-            z: "Z"
-        }
+```
 
-        //Zugriff mittels Propertyname
-        let { x, z } = myObjX;
-        console.log(x); // X
-        console.log(z); // Z
+##### Object
+```html
+<script>
+    let myObjX = {
+        x: "X",
+        y: "Y",
+        z: "Z"
+    }
 
-        //Zugriff mittels falschem Propertyname
-        let { f } = myObjX;
-        console.log(f); // undefined
+    //Zugriff mittels Propertyname
+    let { x, z } = myObjX;
+    console.log(x); // X
+    console.log(z); // Z
 
-        //Zugriff mittels falschem Propertyname
-        let { g = 'geht...' } = myObjX;
-        console.log(g); // geht...        
+    //Zugriff mittels falschem Propertyname
+    let { f } = myObjX;
+    console.log(f); // undefined
 
-        let { x, y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
+    //Zugriff mittels falschem Propertyname
+    let { g = 'geht...' } = myObjX;
+    console.log(g); // geht...        
 
-        //Alias: -> Name des neuen Objekts
-        let { x: anderesX, y: y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
-        console.log(anderesX); // X  
+    let { x, y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
+
+    //Alias: -> Name des neuen Objekts
+    let { x: anderesX, y: y } = myObjX; // Uncaught SyntaxError: Identifier 'x' has already been declared
+    console.log(anderesX); // X  
         
-        let myObjA = {
-            a: "A",
-            b: "B",
-            c: "C",
-            d: "D"
-        }
+    let myObjA = {
+        a: "A",
+        b: "B",
+        c: "C",
+        d: "D"
+    }
 
-        //Automatisch für alle Variablen erzeugen lassen, rest enthält nicht zugewiesene Variablen
-        let { a, c, ...rest } = myObjA;
-        console.log(rest); // {b: "B", d: "D"}   
-    </script>
-    ```
-- Object (Deep Structures)
-    ```html
-    <script>
-        let deepObject = {
-            e1: {
-                e2: "E2",
-                e3: {
-                    e4: "E4"
-                }
+    //Automatisch für alle Variablen erzeugen lassen, rest enthält nicht zugewiesene Variablen
+    let { a, c, ...rest } = myObjA;
+    console.log(rest); // {b: "B", d: "D"}   
+</script>
+```
+##### Object (Deep Structures)
+```html
+<script>
+    let deepObject = {
+        e1: {
+            e2: "E2",
+            e3: {
+                e4: "E4"
             }
-        };
+        }
+    };
 
-        // Zerlegen, sodass
-        // let e2 = deepObject.e1.e2;
-        // und
-        // let e4 = deepObject.e1.e3.e4;
+    // Zerlegen, sodass
+    // let e2 = deepObject.e1.e2;
+    // und
+    // let e4 = deepObject.e1.e3.e4;
 
-        let { e1: { e2: neuesE2, e3: { e4: neuesE4 } } } = deepObject;
-        // Durch: nach e1, kann auf das e2 Property mittels {} zugegriffen 
-        // und daraus eine neue Variable neuesE2 erzeugt werden
-        // Durch ein weiteres Komma, kann auf die nächste Property e3 zugegriffen werden und 
-        // mittels weiterem : auf deren Property e4, wobei daraus 
-        // eine neue Variable neuesE4 deklariert wird
-        console.log(neuesE2); // E2
-        console.log(neuesE4); // E4  
-    </script>
-    ```
+    let { e1: { e2: neuesE2, e3: { e4: neuesE4 } } } = deepObject;
+    // Durch: nach e1, kann auf das e2 Property mittels {} zugegriffen 
+    // und daraus eine neue Variable neuesE2 erzeugt werden
+    // Durch ein weiteres Komma, kann auf die nächste Property e3 zugegriffen werden und 
+    // mittels weiterem : auf deren Property e4, wobei daraus 
+    // eine neue Variable neuesE4 deklariert wird
+    console.log(neuesE2); // E2
+    console.log(neuesE4); // E4  
+</script>
+```
 
 #### Literale
 
