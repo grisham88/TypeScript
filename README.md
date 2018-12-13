@@ -1,5 +1,6 @@
-# TypeScript Seminar
 
+
+# TypeScript Seminar
 TypeScript ist eine Obermenge von ECMAScript 6 (ES6) und ist rückwärtskompatibel mit ECMAScript 5, d. h. JavaScript.  
 Angular bietet somit auch die Vorzüge von ES6:  
 - Lambdas
@@ -8,13 +9,60 @@ Angular bietet somit auch die Vorzüge von ES6:
 - Generatoren im Stil von Python
 - Reflexion
 
-## Markdown (.md) Formatierungsregeln
+## Inhalt
+<!-- vscode-markdown-toc -->
+* 1. [Markdown (.md) Formatierungsregeln](#Markdown.mdFormatierungsregeln)
+* 2. [Visual Studio Code](#VisualStudioCode)
+* 3. [Git Hub](#GitHub)
+	* 3.1. [Git Bash](#GitBash)
+	* 3.2. [Visual Studio Code](#VisualStudioCode-1)
+* 4. [Hilfsfunktionen für VS Code](#HilfsfunktionenfrVSCode)
+* 5. [Debugging](#Debugging)
+* 6. [Seminarablauf](#Seminarablauf)
+	* 6.1. [Tag 1](#Tag1)
+	* 6.2. [Tag 2](#Tag2)
+	* 6.3. [Tag 3](#Tag3)
+* 7. [Installation TypeScript](#InstallationTypeScript)
+* 8. [Installation Webpack](#InstallationWebpack)
+* 9. [ECMA-6](#ECMA-6)
+	* 9.1. [Emmet Cheatsheets](#EmmetCheatsheets)
+	* 9.2. [Syntaxerweiterungen](#Syntaxerweiterungen)
+		* 9.2.1. [Variablen](#Variablen)
+		* 9.2.2. [Spread- & Rest-Operationen](#Spread-Rest-Operationen)
+		* 9.2.3. [Destructuring](#Destructuring)
+		* 9.2.4. [Literale](#Literale)
+		* 9.2.5. [Arrays](#Arrays)
+		* 9.2.6. [Iterables -> Iterator](#Iterables-Iterator)
+	* 9.3. [Funktionen vs. Arrow-Funktionen](#Funktionenvs.Arrow-Funktionen)
+		* 9.3.1. [Functions](#Functions)
+		* 9.3.2. [Arrow-Functions](#Arrow-Functions)
+	* 9.4. [Promises -> Chains](#Promises-Chains)
+	* 9.5. [fetch-API](#fetch-API)
+	* 9.6. [Generatoren](#Generatoren)
+	* 9.7. [class-Keyword vs. Konstruktor](#class-Keywordvs.Konstruktor)
+	* 9.8. [Vererbung](#Vererbung)
+	* 9.9. [Module (Webpack und TypeScript)](#ModuleWebpackundTypeScript)
+	* 9.10. [Observables](#Observables)
+* 10. [Typescript](#Typescript)
+	* 10.1. [Decorators](#Decorators)
+	* 10.2. [Types](#Types)
+	* 10.3. [Interfaces](#Interfaces)
+	* 10.4. [TS-Classes](#TS-Classes)
+	* 10.5. [Generics](#Generics)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+##  1. <a name='Markdown.mdFormatierungsregeln'></a>Markdown (.md) Formatierungsregeln
 * [Markdown Tutorial Git](http://agea.github.io/tutorial.md/)
 * [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 * [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 * [Markdown Navigation](https://github.com/AlanWalk/markdown-navigation)
 
-## Visual Studio Code
+##  2. <a name='VisualStudioCode'></a>Visual Studio Code
 * Live Server als Extension installieren
 ** mit ALT + L + O wird der Server gestartet und die aktuelle Webseite geöffnet und bei jedem Speichern aktualisiert im Browser
 * Formatierung des Texts mit ALT + Shift + F
@@ -22,19 +70,19 @@ Angular bietet somit auch die Vorzüge von ES6:
 * Aus-/Einkommentieren mit STRG + #
 * Kommentar in JavaScript /**/ (Ein-/Mehrzeilig) oder // (Einzeilig)
 
-## Git Hub
+##  3. <a name='GitHub'></a>Git Hub
 * auf git hub ein neues Repository anlegen
 * https Link kopieren
 * Laufwerk/Order im Explorer öffnen in der das Repository lokal abgelegt werden soll
 
-### Git Bash
+###  3.1. <a name='GitBash'></a>Git Bash
 * mit Rechtsklick git bash öffnen
 * git config --global user.name "username"
 * git config --global user.email "eMail@host"
 * Repository nach lokal kopieren:
     * git clone  https://github.com/grisham88/Javascript.git
 
-### Visual Studio Code
+###  3.2. <a name='VisualStudioCode-1'></a>Visual Studio Code
 * [Visual Studio Code: How to integrate Git](https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integration/)
 * Den neuen Ordner öffnen
 * mit Rechtsklick "Open with Code"
@@ -43,7 +91,7 @@ Angular bietet somit auch die Vorzüge von ES6:
     * Mit Button "V" können diese direkt commited werden oder einzeln zum Commit freigegeben werden
     * Beim ... kann dann push ausgeführt werden -> Git wird nach Git Hub aktualisiert
 
-## Hilfsfunktionen für VS Code
+##  4. <a name='HilfsfunktionenfrVSCode'></a>Hilfsfunktionen für VS Code
 - https://code.visualstudio.com/docs/getstarted/tips-and-tricks
 - https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf
 - https://code.visualstudio.com/docs/getstarted/keybindings
@@ -52,15 +100,15 @@ Angular bietet somit auch die Vorzüge von ES6:
     - Ohne > kann man nach Dateien suchen
 - STRG + B für Explorer links zuklappen
 
-## Debugging
+##  5. <a name='Debugging'></a>Debugging
 - Extension Chrome Debugger installieren
 - F5 bestätigen, dann stoppen und in der neuen launch.json den korrekten Port hinterlegen
 - F1 bestätigen, suchen nach User Settings, dann dort nach Debugging und die Einstellung "Allow Breakpoints Everywhere" aktivieren
 - Breakpoints setzen und mit F5 Debugging starten und zur gewünschten Datei hinwechseln
 
-## Seminarablauf
+##  6. <a name='Seminarablauf'></a>Seminarablauf
 
-### Tag 1
+###  6.1. <a name='Tag1'></a>Tag 1
 ECMA 6
 - Syntaxerweiterungen
     - Variablen
@@ -72,7 +120,7 @@ ECMA 6
     - Iterables -> Iterator
         - for ... of
 
-### Tag 2
+###  6.2. <a name='Tag2'></a>Tag 2
 ECMA 6
 - Funktionen vs. Arrow-Funktionen
 - Promises -> Chains
@@ -83,7 +131,7 @@ ECMA 6
 - Module (Webpack und TypeScript)
 - Observables
 
-### Tag 3
+###  6.3. <a name='Tag3'></a>Tag 3
 Typescript
 - Decorators
 - Types
@@ -96,7 +144,7 @@ Tooling
 - Webpack
 - RxJs
 
-## Installation TypeScript
+##  7. <a name='InstallationTypeScript'></a>Installation TypeScript
 Installation:  
 - https://code.visualstudio.com/docs/languages/typescript
 - The easiest way to install TypeScript is through npm, the Node.js Package Manager. If you have npm installed, you can install TypeScript globally (-g) on your computer by:
@@ -116,9 +164,9 @@ Beispiel: tcs "typescript - example.ts"
 ```
 Dadurch wird eine ausführbare .js-Datei erzeugt
 
-## Installation Webpack
+##  8. <a name='InstallationWebpack'></a>Installation Webpack
 
-## ECMA-6
+##  9. <a name='ECMA-6'></a>ECMA-6
 - https://www.w3schools.com/js/js_es6.asp
 - https://www.buschmais.de/2017/08/24/cleaner-code-mit-ecmascript-6/
 - Implementierungsstand  
@@ -127,12 +175,12 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
         - grün (implementiert)
         - rot (nicht unterstützt)
 
-### Emmet Cheatsheets
+###  9.1. <a name='EmmetCheatsheets'></a>Emmet Cheatsheets
 - https://docs.emmet.io/cheat-sheet/
 
-### Syntaxerweiterungen
+###  9.2. <a name='Syntaxerweiterungen'></a>Syntaxerweiterungen
 
-#### Variablen
+####  9.2.1. <a name='Variablen'></a>Variablen
 
 ##### var
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/var
@@ -229,7 +277,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-#### Spread- & Rest-Operationen
+####  9.2.2. <a name='Spread-Rest-Operationen'></a>Spread- & Rest-Operationen
 ##### Spread
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 - Verwandelt durch ... ein Array in eine Sequenz, also in einzelne Übergabewerte
@@ -334,7 +382,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-#### Destructuring
+####  9.2.3. <a name='Destructuring'></a>Destructuring
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Destrukturierende_Zuweisung  
 ##### Array
  ```html
@@ -429,7 +477,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-#### Literale
+####  9.2.4. <a name='Literale'></a>Literale
 
 ##### Templateliterale
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings
@@ -633,7 +681,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-#### Arrays
+####  9.2.5. <a name='Arrays'></a>Arrays
 ```html
 <script>
     // neue STATISCHE Methoden für Array
@@ -668,7 +716,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-#### Iterables -> Iterator
+####  9.2.6. <a name='Iterables-Iterator'></a>Iterables -> Iterator
 ##### for ... of
 ```html
 <script>
@@ -716,9 +764,9 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-### Funktionen vs. Arrow-Funktionen
+###  9.3. <a name='Funktionenvs.Arrow-Funktionen'></a>Funktionen vs. Arrow-Funktionen
 
-#### Functions
+####  9.3.1. <a name='Functions'></a>Functions
 ```html
 <script>
     // bei Functions wurde ein wenig nachgebessert
@@ -784,7 +832,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-#### Arrow-Functions
+####  9.3.2. <a name='Arrow-Functions'></a>Arrow-Functions
 - kann keinen Namen haben
 - ist viel Kompakter als eine normale Function
 - hat einen Returnwert
@@ -860,7 +908,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
-### Promises -> Chains
+###  9.4. <a name='Promises-Chains'></a>Promises -> Chains
 - Promise dokumentiert einen asynchronen Vorgang
 - Synchron
     - https://developer.mozilla.org/en-US/docs/Glossary/Callback_function
@@ -1081,36 +1129,64 @@ Promises zu einem XMLHttpRequest (Ajax)
         xhr.onload = function () {
             if (this.status < 400) {
                 console.log(this.responseText);
+                // ... in die Chain damit
+                resolve(this.responseText);
             }
             else {
-
+                // 404 oder so...
+                reject('Fehler beim Request' + this.status)
             }
         };
         //Fängt nur grundlegende Fehler, nicht z.B. keine Datei gefunden
         xhr.onerror = function () {
             console.log('Error! Wir haben kein Netz!!');
+            reject('Fehler im Network');
         };
         xhr.send();
+    }).then(responseText => JSON.parse(responseText))
+        .then(jsonObj => jsonObj.personen)
+        .then(personen => console.log(...personen))
+        .catch(err => console.log(err));
 
-        //Ausgabe:
+        // Ausgabe mit falscher.json-Datei:
         // promises05.html:28 GET http://127.0.0.1:5500/Seminar%20ECMA6/seminar/data/_personen.json 404 (Not Found)
+
+        // Ausgabe bei Erfolgreichen laden
+        // {
+        //     "success": true,
+        //     "dataProp" : "personen",
+        //     "primKey": "mId",
+        //     "personen" : [
+        //         {"vorname":"Peter", "nachname":"Panter","mId":"m001"},
+        //         {"vorname":"Theo", "nachname":"Tiger","mId":"m002"},
+        //         {"vorname":"Leo", "nachname":"Löwe", "mId":"m004"},
+        //         {"vorname":"Anton", "nachname":"Ameise", "mId":"m007"},
+        //         {"vorname":"Bruno", "nachname":"Büffel", "mId":"m006"}
+        //     ]
+        // }
+
+        // {vorname: "Peter", nachname: "Panter", mId: "m001"}
+        // {vorname: "Theo", nachname: "Tiger", mId: "m002"}
+        // {vorname: "Leo", nachname: "Löwe", mId: "m004"}
+        // {vorname: "Anton", nachname: "Ameise", mId: "m007"}
+        // {vorname: "Bruno", nachname: "Büffel", mId: "m006"}
     });
 </script>
 ```
 
-### fetch-API
+###  9.5. <a name='fetch-API'></a>fetch-API
     Ablösung von XML-HTTP Request Objekt
-### Generatoren
-### class-Keyword vs. Konstruktor
-### Vererbung
-### Module (Webpack und TypeScript)
-### Observables
+###  9.6. <a name='Generatoren'></a>Generatoren
+###  9.7. <a name='class-Keywordvs.Konstruktor'></a>class-Keyword vs. Konstruktor
+###  9.8. <a name='Vererbung'></a>Vererbung
+###  9.9. <a name='ModuleWebpackundTypeScript'></a>Module (Webpack und TypeScript)
+###  9.10. <a name='Observables'></a>Observables
 
-## Typescript
+##  10. <a name='Typescript'></a>Typescript
 - https://www.typescriptlang.org/
 
-### Decorators
-### Types
-### Interfaces
-### TS-Classes
-### Generics
+###  10.1. <a name='Decorators'></a>Decorators
+###  10.2. <a name='Types'></a>Types
+###  10.3. <a name='Interfaces'></a>Interfaces
+###  10.4. <a name='TS-Classes'></a>TS-Classes
+###  10.5. <a name='Generics'></a>Generics

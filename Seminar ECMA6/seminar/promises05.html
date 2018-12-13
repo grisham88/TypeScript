@@ -11,25 +11,52 @@
             // hier den async Prozess bilden:
             let xhr = new XMLHttpRequest();
             //Async durchführen mittels true
-            xhr.open('get', 'data/_personen.json', true);
+            xhr.open('get', 'data/personen.json', true);
             //OnLoad bedeutet, der Request ist abgeschlossen
             xhr.onload = function () {
                 if (this.status < 400) {
                     console.log(this.responseText);
+                    // ... in die Chain damit
+                    resolve(this.responseText);
                 }
                 else {
-
+                    // 404 oder so...
+                    reject('Fehler beim Request' + this.status)
                 }
             };
             //Fängt nur grundlegende Fehler, nicht z.B. keine Datei gefunden
             xhr.onerror = function () {
                 console.log('Error! Wir haben kein Netz!!');
+                reject('Fehler im Network');
             };
             xhr.send();
-        });
+        }).then(responseText => JSON.parse(responseText))
+            .then(jsonObj => jsonObj.personen)
+            .then(personen => console.log(...personen))
+            .catch(err => console.log(err));
 
-        //Ausgabe:
+        // Ausgabe mit falscher.json-Datei:
         // promises05.html:28 GET http://127.0.0.1:5500/Seminar%20ECMA6/seminar/data/_personen.json 404 (Not Found)
+
+        // Ausgabe bei Erfolgreichen laden
+        // {
+        //     "success": true,
+        //     "dataProp" : "personen",
+        //     "primKey": "mId",
+        //     "personen" : [
+        //         {"vorname":"Peter", "nachname":"Panter","mId":"m001"},
+        //         {"vorname":"Theo", "nachname":"Tiger","mId":"m002"},
+        //         {"vorname":"Leo", "nachname":"Löwe", "mId":"m004"},
+        //         {"vorname":"Anton", "nachname":"Ameise", "mId":"m007"},
+        //         {"vorname":"Bruno", "nachname":"Büffel", "mId":"m006"}
+        //     ]
+        // }
+
+        // {vorname: "Peter", nachname: "Panter", mId: "m001"}
+        // {vorname: "Theo", nachname: "Tiger", mId: "m002"}
+        // {vorname: "Leo", nachname: "Löwe", mId: "m004"}
+        // {vorname: "Anton", nachname: "Ameise", mId: "m007"}
+        // {vorname: "Bruno", nachname: "Büffel", mId: "m006"}
     </script>
 </head>
 
