@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA 6: Classes</title>
+    <script>
+        "use strict";
+        
+        // global Symbol
+        // let haustier = Symbol.for('haustier');
+        // console.log(haustier);
+        // console.log(Symbol.for('haustier') === Symbol.for('haustier'))
+
+    
+        class Person {
+            // der Konstruktor
+            constructor(vorname) {
+                this.vorname = vorname;
+                // Uff. Besser.
+                this[Symbol.for('haustier')] = "Dackel";
+            }
+            // der PROTOTYPE! 
+            hallo() {
+                console.log('Hallo, ich bin', this.vorname, 
+                            '. Ich habe einen', this.haustier );
+            }
+            // Accessor Method
+            get haustier() {
+                console.log("Getter!")
+                // return "Dackel";
+                return this[Symbol.for('haustier')];
+            }
+            set haustier(neuesHaustier) {
+                console.log("Setter!", neuesHaustier)
+                this[Symbol.for('haustier')] = neuesHaustier
+            }
+        };
+
+        let peter = new Person("Peter");
+        console.log(peter);
+        peter.haustier = "Kaiman";
+        peter.hallo();
+
+    </script>
+</head>
+<body>
+    <h1>Classes (oder so)</h1>
+</body>
+</html>

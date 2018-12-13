@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA 6: Classes</title>
+    <script>
+        let PersonConstructor = function (vorname) {
+            this.vorname = vorname;
+        }
+        PersonConstructor.prototype.hallo = function () {
+            console.log('Hallo, ich bin', this.vorname,
+                '. Ich habe einen', this.haustier);
+        }
+        PersonConstructor.prototype.haustier = "Dackel";
+
+        let paul = new PersonConstructor("Paul");
+        console.log(paul);
+        // PersonConstructor
+        // vorname: "Paul"
+        // __proto__: 
+        // hallo: ƒ ()
+        // haustier: "Dackel"
+        // constructor: ƒ (vorname)
+        // __proto__: Object
+
+        paul.haustier = "Leguan";
+        paul.hallo();
+        // Hallo, ich bin Paul . Ich habe einen Leguan
+
+        class Person {
+            // der Konstruktor
+            constructor(vorname) {
+                this.vorname = vorname;
+                // echt jetzt? -> Dadurch ist das Property nach außen hin zugänglich
+                this.__haustier = "Dackel";
+            }
+            // der PROTOTYPE! 
+            hallo() {
+                console.log('Hallo, ich bin', this.vorname,
+                    '. Ich habe einen', this.haustier);
+            }
+            // Accessor Method
+            get haustier() {
+                console.log("Getter!")
+                // return "Dackel";
+                return this.__haustier;
+            }
+            set haustier(neuesHaustier) {
+                console.log("Setter!", neuesHaustier)
+                this.__haustier = neuesHaustier
+            }
+        };
+
+        console.log(typeof Person);
+        // function
+        let peter = new Person("Peter");
+        console.log(peter);
+        // Person {vorname: "Peter"}
+        // vorname:"Peter"
+        // __proto__:Object
+        // constructor:class Person
+        // hallo: ƒ hallo()
+
+        peter.haustier = "Kaiman";
+        // Setter! Kaiman
+        // Getter!
+        peter.hallo();
+        // Hallo, ich bin Peter . Ich habe einen Kaiman
+    </script>
+</head>
+
+<body>
+    <h1>Classes (oder so)</h1>
+</body>
+
+</html>

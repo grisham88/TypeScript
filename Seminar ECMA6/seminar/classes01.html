@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA 6: Classes</title>
+    <script>
+        let PersonConstructor = function (vorname) {
+            this.vorname = vorname;
+        }
+
+        PersonConstructor.prototype.hallo = function () {
+            console.log('Hallo, ich bin', this.vorname);
+        }
+
+        PersonConstructor.prototype.haustier = "Dackel";
+
+        let paul = new PersonConstructor();
+        console.log(paul);
+        // PersonConstructor {vorname: "Paul"}
+        // vorname:"Paul"
+        // __proto__:
+        // hallo:ƒ ()
+        // haustier:"Dackel"
+        // constructor:ƒ ()     
+
+        paul.hallo();
+        // Hallo, ich bin Paul
+
+        class Person {
+            // was ist denn das hier für ein Block?
+            // vorname = "Peter"; // nope. keine Statements!
+            // vorname: "Peter" // nope. kein Object!
+            // was ist es denn? Ein Class-Block :-)
+            // WAs darf ich dann? NUR :
+            // Get alles in den PROTOTYPE!
+            constructor() {
+                this.vorname = "Peter";
+            }
+            hallo() {
+                console.log('Aha. Concise Methods!');
+            }
+
+            // Ein Property kann nicht ins Property einer Klasse geschrieben werden
+        };
+
+        console.log(Person);
+        console.log(typeof Person);
+        let peter = new Person();
+        console.log(peter);
+        // Person {vorname: "Peter"}
+        // vorname:"Peter"
+        // __proto__:Object
+        // constructor:class Person
+        // hallo: ƒ hallo()
+        
+        peter.hallo();
+        // Aha. Concise Methods!
+    </script>
+</head>
+
+<body>
+    <h1>Classes (oder so)</h1>
+</body>
+
+</html>

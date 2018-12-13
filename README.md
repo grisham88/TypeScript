@@ -1250,6 +1250,132 @@ Aufruf mehrerer Promises mit Promise.all()
 
 ###  9.6. <a name='Generatoren'></a>Generatoren
 ###  9.7. <a name='class-Keywordvs.Konstruktor'></a>class-Keyword vs. Konstruktor
+
+Klassen in TypeScript dürfen nur Concise Methods enthalten, oder Properties über den constructor zur Verfügung stellen
+```html
+<script>
+    let PersonConstructor = function (vorname) {
+        this.vorname = vorname;
+    }
+
+    PersonConstructor.prototype.hallo = function () {
+        console.log('Hallo, ich bin', this.vorname);
+    }
+
+    PersonConstructor.prototype.haustier = "Dackel";
+
+    let paul = new PersonConstructor();
+    console.log(paul);
+    // PersonConstructor {vorname: "Paul"}
+    // vorname:"Paul"
+    // __proto__:
+    // hallo:ƒ ()
+    // haustier:"Dackel"
+    // constructor:ƒ ()     
+
+    paul.hallo();
+    // Hallo, ich bin Paul
+
+    class Person {
+        // was ist denn das hier für ein Block?
+        // vorname = "Peter"; // nope. keine Statements!
+        // vorname: "Peter" // nope. kein Object!
+        // was ist es denn? Ein Class-Block :-)
+        // WAs darf ich dann? NUR :
+        // Get alles in den PROTOTYPE!
+        constructor() {
+            this.vorname = "Peter";
+        }
+        hallo() {
+            console.log('Aha. Concise Methods!');
+        }
+
+        // Ein Property kann nicht ins Property einer Klasse geschrieben werden
+    };
+
+    console.log(Person);
+    console.log(typeof Person);
+    let peter = new Person();
+    console.log(peter);
+    // Person {vorname: "Peter"}
+    // vorname:"Peter"
+    // __proto__:Object
+    // constructor:class Person
+    // hallo: ƒ hallo()
+        
+    peter.hallo();
+    // Aha. Concise Methods!
+</script>
+```
+
+Beispiel mit Properties in Class
+```html
+<script>
+    let PersonConstructor = function (vorname) {
+        this.vorname = vorname;
+    }
+    PersonConstructor.prototype.hallo = function () {
+        console.log('Hallo, ich bin', this.vorname,
+            '. Ich habe einen', this.haustier);
+    }
+    PersonConstructor.prototype.haustier = "Dackel";
+
+    let paul = new PersonConstructor("Paul");
+    console.log(paul);
+    // PersonConstructor
+    // vorname: "Paul"
+    // __proto__: 
+    // hallo: ƒ ()
+    // haustier: "Dackel"
+    // constructor: ƒ (vorname)
+    // __proto__: Object
+
+    paul.haustier = "Leguan";
+    paul.hallo();
+    // Hallo, ich bin Paul . Ich habe einen Leguan
+
+    class Person {
+        // der Konstruktor
+        constructor(vorname) {
+            this.vorname = vorname;
+            // echt jetzt? -> Dadurch ist das Property nach außen hin zugänglich
+            this.__haustier = "Dackel";
+        }
+        // der PROTOTYPE! 
+        hallo() {
+            console.log('Hallo, ich bin', this.vorname,
+                '. Ich habe einen', this.haustier);
+        }
+        // Accessor Method
+        get haustier() {
+            console.log("Getter!")
+            // return "Dackel";
+            return this.__haustier;
+        }
+        set haustier(neuesHaustier) {
+            console.log("Setter!", neuesHaustier)
+            this.__haustier = neuesHaustier
+        }
+    };
+
+    console.log(typeof Person);
+    // function
+    let peter = new Person("Peter");
+    console.log(peter);
+    // Person {vorname: "Peter"}
+    // vorname:"Peter"
+    // __proto__:Object
+    // constructor:class Person
+    // hallo: ƒ hallo()
+
+    peter.haustier = "Kaiman";
+    // Setter! Kaiman
+    // Getter!
+    peter.hallo();
+    // Hallo, ich bin Peter . Ich habe einen Kaiman
+</script>
+```
+
 ###  9.8. <a name='Vererbung'></a>Vererbung
 ###  9.9. <a name='ModuleWebpackundTypeScript'></a>Module (Webpack und TypeScript)
 ###  9.10. <a name='Observables'></a>Observables
@@ -1261,4 +1387,5 @@ Aufruf mehrerer Promises mit Promise.all()
 ###  10.2. <a name='Types'></a>Types
 ###  10.3. <a name='Interfaces'></a>Interfaces
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
+
 ###  10.5. <a name='Generics'></a>Generics

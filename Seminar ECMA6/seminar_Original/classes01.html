@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA 6: Classes</title>
+    <script>
+
+        let PersonConstructor = function(vorname) {
+            this.vorname = vorname;
+        }
+        PersonConstructor.prototype.hallo = function() {
+            console.log('Hallo, ich bin', this.vorname);
+        }
+        PersonConstructor.prototype.haustier = "Dackel";
+
+        let paul = new PersonConstructor("Paul");
+        console.log(paul);
+        paul.hallo();
+    
+        class Person {
+            // was ist denn das hier für ein Block?
+            // vorname = "Peter"; // nope. keine Statements!
+            // vorname: "Peter" // nope. kein Object!
+            // was ist es denn? Ein Class-Block :-)
+            // Was darf ich dann? NUR concise Methods.
+            constructor(vorname) {
+                this.vorname = vorname;
+            }
+            // Geht alles in den PROTOTYPE! 
+            hallo() {
+                console.log('Hallo, ich bin', this.vorname);
+            }
+        };
+
+        console.log(Person);
+        console.log(typeof Person);
+        let peter = new Person("Peter");
+        console.log(peter);
+        peter.hallo();
+
+    </script>
+</head>
+<body>
+    <h1>Classes (oder so)</h1>
+</body>
+</html>
