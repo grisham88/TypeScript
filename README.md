@@ -1376,7 +1376,213 @@ Beispiel mit Properties in Class
 </script>
 ```
 
-###  9.8. <a name='Vererbung'></a>Vererbung
+Beispiel mit Properties in Class mittels Symbols (AccessorSpeicher-Key)
+```html
+<script>    
+    "use strict";
+
+    // Symbol als AccessorSpeicher-Key
+    let haustier = Symbol('haustier');
+
+    class Person {
+        // der Konstruktor
+        constructor(vorname) {
+            this.vorname = vorname;
+            // Uff. Besser mit Symbol.
+            this[haustier] = "Dackel";
+        }
+        // der PROTOTYPE! 
+        hallo() {
+            console.log('Hallo, ich bin', this.vorname,
+                '. Ich habe einen', this.haustier);
+        }
+        // Accessor Method
+        get haustier() {
+            console.log("Getter!")
+            // return "Dackel";
+            return this[haustier];
+        }
+        set haustier(neuesHaustier) {
+            console.log("Setter!", neuesHaustier)
+            this[haustier] = neuesHaustier
+        }
+    };
+
+    let peter = new Person("Peter");
+    console.log(peter);
+    // Person {vorname: "Peter", Symbol(haustier): "Dackel"}
+    // vorname:"Peter"
+    // Symbol(haustier):"Kaiman"
+    // haustier:(...)
+    // __proto__
+    // constructor:class Person
+    // hallo:ƒ hallo()
+    // haustier:(...)
+    // get haustier:ƒ haustier()
+    // set haustier:ƒ haustier(neuesHaustier)
+    // __proto__:Object
+    
+    peter.haustier = "Kaiman";
+    // Setter! Kaiman
+    // Getter!
+    peter.hallo();
+    // Hallo, ich bin Peter . Ich habe einen Kaiman
+</script>
+```
+
+Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
+```html
+<script>    
+    "use strict";
+
+    // global Symbol!! Entsteht "durch Gebrauch"...
+
+    // Könnte ich herstellen und speichern. So:
+    // let haustier = Symbol.for('haustier'); 
+    // console.log(haustier); // Einfach ein Symbol...
+
+    // Man kann es später über den Ausdruck aber auch REFERENZIEREN!!!!
+    // console.log(Symbol.for('haustier') === Symbol.for('haustier')) // true !!
+
+    // Globales Symbol als AccessorSpeicher-Key
+
+    class Person {
+        // der Konstruktor
+        constructor(vorname) {
+            this.vorname = vorname;
+            // Uff. Besser.
+            this[Symbol.for('haustier')] = "Dackel";
+        }
+        // der PROTOTYPE! 
+        hallo() {
+            console.log('Hallo, ich bin', this.vorname,
+                '. Ich habe einen', this.haustier);
+        }
+        // Accessor Method
+        get haustier() {
+            console.log("Getter!")
+            // return "Dackel";
+            return this[Symbol.for('haustier')];
+        }
+        set haustier(neuesHaustier) {
+            console.log("Setter!", neuesHaustier)
+            this[Symbol.for('haustier')] = neuesHaustier
+        }
+    };
+
+    let peter = new Person("Peter");
+    console.log(peter);
+    // Person
+    // vorname:"Peter"
+    // Symbol(haustier):"Kaiman"
+    // haustier:(...)
+    // __proto__:
+    // constructor:class Person
+    // hallo:ƒ hallo()
+    // haustier:(...)
+    // get haustier:ƒ haustier()
+    // set haustier:ƒ haustier(neuesHaustier)
+    // __proto__:Object
+    
+    peter.haustier = "Kaiman";
+    // Setter! Kaiman
+    // Getter!
+    peter.hallo();
+    // Hallo, ich bin Peter . Ich habe einen Kaiman
+</script>
+```
+
+###  9.8. <a name='Vererbung'></a>Classes und Vererbung
+- Beim Vererben muss darauf geachtet werden, welcher Konstruktor die abzuleitende Klasse besitzt (siehe Beispiel)
+- Soll die abgeleitet Klasse eine Methode überschreiben und möchte die Ursprungsmethode ebenfalls nutzen, so muss diese explizit mit "super...." aufgerufen werden
+```html
+<script>
+    "use strict";
+
+    class Person {
+        constructor(vorname) {
+            this.vorname = vorname;
+            this[Symbol.for('haustier')] = "Dackel";
+        }
+        hallo() {
+            console.log('Hallo, ich bin', this.vorname,
+                '. Ich habe einen', this.haustier);
+        }
+        get haustier() {
+            return this[Symbol.for('haustier')];
+        }
+        set haustier(neuesHaustier) {
+            this[Symbol.for('haustier')] = neuesHaustier
+        }
+    };
+
+    let peter = new Person("Peter");
+    console.log(peter);
+    // Person
+    // vorname:"Peter"
+    // Symbol(haustier):"Kaiman"
+    // haustier:(...)
+    // __proto__:
+    // constructor:class Person
+    // hallo:ƒ hallo()
+    // haustier:(...)
+    // get haustier:ƒ haustier()
+    // set haustier:ƒ haustier(neuesHaustier)
+    // __proto__:Object
+
+    peter.hallo();
+    // Hallo, ich bin Peter . Ich habe einen Dackel
+
+    // Klasse kann von Klasse "erben":
+    class Fahrer extends Person {
+        // implizit (solange hier NICHTS ist):
+        // ruft Konstruktor der Superklasse
+        // Aber:
+        constructor(fuehrerschein, ...rest) {
+            // Wird explizit ein Konstruktor gesetzt, so muss mit super() 
+            // der Konstruktor der Abzuleitenden Klasse aufgerufen werden
+            // und die notwendigen Parameter des super-Konstruktors mitgegeben werden
+            // Konstruktor - Parameter der Subklasse zuerst übergeben, 
+            // dann der Superclass mittels Spread ...
+            super(...rest);
+            this.auto = "BMW";
+            this.fuehrerschein = fuehrerschein;
+        }
+        fahren() {
+            console.log('Ich fahre Auto...');
+        }
+        hallo() {
+            // Methode der Superclass ebenfalls aufrufen (Explizit)
+            super.hallo();
+            console.log("Ich bin ein Fahrer und fahre", this.auto);
+        }
+    }
+
+    let fritz = new Fahrer("Klasse 1", 'Fritz');
+    console.log(fritz);
+    // Fahrer {vorname: "Fritz", auto: "BMW", fuehrerschein: "Klasse 1", Symbol(haustier): "Dackel"}
+    // auto:"BMW"
+    // fuehrerschein:"Klasse 1"
+    // vorname:"Fritz"
+    // Symbol(haustier):"Dackel"
+    // haustier:(...)
+    // __proto__:Person
+    // constructor:class Fahrer
+    // fahren:ƒ fahren()
+    // haustier:(...)
+    // __proto__:
+    // constructor:class Person
+    // hallo:ƒ hallo()
+    // haustier:(...)
+    // get haustier:ƒ haustier()
+    // set haustier:ƒ haustier(neuesHaustier)
+
+    fritz.hallo();
+    // Hallo, ich bin Fritz . Ich habe einen Dackel
+    // Ich bin ein Fahrer und fahre BMW
+</script>
+```
+
 ###  9.9. <a name='ModuleWebpackundTypeScript'></a>Module (Webpack und TypeScript)
 ###  9.10. <a name='Observables'></a>Observables
 

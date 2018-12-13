@@ -7,16 +7,25 @@
     <title>ECMA 6: Classes</title>
     <script>
         "use strict";
+        
+        // global Symbol!! Entsteht "durch Gebrauch"...
 
-        let haustier = Symbol('haustier');
+        // Könnte ich herstellen und speichern. So:
+        // let haustier = Symbol.for('haustier'); 
+        // console.log(haustier); // Einfach ein Symbol...
+
+        // Man kann es später über den Ausdruck aber auch REFERENZIEREN!!!!
+        // console.log(Symbol.for('haustier') === Symbol.for('haustier')) // true !!
 
     
+        // Globales Symbol als AccessorSpeicher-Key
+
         class Person {
             // der Konstruktor
             constructor(vorname) {
                 this.vorname = vorname;
-                // Uff. Besser.
-                this[haustier] = "Dackel";
+                // Referenziert ODER ERSTELLT das gSymbol!!
+                this[Symbol.for('haustier')] = "Dackel";
             }
             // der PROTOTYPE! 
             hallo() {
@@ -26,12 +35,13 @@
             // Accessor Method
             get haustier() {
                 console.log("Getter!")
-                // return "Dackel";
-                return this[haustier];
+                // Referenziert ODER ERSTELLT das gSymbol!!
+                return this[Symbol.for('haustier')];
             }
             set haustier(neuesHaustier) {
-                console.log("Setter!", neuesHaustier)
-                this[haustier] = neuesHaustier
+                console.log("Setter!", neuesHaustier);
+                // Referenziert ODER ERSTELLT das gSymbol!!
+                this[Symbol.for('haustier')] = neuesHaustier
             }
         };
 
@@ -43,6 +53,6 @@
     </script>
 </head>
 <body>
-    <h1>Classes (oder so)</h1>
+    <h1>Classes und global Symbols</h1>
 </body>
 </html>

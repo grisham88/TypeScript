@@ -9,13 +9,14 @@
     <script>
         "use strict";
 
+        // Symbol als AccessorSpeicher-Key
         let haustier = Symbol('haustier');
 
         class Person {
             // der Konstruktor
             constructor(vorname) {
                 this.vorname = vorname;
-                // Uff. Besser.
+                // Uff. Besser mit Symbol.
                 this[haustier] = "Dackel";
             }
             // der PROTOTYPE! 
@@ -37,14 +38,28 @@
 
         let peter = new Person("Peter");
         console.log(peter);
-        peter.haustier = "Kaiman";
-        peter.hallo();
+        // Person {vorname: "Peter", Symbol(haustier): "Dackel"}
+        // vorname:"Peter"
+        // Symbol(haustier):"Kaiman"
+        // haustier:(...)
+        // __proto__
+        // constructor:class Person
+        // hallo:ƒ hallo()
+        // haustier:(...)
+        // get haustier:ƒ haustier()
+        // set haustier:ƒ haustier(neuesHaustier)
+        // __proto__:Object
 
+        peter.haustier = "Kaiman";
+        // Setter! Kaiman
+        // Getter!
+        peter.hallo();
+        // Hallo, ich bin Peter . Ich habe einen Kaiman
     </script>
 </head>
 
 <body>
-    <h1>Classes (oder so)</h1>
+    <h1>Classes und Symbols</h1>
 </body>
 
 </html>

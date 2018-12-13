@@ -9,11 +9,16 @@
     <script>
         "use strict";
 
-        // global Symbol
-        // let haustier = Symbol.for('haustier');
-        // console.log(haustier);
-        // console.log(Symbol.for('haustier') === Symbol.for('haustier'))
+        // global Symbol!! Entsteht "durch Gebrauch"...
 
+        // Könnte ich herstellen und speichern. So:
+        // let haustier = Symbol.for('haustier'); 
+        // console.log(haustier); // Einfach ein Symbol...
+
+        // Man kann es später über den Ausdruck aber auch REFERENZIEREN!!!!
+        // console.log(Symbol.for('haustier') === Symbol.for('haustier')) // true !!
+
+        // Globales Symbol als AccessorSpeicher-Key
         class Person {
             // der Konstruktor
             constructor(vorname) {
@@ -38,15 +43,30 @@
             }
         };
 
-        let peter = new Person("Peter");
+        let peter = new Person("Peter")
         console.log(peter);
+        // Person
+        // vorname:"Peter"
+        // Symbol(haustier):"Kaiman"
+        // haustier:(...)
+        // __proto__:
+        // constructor:class Person
+        // hallo:ƒ hallo()
+        // haustier:(...)
+        // get haustier:ƒ haustier()
+        // set haustier:ƒ haustier(neuesHaustier)
+        // __proto__:Object
+
         peter.haustier = "Kaiman";
+        // Setter! Kaiman
+        // Getter!
         peter.hallo();
+        // Hallo, ich bin Peter . Ich habe einen Kaiman
     </script>
 </head>
 
 <body>
-    <h1>Classes (oder so)</h1>
+    <h1>Classes und global Symbols</h1>
 </body>
 
 </html>

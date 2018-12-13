@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA 6: Classes</title>
+    <script>
+        "use strict";
+
+        class Person {
+            constructor(vorname) {
+                this.vorname = vorname;
+                this[Symbol.for('haustier')] = "Dackel";
+            }
+            hallo() {
+                console.log('Hallo, ich bin', this.vorname,
+                    '. Ich habe einen', this.haustier);
+            }
+            get haustier() {
+                return this[Symbol.for('haustier')];
+            }
+            set haustier(neuesHaustier) {
+                this[Symbol.for('haustier')] = neuesHaustier
+            }
+        };
+
+        let peter = new Person("Peter");
+        console.log(peter);
+        // Person
+        // vorname:"Peter"
+        // Symbol(haustier):"Kaiman"
+        // haustier:(...)
+        // __proto__:
+        // constructor:class Person
+        // hallo:ƒ hallo()
+        // haustier:(...)
+        // get haustier:ƒ haustier()
+        // set haustier:ƒ haustier(neuesHaustier)
+        // __proto__:Object
+
+        peter.hallo();
+        // Hallo, ich bin Peter . Ich habe einen Dackel
+
+        // Klasse kann von Klasse "erben":
+        class Fahrer extends Person {
+            // implizit (solange hier NICHTS ist):
+            // ruft Konstruktor der Superklasse
+            // Aber:
+            constructor(fuehrerschein, ...rest) {
+                // Wird explizit ein Konstruktor gesetzt, so muss mit super() 
+                // der Konstruktor der Abzuleitenden Klasse aufgerufen werden
+                // und die notwendigen Parameter des super-Konstruktors mitgegeben werden
+                // Konstruktor - Parameter der Subklasse zuerst übergeben,
+                // dann der Superclass mittels Spread ...
+                super(...rest);
+                this.auto = "BMW";
+                this.fuehrerschein = fuehrerschein;
+            }
+            fahren() {
+                console.log('Ich fahre Auto...');
+            }
+            hallo() {
+                // Methode der Superclass ebenfalls aufrufen (Explizit)
+                super.hallo();
+                console.log("Ich bin ein Fahrer und fahre", this.auto);
+            }
+        }
+
+        let fritz = new Fahrer("Klasse 1", 'Fritz');
+        console.log(fritz);
+        // Fahrer {vorname: "Fritz", auto: "BMW", fuehrerschein: "Klasse 1", Symbol(haustier): "Dackel"}
+        // auto:"BMW"
+        // fuehrerschein:"Klasse 1"
+        // vorname:"Fritz"
+        // Symbol(haustier):"Dackel"
+        // haustier:(...)
+        // __proto__:Person
+        // constructor:class Fahrer
+        // fahren:ƒ fahren()
+        // haustier:(...)
+        // __proto__:
+        // constructor:class Person
+        // hallo:ƒ hallo()
+        // haustier:(...)
+        // get haustier:ƒ haustier()
+        // set haustier:ƒ haustier(neuesHaustier)
+
+        fritz.hallo();
+        // Hallo, ich bin Fritz . Ich habe einen Dackel
+        // Ich bin ein Fahrer und fahre BMW
+    </script>
+</head>
+
+<body>
+    <h1>Classes und Vererbung</h1>
+</body>
+
+</html>

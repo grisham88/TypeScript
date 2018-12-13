@@ -6,46 +6,59 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ECMA 6: Classes</title>
     <script>
-        "use strict";
-        
-        // global Symbol
-        // let haustier = Symbol.for('haustier');
-        // console.log(haustier);
-        // console.log(Symbol.for('haustier') === Symbol.for('haustier'))
+        "use strict";      
 
-    
         class Person {
-            // der Konstruktor
             constructor(vorname) {
                 this.vorname = vorname;
-                // Uff. Besser.
                 this[Symbol.for('haustier')] = "Dackel";
             }
-            // der PROTOTYPE! 
             hallo() {
                 console.log('Hallo, ich bin', this.vorname, 
                             '. Ich habe einen', this.haustier );
             }
-            // Accessor Method
             get haustier() {
-                console.log("Getter!")
-                // return "Dackel";
                 return this[Symbol.for('haustier')];
             }
             set haustier(neuesHaustier) {
-                console.log("Setter!", neuesHaustier)
                 this[Symbol.for('haustier')] = neuesHaustier
             }
         };
 
         let peter = new Person("Peter");
         console.log(peter);
-        peter.haustier = "Kaiman";
         peter.hallo();
+
+        // Klasse kann von Klasse "erben":
+        class Fahrer extends Person {
+            // implizit (solange hier NICHTS ist):
+            // ruft Konstruktor der Superklasse
+            // Aber:
+            constructor(fuehrerschein, ...rest) {
+                super(...rest);
+                this.auto = "BMW";
+                this.fuehrerschein = fuehrerschein;
+            }
+            fahren() {
+                console.log('Ich fahre Auto...');
+            }
+            // VERDECKT Superklassen-Methode!
+            hallo() {
+                // super.hallo(); // Call zu Supermethod!
+                console.log("Ich bin ein Fahrer und fahre ", this.auto);
+                super.hallo();
+            }
+        }
+
+        let fritz = new Fahrer('Klasse 1', 'Fritz');
+        console.log(fritz);  
+        fritz.hallo();      
+
+
 
     </script>
 </head>
 <body>
-    <h1>Classes (oder so)</h1>
+    <h1>Classes und Vererbung</h1>
 </body>
 </html>

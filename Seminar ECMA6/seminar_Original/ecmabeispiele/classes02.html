@@ -26,18 +26,19 @@
             // der Konstruktor
             constructor(vorname) {
                 this.vorname = vorname;
-                // echt jetzt?
+                // Speicher für Accessor. Brauchen wir.
                 this.__haustier = "Dackel";
+                // Echt jetzt? Ja wirklich! Soll so.
             }
             // der PROTOTYPE! 
             hallo() {
                 console.log('Hallo, ich bin', this.vorname, 
                             '. Ich habe einen', this.haustier );
             }
-            // Accessor Method
+            // Accessor Method ...
+            // bedient Speicher IN der INSTANZ!!
             get haustier() {
                 console.log("Getter!")
-                // return "Dackel";
                 return this.__haustier;
             }
             set haustier(neuesHaustier) {
@@ -46,8 +47,6 @@
             }
         };
 
-        // console.log(Person);
-        // console.log(typeof Person);
         let peter = new Person("Peter");
         console.log(peter);
         peter.haustier = "Kaiman";
@@ -56,6 +55,6 @@
     </script>
 </head>
 <body>
-    <h1>Classes (oder so)</h1>
+    <h1>Classes und Accessoren</h1>
 </body>
 </html>
