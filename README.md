@@ -861,6 +861,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 ```
 
 ### Promises -> Chains
+- Promise dokumentiert einen asynchronen Vorgang
 - Synchron
     - https://developer.mozilla.org/en-US/docs/Glossary/Callback_function
     - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Function/call
@@ -870,9 +871,232 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     - https://developer.mozilla.org/en-US/docs/Glossary/Promise
     - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise
     - cb -> Callback
-    - Promise -> .then (cb)
-        - Ist ein Wert sofort vorhanden, verhält es sich wie synchron
+    - Promise
+        - .then (cb)
+            - Ist ein Wert sofort vorhanden, verhält es sich synchron
+            - Wird ein Promise auf ein then angewendet, verhält sich dieses synchron, auch nachfolgende auf weitere .then-Aufrufe im nächsten Promise
+        - .catch (cb)
+        - Funktionen in Promises verhalten sich immer asynchron
+        - enthält immer eine Function mit 2 Objekten
+            - resolve für den value des Erfolgs
+            - reject für die reason des Abbruchs (Übergabe des Fehlertexts direkt mit einem String möglich, ohne implementierung)
+                - reject kann mit .catch nachdem Promise überschrieben bzw. abgefangen werden
+            - Jedes .then bzw. .catch hat einen Input und einen Output-Value, dies muss auch durch die genutzte Funktion aufgenommen werden
+            - .catch sollte zumindest im letzten Level/Promise immer gesetzt werden, da sonst Fehler durchrutschen/unbehandelt sind
     - Observable mit .subscribe (cb) als Rückgabewert
+- In Skripten wird erst der ganze Code durchlaufen, sodass Funktionen in Funktionen frühestens nach dem kompletten Durchlauf gestartet werden.
+
+```html
+<script>
+    let prom1 = new Promise(function (resolve, reject) {
+        console.log("Konstruiere Promise:", arguments);
+        // Konstruiere Promise: 
+        // Arguments(2) [ƒ, ƒ, callee: ƒ (resolve, reject), Symbol(Symbol.iterator): ƒ]
+
+        //Funktionen in Promises verhalten sich immer asynchron
+        setTimeout(function () {
+            console.log('Resolve ... jetzt!');
+            resolve(42); // Wert des async Vorgangs
+        }, 1000);
+
+        setTimeout(function () {
+            console.log('Rejecte ... jetzt!');
+            reject('ging halt schief'); //Throw!!!
+        }, 2000);
+    });
+
+    //then() nimmt 1 oder 2 Function-Objects
+    prom1.then(function (value) {
+        console.log('Resolved:', value);
+        // Resolved: 42 -> wird erst nach 1000ms ausgeführt (erste Funktion "resolve" im Promise)
+    }, function (err) {
+        console.log('Rejected weil', err)
+    });
+
+    setTimeout(function () {
+        // ich erhalte immer noch den Wert, des thens!
+        prom1.then(function (value) {
+            console.log('5s später... Resolved:', value);
+            // 5s später... Resolved: 42
+        }).catch(function (err) {
+            console.log('5s später... Rejected weil ', err)
+        });
+    }, 5000);
+
+    console.log('Das Promise:', prom1);
+    // Das Promise: Promise
+    // [[PromiseStatus]]:"pending"
+    // [[PromiseValue]]:undefined
+
+    // Ausgabereihenfolge bei keiner resolve Ausführung:
+    // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    // Das Promise: Promise {<pending>}
+    // Rejecte ... jetzt!
+    // Rejected weil ging halt schief
+    // 5s später... Rejected weil  ging halt schief
+
+    // Ausgabereihenfolge bei resolve Ausführung:
+    // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    // Das Promise: Promise {<pending>}
+    // Resolve ... jetzt!
+    // Resolved: 42
+    // Rejecte ... jetzt!
+    // 5s später... Resolved: 42
+</script>
+```
+
+Ausführung mit mehreren Promises hintereinandergeschalten (Nutzung eigener Promises):  
+```html
+<script>
+    let prom1Level1 = new Promise(function (resolve, reject) {
+    console.log('Konstruiere Promise:', arguments);
+
+    setTimeout(function () {
+        // console.log('Resolve ... jetzt!');
+        // resolve(42); // Wert des async Vorgangs
+    }, 1000);
+    setTimeout(function () {
+        console.log('Rejecte ... jetzt!');
+        reject('ging halt schief'); // Throw!!
+    }, 2000);
+
+    });
+
+    // a) then-Bindung b) nächstes Level zurückgeben
+    let promLevel2 = prom1Level1.then(function (val) {
+        console.log('Level 1 Resolved:', val);
+    }, function (err) {
+        console.log('Rejected weil', err);
+        // return 'Error in Level 1'; -> Success im nächsten Level, da return fehlt!!!
+        throw new Error('Error in Level 1');
+    });
+
+    // usw...
+    let promLevel3 = promLevel2.then(function (val) {
+        console.log('Level 2 Erfolg! Juhu!', val);
+        return 'und so geht es weiter!';
+    }, function (err) {
+        console.log('Level 2 Fehler! Buh!', err);
+        // return ODER throw
+        throw new Error('Error in Level 2');
+    });
+
+    let promLevel4 = promLevel3.then(function (val) {
+        console.log('Level 3 Erfolg! Juhu!', val);
+    });
+    promLevel4.catch(function (err) {
+        console.log('Level 3 Fehler! Buh!', err)
+    });
+
+    // Ausgabereihenfolge bei keiner resolve Ausführung und ohne val bei promLevel2&3:
+    // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    // Rejecte ... jetzt!
+    // Rejected weil ging halt schief
+    // Level 2 Erfolg! Juhu!
+    // Level 3 Erfolg! Juhu!
+
+    // Ausgabereihenfolge bei keiner reject Ausführung und ohne val bei promLevel2&3:
+    // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    // Resolve ... jetzt!
+    // Level 1 Resolved: 42
+    // Level 2 Erfolg! Juhu!
+    // Level 3 Erfolg! Juhu!
+
+    // Ausgabereihenfolge bei keiner resolve Ausführung mit val in Level 2-4:
+    // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    // Rejecte ... jetzt!
+    // Rejected weil ging halt schief
+    // Level 2 Fehler! Buh! Error: Error in Level 1 at promises02.html:32
+    // Level 3 Fehler! Buh! Error: Error in Level 2 at promises02.html:42
+</script>
+```
+
+Mehrere Promises durch direkte Hintereinanderschaltung (Promise-Chain/)
+```html
+<script>    
+    // Level 1
+    new Promise(function (resolve, reject) {
+        console.log('Konstruiere Promise:', arguments);
+
+        setTimeout(function () {
+            // console.log('Resolve ... jetzt!');
+            // resolve(42); // Wert des async Vorgangs
+        }, 1000);
+        setTimeout(function () {
+            console.log('Rejecte ... jetzt!');
+            reject('ging halt schief'); // Throw!!
+        }, 2000);
+    }// Level 2
+    ).then(function (val) {
+        console.log('Level1 Resolved:', val);
+        return 'so ist das also!';
+    }, function (err) {
+        console.log('Rejected weil ', err);
+        // return 'Error in Level 1'; -> Success nächstes Level!!!
+        throw new Error('Error in Level 1');
+    }// Level 3
+    ).then(function (val) {
+        console.log('Level 2 Erfolg! Juhu!', val);
+        return 'und so geht es weiter';
+    }, function (err) {
+        console.log('Level 2 Fehler! Buh!', err);
+        // return ODER throw??
+        throw new Error('Error in Level 2');
+    }// Level 4
+    ).then(function (val) {
+        console.log('Level 3 Erfolg! Juhu!', val);
+    }// Level 5
+    ).catch(function (err) {
+        console.log('Level 5 Fehler! Buh!', err);
+    });
+
+    // Ausgabereihenfolge bei keiner resolve Ausführung mit teilweisem catch und throw der Fehler durch die Levels
+    // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    // Rejecte ... jetzt!
+    // Rejected weil  ging halt schief
+    // Level 2 Fehler! Buh! Error: Error in Level 1 at promises03.html:30
+    // Level 5 Fehler! Buh! Error: Error in Level 2 at promises03.html:38
+</script>
+```
+
+Resolve Funktion des Promise kann direkt angesprochen werden mit einem Rückgabewert
+```html
+<script>
+    Promise.resolve(42).then(function(val){
+            console.log('Level 1 Resolved:', val);
+            return 'so ist das also!';
+    });
+</script>
+```
+
+Promises zu einem XMLHttpRequest (Ajax)
+```html
+<script>
+    new Promise(function (resolve, reject) {
+        // hier den async Prozess bilden:
+        let xhr = new XMLHttpRequest();
+        //Async durchführen mittels true, Falsche Datei aufgerufen (nicht existent)
+        xhr.open('get', 'data/_personen.json', true);
+        //OnLoad bedeutet, der Request ist abgeschlossen
+        xhr.onload = function () {
+            if (this.status < 400) {
+                console.log(this.responseText);
+            }
+            else {
+
+            }
+        };
+        //Fängt nur grundlegende Fehler, nicht z.B. keine Datei gefunden
+        xhr.onerror = function () {
+            console.log('Error! Wir haben kein Netz!!');
+        };
+        xhr.send();
+
+        //Ausgabe:
+        // promises05.html:28 GET http://127.0.0.1:5500/Seminar%20ECMA6/seminar/data/_personen.json 404 (Not Found)
+    });
+</script>
+```
 
 ### fetch-API
     Ablösung von XML-HTTP Request Objekt

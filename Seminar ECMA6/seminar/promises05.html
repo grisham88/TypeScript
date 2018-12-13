@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA6: Promises & Ajax</title>
+    <script>
+        new Promise(function (resolve, reject) {
+            // hier den async Prozess bilden:
+            let xhr = new XMLHttpRequest();
+            //Async durchführen mittels true
+            xhr.open('get', 'data/_personen.json', true);
+            //OnLoad bedeutet, der Request ist abgeschlossen
+            xhr.onload = function () {
+                if (this.status < 400) {
+                    console.log(this.responseText);
+                }
+                else {
+
+                }
+            };
+            //Fängt nur grundlegende Fehler, nicht z.B. keine Datei gefunden
+            xhr.onerror = function () {
+                console.log('Error! Wir haben kein Netz!!');
+            };
+            xhr.send();
+        });
+
+        //Ausgabe:
+        // promises05.html:28 GET http://127.0.0.1:5500/Seminar%20ECMA6/seminar/data/_personen.json 404 (Not Found)
+    </script>
+</head>
+
+<body>
+    <h1>Promises & Ajax</h1>
+</body>
+
+</html>

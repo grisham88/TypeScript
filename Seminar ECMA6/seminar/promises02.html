@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA6: Promises</title>
+    <script>
+        let prom1Level1 = new Promise(function (resolve, reject) {
+            console.log('Konstruiere Promise:', arguments);
+
+            setTimeout(function () {
+                // console.log('Resolve ... jetzt!');
+                // resolve(42); // Wert des async Vorgangs
+            }, 1000);
+            setTimeout(function () {
+                console.log('Rejecte ... jetzt!');
+                reject('ging halt schief'); // Throw!!
+            }, 2000);
+
+        });
+
+        // a) then-Bindung b) nächstes Level zurückgeben
+        let promLevel2 = prom1Level1.then(function (val) {
+            console.log('Level 1 Resolved:', val);
+        }, function (err) {
+            console.log('Rejected weil', err);
+            // return 'Error in Level 1'; -> Success im nächsten Level, da return fehlt!!!
+            throw new Error('Error in Level 1');
+        });
+
+        // usw...
+        let promLevel3 = promLevel2.then(function (val) {
+            console.log('Level 2 Erfolg! Juhu!', val);
+            return 'und so geht es weiter!';
+        }, function (err) {
+            console.log('Level 2 Fehler! Buh!', err);
+            // return ODER throw
+            throw new Error('Error in Level 2');
+        });
+
+        let promLevel4 = promLevel3.then(function (val) {
+            console.log('Level 3 Erfolg! Juhu!', val);
+        });
+        promLevel4.catch(function (err) {
+            console.log('Level 3 Fehler! Buh!', err)
+        });
+
+        // Ausgabereihenfolge bei keiner resolve Ausführung und ohne val bei promLevel2&3:
+        // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+        // Rejecte ... jetzt!
+        // Rejected weil ging halt schief
+        // Level 2 Erfolg! Juhu!
+        // Level 3 Erfolg! Juhu!
+
+        // Ausgabereihenfolge bei keiner reject Ausführung und ohne val bei promLevel2&3:
+        // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+        // Resolve ... jetzt!
+        // Level 1 Resolved: 42
+        // Level 2 Erfolg! Juhu!
+        // Level 3 Erfolg! Juhu!
+
+        // Ausgabereihenfolge bei keiner resolve Ausführung mit val in Level 2-4:
+        // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+        // Rejecte ... jetzt!
+        // Rejected weil ging halt schief
+        // Level 2 Fehler! Buh! Error: Error in Level 1 at promises02.html:32
+        // Level 3 Fehler! Buh! Error: Error in Level 2 at promises02.html:42
+    </script>
+</head>
+
+<body>
+    <h1>Promises</h1>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA6: Promises</title>
+    <script>
+        // Level 1
+        new Promise(function (resolve, reject) {
+            console.log('Konstruiere Promise:', arguments);
+
+            setTimeout(function () {
+                // console.log('Resolve ... jetzt!');
+                // resolve(42); // Wert des async Vorgangs
+            }, 1000);
+            setTimeout(function () {
+                console.log('Rejecte ... jetzt!');
+                reject('ging halt schief'); // Throw!!
+            }, 2000);
+        }// Level 2
+        ).then(function (val) {
+            console.log('Level1 Resolved:', val);
+            return 'so ist das also!';
+        }, function (err) {
+            console.log('Rejected weil ', err);
+            // return 'Error in Level 1'; -> Success nächstes Level!!!
+            throw new Error('Error in Level 1');
+        }// Level 3
+        ).then(function (val) {
+            console.log('Level 2 Erfolg! Juhu!', val);
+            return 'und so geht es weiter';
+        }, function (err) {
+            console.log('Level 2 Fehler! Buh!', err);
+            // return ODER throw??
+            throw new Error('Error in Level 2');
+        }// Level 4
+        ).then(function (val) {
+            console.log('Level 3 Erfolg! Juhu!', val);
+        }// Level 5
+        ).catch(function (err) {
+            console.log('Level 5 Fehler! Buh!', err);
+        });
+
+        // Ausgabereihenfolge bei keiner resolve Ausführung mit teilweisem catch und throw der Fehler durch die Levels
+        // Konstruiere Promise: Arguments(2) [ƒ, ƒ, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+        // Rejecte ... jetzt!
+        // Rejected weil  ging halt schief
+        // Level 2 Fehler! Buh! Error: Error in Level 1 at promises03.html:30
+        // Level 5 Fehler! Buh! Error: Error in Level 2 at promises03.html:38
+    </script>
+</head>
+
+<body>
+    <h1>Promises</h1>
+</body>
+
+</html>
