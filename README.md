@@ -1,5 +1,3 @@
-
-
 # TypeScript Seminar
 TypeScript ist eine Obermenge von ECMAScript 6 (ES6) und ist rückwärtskompatibel mit ECMAScript 5, d. h. JavaScript.  
 Angular bietet somit auch die Vorzüge von ES6:  
@@ -54,6 +52,7 @@ Angular bietet somit auch die Vorzüge von ES6:
 	numbering=true
 	autoSave=true
 	/vscode-markdown-toc-config -->
+    Table of Content über Extension Markdown TOC von Joffrey Kern
 <!-- /vscode-markdown-toc -->
 
 ##  1. <a name='Markdown.mdFormatierungsregeln'></a>Markdown (.md) Formatierungsregeln
@@ -160,7 +159,7 @@ tsc --help
 Compilierung:  
 Eingabe im Terminal tsc und name der Datei
 ```html
-Beispiel: tcs "typescript - example.ts"
+Beispiel: tsc "typescript - example.ts"
 ```
 Dadurch wird eine ausführbare .js-Datei erzeugt
 
@@ -1588,8 +1587,127 @@ Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
 
 ##  10. <a name='Typescript'></a>Typescript
 - https://www.typescriptlang.org/
+- Aktivierung von Decorators und Setzen der ECMA Version
+- Öffnen der tsconfig.json und aktivieren der Settings
+    - "experimentalDecorators"
+    - "emitDecoratorMetadata"
+- Setzen der ECMA Version
+- Öffnen der tsconfig.json und aktivieren des Settings
+    - "target": "es5"
+- Automatisches erzeugen von .js zu .ts Dateien über Terminal
+    - tsc --watch
+    ```html
+    [14:35:10] Starting compilation in watch mode...
+
+    [14:35:11] Found 0 errors. Watching for file changes.
+    ```
+- Oder manuelles erzeugen in aktuelles Verzeichnis der .ts
+    Eingabe im Terminal tsc und name der Datei
+    ```html
+    Beispiel: tsc "typescript - example.ts"
+    ```
 
 ###  10.1. <a name='Decorators'></a>Decorators
+- https://www.typescriptlang.org/docs/handbook/decorators.html   
+- Gesetzte Decorators werden von innen nach außen gelesen  
+- Decorators können für Methods, class, Properties gesetzt werden
+
+Einbinden des Scripts (.js generiert aus .ts) in der HTML-Datei
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="dist/decorators.js"></script>
+</head>
+```
+
+Beispiel .ts
+```typescript
+// Class Decorator
+function personDecorator(myClass: any) {
+    console.log('Ich dekoriere....:s', myClass);
+
+    // nope! Nicht so machen:
+    // myClass.prototype.bumm = function() {}
+
+    // Das da machen wir:
+    return class extends myClass {
+        constructor(vorname, nachname, ...args) {
+            super(vorname, nachname, ...args);
+            this.haustier = "Dackel";
+            this.fullname = vorname + ' ' + nachname;
+        }
+        spezial() {
+            console.log('Reindekoriert!');
+        }
+    }
+}
+// Class Decorator
+function nochEinDecorator(myClass: any) {
+    console.log('Ich dekoriere auch!');
+}
+
+// Method Decorator
+function halloDecorator(a, b, descriptor) {
+    console.log('Method Decorator - Prototype d. Class:', a,
+        'propertyKey:', b,
+        'propertyDescriptor:', descriptor);
+
+    let oldMethod = descriptor.value;
+
+    let newMethod = function () {
+        oldMethod.call(this);
+        // console.log('Ooops, ich wurde wegdekoriert!');
+    }
+
+    // Return: a) NICHTS! b) einen Descriptor!
+    return {
+        value: newMethod, // ERSATZMETHODE
+        writable: true,
+        enumerable: true,
+        configurable: true
+    }
+}
+
+// ClassDecorator
+// Klasse/Methoden werden immer modifiziert 
+// und nicht erst durch Instanzierungen bzw. Aufrufe
+@nochEinDecorator
+@personDecorator
+class Person {
+    constructor(vorname, nachname) {
+        this.vorname = vorname;
+        this.nachname = nachname;
+    }
+    @halloDecorator
+    hallo() {
+        console.log('Hallo, ich bin', this.vorname, '!');
+    }
+}
+// Durch setzen der @Decorators wird direkt die Funktion ausgeführt
+// Ich dekoriere....:s ƒ Person(vorname, nachname) {
+//     this.vorname = vorname;
+//     this.nachname = nachname;
+// }
+// Ich dekoriere auch!
+// Method Decorator:
+// Prototype d. Class: {hallo: ƒ, constructor: ƒ} 
+// propertyKey: hallo 
+// PropertyDescriptor: {value: ƒ, writable: true, enumerable: true, configurable: true}
+
+let jim = new Person('Jim', 'Dandy');
+console.log(jim);
+// class_1 
+// {vorname: "Jim", nachname: "Doe", haustier: "Dackel", fullname: "Jim Doe"}
+jim.hallo();
+// Hallo, ich bin eine Person!
+
+let joe = new Person('Joe', 'Cool');
+console.log(joe);
+// class_1 
+// {vorname: "Joe", nachname: "Doe", haustier: "Dackel", fullname: "Joe Doe"}
+```
+
 ###  10.2. <a name='Types'></a>Types
 ###  10.3. <a name='Interfaces'></a>Interfaces
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
