@@ -639,6 +639,11 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
 </script>
 ```
 
+##### Payload
+```html
+In computing and telecommunications, the payload is the part of transmitted data that is the actual intended message. Headers and metadata are sent only to enable payload delivery. In the context of a computer virus or worm, the payload is the portion of the malware which performs malicious action.
+```
+
 ##### Symbols
 - https://developer.mozilla.org/en-US/docs/Glossary/Symbol
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol
@@ -1175,7 +1180,74 @@ Promises zu einem XMLHttpRequest (Ajax)
 ```
 
 ###  9.5. <a name='fetch-API'></a>fetch-API
-    Ablösung von XML-HTTP Request Objekt
+- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+- Ablösung von XML-HTTP Request Objekt
+```html
+<script>    
+    let myFetch = fetch('data/santa.json');
+    console.log(myFetch);
+
+    // ... aha, ein Promise!
+    myFetch.then(response => {
+        // aha, ein Response-Objekt!
+        console.log('Hab was!', response);
+        // Hab was! Response
+
+        // Daten aus dem Response rausholen:
+        // ACHTUNG: Dies KONSUMIERT den Stream bereits!
+        // console.log('Ooops, wieder ein Promise!', response.text());
+        // was tun mit diesem Promise? Einfach auf dem Stream!
+        // Dies konsumiert den Stream!
+        // return response.text; // Ich hole Text raus...
+
+        return response.json();
+        // Mittels dem zweiten then kommt man erst and brauchbare Daten heran json oder text (entweder, oder)
+    }).then(input => console.log(input));
+    // Ausgabe: {vorname: "Santa", nachname: "Claus"}
+
+    let myOtherFetch = fetch('data/karl.json', {
+        // method:'post' // etc.
+    });
+</script>
+```
+
+Aufruf mehrerer Promises mit Promise.all()
+```html
+<script>
+    let myFetch1 = fetch('data/santa.json').then(response => response.json());
+    console.log(myFetch1);
+    let myFetch2 = fetch('data/karl.json').then(response => response.json());
+    console.log(myFetch2);
+    let myFetch3 = fetch('data/frida.json').then(response => response.json());
+    console.log(myFetch3);
+
+    console.log(Promise.all([42, 17])
+        .then(response => console.log(response)));
+    // (2) [42, 17]
+
+    console.log(Promise.all([myFetch1, myFetch2, myFetch3])
+        .then(response => console.log(response)));
+    // [{…}, {…}, {…}]
+    // 0: {vorname: "Santa", nachname: "Claus"}
+    // 1: {vorname: "Karl", nachname: "Karpfen"}
+    // 2: {vorname: "Frida", nachname: "Forelle"}
+
+    Promise.all([myFetch1, myFetch2, myFetch3])
+        .then(([santa, karl, frida]) => {
+            console.log('Santa:', santa);
+            console.log('Karl:', karl);
+            console.log('Frida:', frida);
+            return {
+                personen: [santa.vorname, karl.vorname, frida.vorname]
+            }
+        }).then(personen => console.log(personen));
+    // Santa: {vorname: "Santa", nachname: "Claus"}
+    // Karl: {vorname: "Karl", nachname: "Karpfen"}
+    // Frida: {vorname: "Frida", nachname: "Forelle"}
+    // personen: (3) ["Santa", "Karl", "Frida"]
+</script>
+```
+
 ###  9.6. <a name='Generatoren'></a>Generatoren
 ###  9.7. <a name='class-Keywordvs.Konstruktor'></a>class-Keyword vs. Konstruktor
 ###  9.8. <a name='Vererbung'></a>Vererbung

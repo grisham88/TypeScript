@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA 6: fetch-API</title>
+    <script>
+    
+        let myFetch1 = fetch('data/santa.json').then(response => response.json());
+        console.log(myFetch1);
+        let myFetch2 = fetch('data/karl.json').then(response => response.json());
+        console.log(myFetch2);
+        let myFetch3 = fetch('data/frida.json').then(response => response.json());
+        console.log(myFetch3);
+
+        Promise.all([myFetch1, myFetch2, myFetch3])
+            .then( ([santa, karl, frida]) => { 
+                // console.log(arrResponse);
+                console.log("Santa:", santa);
+                console.log("Karl:", karl);
+                console.log("Frida:", frida);
+                return {
+                    personen: [santa.vorname, karl.vorname, frida.vorname]
+                }
+            })
+            .then(personen => console.log(personen));
+
+    
+    </script>
+</head>
+<body>
+    <h1>Fetch ... etc.</h1>
+</body>
+</html>

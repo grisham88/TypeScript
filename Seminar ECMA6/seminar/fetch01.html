@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ECMA 6: fetch-API</title>
     <script>
-    
         let myFetch = fetch('data/santa.json');
         console.log(myFetch);
 
-        // ... ahaa, ein Promise!
+        // ... aha, ein Promise!
         myFetch.then(response => {
             // aha, ein Response-Objekt!
             console.log('Hab was!', response);
-            // Daten aus dem Ding rausholen?
-            // Achtung: Dies KONSUMIERT den Stream bereits!
-            // console.log('Oops, wieder ein Promise!', response.text());
-            // was tun mit diesem Promise? Einfach auf den Stream!
+            // Hab was! Response
+
+            // Daten aus dem Response rausholen:
+            // ACHTUNG: Dies KONSUMIERT den Stream bereits!
+            // console.log('Ooops, wieder ein Promise!', response.text());
+            // was tun mit diesem Promise? Einfach auf dem Stream!
             // Dies konsumiert den Stream!
-            // return response.text(); // Ich hole Text raus...
+            // return response.text; // Ich hole Text raus...
+
             return response.json();
-        }).then( input => console.log(input));
+            // Mittels dem zweiten then kommt man erst and brauchbare Daten heran json oder text (entweder, oder)
+        }).then(input => console.log(input));
+        // Ausgabe: {vorname: "Santa", nachname: "Claus"}
 
         let myOtherFetch = fetch('data/karl.json', {
-           // method:'post' // etc.
+            // method:'post' // etc.
         });
-    
     </script>
 </head>
+
 <body>
     <h1>Fetch ... etc.</h1>
 </body>
+
 </html>
