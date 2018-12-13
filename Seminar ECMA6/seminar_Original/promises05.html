@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA6: Promises & Ajax</title>
+    <script>
+    
+        new Promise(function(resolve, reject){
+            // hier den async Prozess bilden:
+            let xhr = new XMLHttpRequest();
+                xhr.open('get','data/_personen.json',true);
+                xhr.onload = function(){
+                    if(this.status < 400) {
+                        console.log(this.responseText);
+                        // ... in die Chain damit
+                        resolve(this.responseText);
+                    } else {
+                        // 404 oder so...
+                        reject('Fehler beim Request: ' + this.status);
+                    }
+                };
+                xhr.onerror = function() {
+                    console.log('Error! Wir haben kein Netz!!');
+                    reject('Fehler im Network');
+                }
+                xhr.send();
+        }).then(responseText => JSON.parse(responseText))
+          .then(jsonObj => jsonObj.personen)
+          .then(personen => console.log(...personen))
+          .catch(err => console.log(err));
+  
+
+
+    </script>
+</head>
+<body>
+    <h1>Promises</h1>
+</body>
+</html>

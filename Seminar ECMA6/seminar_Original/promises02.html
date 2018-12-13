@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA6: Promises</title>
+    <script>
+    
+        // Level 1
+        let prom1Level1 = new Promise(function(resolve, reject){
+            console.log('Konstruiere Promise:', arguments);
+
+            setTimeout(function(){
+                console.log('Resolve ... jetzt!');
+                resolve(42); // Wert des async Vorgangs
+            }, 1000);
+            setTimeout(function() {
+                // console.log('Rejecte ... jetzt!');
+                // reject('ging halt schief'); // Throw!!
+            }, 2000);
+
+        });
+
+        // a) then-Bindung b) nächste Level zurückgeben
+        let promLevel2 = prom1Level1.then(function(val){
+            console.log('Level1 Resolved:', val);
+            return 'so ist das also!';
+        }, function(err){
+            console.log('Rejected weil ', err);
+            // return 'Error in Level 1'; -> Success nächstes Level!!!
+            throw new Error('Error in Level 1');
+        });
+
+        // usw...
+        let promLevel3 = promLevel2.then(function(val){
+            // setTimeout(function() {
+            //     console.log('OOps'); 
+            // }, 100);
+            console.log('Level 2 Erfolg! Juhu!', val);
+            return 'und so geht es weiter';
+        },function(err){
+            console.log('Level 2 Fehler! Buh!', err);
+            // return ODER throw??
+            throw new Error('Error in Level 2');
+        });
+
+        let promLevel4 = promLevel3.then(function(val){
+            console.log('Level 3 Erfolg! Juhu!', val);
+        }).catch(function(err){
+            console.log('Level 3 Fehler! Buh!', err);
+        });
+
+
+
+
+    </script>
+</head>
+<body>
+    <h1>Promises</h1>
+</body>
+</html>

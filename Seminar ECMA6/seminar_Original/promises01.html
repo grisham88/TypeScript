@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECMA6: Promises</title>
+    <script>
+    
+        let prom1 = new Promise(function(resolve, reject){
+            console.log('Konstruiere Promise:', arguments);
+
+            setTimeout(function(){
+                // console.log('Resolve ... jetzt!');
+                // resolve(42); // Wert des async Vorgangs
+            }, 1000);
+            setTimeout(function() {
+                console.log('Rejecte ... jetzt!');
+                reject('ging halt schief'); // Throw!!
+            }, 2000);
+
+        });
+
+        // then() nimmt 1 oder 2 FN-Obj
+        prom1.then(function(val){
+            console.log('Resolved:', val);
+        }, function(err){
+            console.log('Rejected weil ', err)
+        });
+
+        setTimeout(function(){
+            // ich kriege immer noch den Wert!
+            prom1.then(function(val){
+                console.log('5s später... Resolved:', val);
+            }).catch(function(err){
+                console.log('5s später... Rejected weil ', err)
+            });            
+        }, 5000);
+
+        console.log('Das Promise:', prom1);
+
+
+    </script>
+</head>
+<body>
+    <h1>Promises</h1>
+</body>
+</html>
