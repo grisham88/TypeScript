@@ -21,6 +21,9 @@ Angular bietet somit auch die Vorzüge von ES6:
 	* 6.2. [Tag 2](#Tag2)
 	* 6.3. [Tag 3](#Tag3)
 * 7. [Installation TypeScript](#InstallationTypeScript)
+    * 7.1  [package.json](#package.json)
+	* 7.2. [Bootstrap](#Bootstrap)
+    * 7.3  [node_modules](#node_modules)
 * 8. [Installation Webpack](#InstallationWebpack)
 * 9. [ECMA-6](#ECMA-6)
 	* 9.1. [Emmet Cheatsheets](#EmmetCheatsheets)
@@ -163,7 +166,52 @@ Beispiel: tsc "typescript - example.ts"
 ```
 Dadurch wird eine ausführbare .js-Datei erzeugt
 
+- Erweiterung von npm um Befehle  
+
+    package.json im Block Scripts einen neuen Eintrag hinterlegen
+    ```json
+    {
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "webpack-dev-server",
+        "sagwas": "echo \"Hallo, hier ist NPM!!\""
+    }
+    }
+    ```
+    Ausführung im Terimal von sagwas
+    ```html
+    npm run sagwas
+
+    Ausgabe:
+    "Hallo, hier ist NPM!!"
+    ```
+
+###  7.1 <a name='package.json'></a>package.json
+Eingabe im Terminal tsc und name der Datei
+```html
+npm init --yes
+```
+
+###  7.2 <a name='Bootstrap'></a>Bootstrap
+```html
+npm install bootstrap
+```
+
+### 7.3 <a name='node_modules'></a>node_modules
+Über die package.json wird mittels unten aufgeführten Befehl im Terminal, die node_modules frisch geladen, auch bei nicht vorhandenem Ordner
+```html
+npm install
+```
+
 ##  8. <a name='InstallationWebpack'></a>Installation Webpack
+Über das Terminal installieren
+```html
+npm install webpack -g
+
+oder mit Server
+
+npm install webpack-dev-server -g
+```
 
 ##  9. <a name='ECMA-6'></a>ECMA-6
 - https://www.w3schools.com/js/js_es6.asp
@@ -1583,6 +1631,121 @@ Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
 ```
 
 ###  9.9. <a name='ModuleWebpackundTypeScript'></a>Module (Webpack und TypeScript)
+- https://developers.google.com/web/fundamentals/primers/modules
+- https://www.typescriptlang.org/docs/handbook/modules.html
+- https://www.ackee.de/blog/webpack-moderne-webentwicklung/
+- Ein Modul ist eine Kapselung von Dateien
+- Start des Webpack Servers
+    ```html
+    npm run start
+    ```
+
+Beispiel eines Modules (Export, einzelne Parameter)
+ ```typescript
+console.log('Modul 1');
+
+let value1 = 42;
+let value2 = "Wert 2";
+
+export let toolObject = {
+    a: "A",
+    b: "B",
+    c: "C"
+}
+
+let toolFunction = function() {
+    console.log('toolFunction aus Modul1');
+}
+
+// export BY NAME
+export { value1, value2, toolFunction }
+ ```
+ ```typescript
+console.log('Modul 2');
+let ersteZahl = 17;
+let zweiteZahl = 4;
+
+export { ersteZahl, zweiteZahl }
+```
+
+Beispiel eines Modules (DefaultExport)
+- https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/export
+    ```typescript
+    console.log('Modul 3');
+    let superTools = {
+        a:"A",
+        b:"B"
+    }
+
+    let spezialTools = {
+        x:"X",
+        y:"Y"
+    };
+
+    let normalTools = {
+        x:"X",
+        y:"Y"
+    };
+
+    export { superTools, spezialTools };
+
+    // Defaultexport
+    export default normalTools;
+    ```
+
+Beispiel eines Modules (Import BY Name und Nutzung)
+ ```typescript
+import { value1, toolObject, toolFunction } from './modul1';
+
+console.log('Der Sinn des Lebens:', value1)
+
+let propA = toolObject.a; 
+console.log('prop a aus toolObject', propA);
+```
+
+Beispiel eines Modules (Import BY Alias und Nutzung)
+ ```typescript
+import { value2 as value2Modul1 } from './modul1';
+
+let value2 = 'Ich bin schon belegt!'; // !!!
+console.log('Alias:', value2Modul1);
+```
+
+Beispiel eines Modules (Import des ganzen Moduls Nutzung)
+ ```typescript
+// ICH WILL ALLES! Namespacing mit Aliasobjekt
+import * as tools from './modul2';
+
+// Pauschalimport
+console.log(tools);
+```
+
+Beispiel eines Modules (Import des Default Exports Nutzung)
+ ```typescript
+//Defaultimport
+import toolset from './modul3';
+
+//Defaultimport
+console.log(toolset);
+```
+
+Zusammenfassung mehrer Module für den Import in ein Module mittels barrels (dieses als index.ts deklarieren)
+ ```typescript
+import { myTool1 } from './tool1';
+import { myTool2 } from './tool2';
+
+export { myTool3 } from './tool3';
+
+export { myTool1, myTool2 }
+```
+Import der gesammelten Module über Verzeichnis
+```typescript
+// Import aus Verzeichnis (Barrel):
+import { myTool1 } from './tools';
+
+// spezielle Sachen die nicht im Barrel sind
+import { myTool1Variant } from './tools/tool1'
+```
 ###  9.10. <a name='Observables'></a>Observables
 
 ##  10. <a name='Typescript'></a>Typescript
