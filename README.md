@@ -187,7 +187,7 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     ```
 
 ###  7.1 <a name='package.json'></a>package.json
-Eingabe im Terminal tsc und name der Datei
+Eingabe im Terminal um die package.json zu erzeugen
 ```html
 npm init --yes
 ```
@@ -1297,6 +1297,7 @@ Aufruf mehrerer Promises mit Promise.all()
 
 ###  9.6. <a name='Generatoren'></a>Generatoren
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/function*
+- https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-3.html
 - Generators dienen dazu, Asynchrone Strukturen abzuarbeiten
 - Generator verhält sich ähnlich wie ein Iterator (kann mit next zum nächsten Wert im Generator springen)
 
@@ -1727,6 +1728,7 @@ Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
     ```html
     npm run start
     ```
+- Mittels Webpack Server, wird direkt jede Änderung sofort kompiliert und auf der Oberfläche zur Verfügung gestellt
 
 Beispiel eines Modules (Export, einzelne Parameter)
  ```typescript
@@ -1834,8 +1836,156 @@ import { myTool1 } from './tools';
 // spezielle Sachen die nicht im Barrel sind
 import { myTool1Variant } from './tools/tool1'
 ```
+
 ###  9.10. <a name='Observables'></a>Observables
-- Arbeitet auf einer Sequenz von Objekten
+- https://angular.io/guide/observables
+- https://angular.io/guide/observables-in-angular
+- https://www.learnrxjs.io/
+- http://www.syntaxsuccess.com/viewarticle/observables-in-angular-2.0
+- https://medium.com/@benlesh/learning-observable-by-building-observable-d5da57405d87
+- Arbeitet auf einer Sequenz von Objekten (Stream analog einer Zeitachse)
+- Kann analog wie auf ein Array zugegriffen werden
+- Alle asynchronen Daten in Angular sind mit Observables implementiert
+- Mittels .toPromise kann man ein Observable in ein Promise umwandeln, damit ist aber nur ein Zugriff auf das erste Objekt des Streams möglich
+- Pipe
+    - Import notwendig zur Eingrenzung
+        ```typescript
+        import { take } from 'rxjs/operators';
+        ```
+    - Moglichkeit die gewünschten Elemente aus dem Stream einzugrenzen, z.b. nur die ersten 3 zu erhalten. Mit Subscribe kann dann das Ergebnis verarbeitet werden
+- Subscribe enthält folgende direkte Zugriffsmöglichkeiten
+     - next
+        Durchlaufen des Stream, Object für Object
+     - complete
+        Abfragen ob der Stream abgeschlossen ist
+     - error     
+        Abfragen der Fehlernachricht, falls vorhanden
+- Paralleles Abfragen des Observables/Streams möglich
+
+Beispiel Nutzung von Observables in einer .ts-Datei
+```typescript
+import { Observable, from } from 'rxjs'
+import { take } from 'rxjs/operators';
+
+let myObservable = new Observable(function (observer) {
+    // Stream bilden
+    observer.next(1);
+    observer.next(2);
+    observer.next(3);
+    observer.next(4);
+    observer.next('Hallo');
+    observer.next({
+        x: "X",
+        y: "Y"
+    });
+    // Fehlermeldung
+    // observer.error('Havarie!');
+
+    // Complete Message
+    // -> Abschluss des Streams, das Subscribe wird dadurch aufgelöst
+    observer.complete();
+});
+
+console.log(myObservable);
+// Observable {_isScalar: false}
+// _isScalar:false
+// __proto__:
+// @@observable:ƒ ()
+// forEach:ƒ (next, promiseCtor)
+// lift:ƒ (operator)
+// pipe:ƒ ()
+// subscribe:ƒ (observerOrNext, error, complete)
+// toPromise:ƒ (promiseCtor)
+// _subscribe:ƒ (subscriber)
+// _trySubscribe:ƒ (sink)
+// constructor:ƒ Observable(subscribe)
+// __proto__:Object
+
+//Nutzung des Observables mittels Funktion
+let subscription1 = myObservable.subscribe(
+    (value) => console.log('Subscribe 1:', value)
+);
+// Durch das Stream bilden -> observer.next und 
+// Übergabe eines Werts wird das Event in subscribe ausgelöst
+// Subscribe 1: 1
+// Subscribe 1: 2
+// Subscribe 1: 3
+// Subscribe 1: 4
+// Subscribe 1: Hallo
+// Subscribe 1: {x: "X", y: "Y"}
+
+console.log('Subscription:', subscription1);
+// Subscription: 
+// Subscriber {closed: true, _parent: null, _parents: null, _subscriptions: null, syncErrorValue: null, …}
+// closed:true
+// destination:SafeSubscriber {closed: true, _parent: null, _parents: null, _subscriptions: null, syncErrorValue: null, …}
+// isStopped:true
+// syncErrorThrowable:true
+// syncErrorThrown:false
+// syncErrorValue:null
+// _parent:null
+// _parentSubscription:Subscription {closed: true, _parent: null, _parents: null, _subscriptions: null}
+// _parents:null
+// _subscriptions:null
+```
+
+- Nutzung des Observables mittels Objectabfrage auf den Observable  
+- Paralleles Abfragen des Streams möglich
+    ```typescript
+    let subscription2 = myObservable.subscribe({
+        next: val => console.log('Subscribe 2:', val),
+        complete: () => console.log('Subscribe 2: Stream beendet.'),
+        //Falls error im Observer ausgelöst wird
+        error: err => console.error('Subscribe 2: Error', err)
+    });
+    // Bei Übergabe eines Werts, wird das Event in subscribe ausgelöst
+    // next -> 
+    // Subscribe 2: 1
+    // Subscribe 2: 2
+    // Subscribe 2: 3
+    // Subscribe 2: 4
+    // Subscribe 2: Hallo
+    // Subscribe 2: {x: "X", y: "Y"}
+    // complete -> 
+    // Subscribe 2: Stream beendet.
+    // error -> 
+    // Subscribe 2: Error Havarie!
+    // Uncaught Havarie!
+    ```
+
+- Eingrenzung des gewünschten Streams mittels .pipe und take
+    ```typescript
+    let subscription3 = myObservable
+        .pipe(
+            take(4)
+        )
+        .subscribe(
+            //Analog zu next: val => ...
+            val => console.log('Subscribe 3:', val)
+            // Subscribe 3: 1
+            // Subscribe 3: 2
+            // Subscribe 3: 3
+            // Subscribe 3: 4
+        );
+
+    // -> Paralleles Abfragen des Streams möglich
+    ```
+
+- Observable wird über from() direkt für ein Object/Funktion erzeugt:
+    ```typescript
+    import { Observable, from } from 'rxjs'
+    
+    let blumenArray = ['Rosen', 'Tulpen', 'Nelken', 'Geranien']
+
+    from(blumenArray)
+        .subscribe(
+            val => console.log(val)
+        );
+    // Rosen
+    // Tulpen
+    // Nelken
+    // Geranien
+    ```
 
 ##  10. <a name='Typescript'></a>Typescript
 - https://www.typescriptlang.org/
