@@ -2028,7 +2028,7 @@ Einbinden des Scripts (.js generiert aus .ts) in der HTML-Datei
 
 Beispiele .ts
 
-#### 10.1.1 <a name='>Class Decorator'></a>Class Decorator
+#### 10.1.1 <a name='>ClassDecorator'></a>Class Decorator
 ```typescript
 function personDecorator(myClass: any) {
     console.log('Ich dekoriere....:s', myClass);
@@ -2054,7 +2054,7 @@ function nochEinDecorator(myClass: any) {
 }
 ```
 
-#### 10.1.2 <a name='>Method Decorator'></a>Method Decorator
+#### 10.1.2 <a name='>MethodDecorator'></a>Method Decorator
 ```typescript
 function halloDecorator(a, b, descriptor) {
     console.log('Method Decorator - Prototype d. Class:', a,
@@ -2078,7 +2078,7 @@ function halloDecorator(a, b, descriptor) {
 }
 ```
 
-#### 10.1.3 <a name='>Nutzung der Decorators'></a>Nutzung der Decorators
+#### 10.1.3 <a name='>NutzungderDecorators'></a>Nutzung der Decorators
 ```typescript
 // ClassDecorator
 // Klasse/Methoden werden immer modifiziert 
