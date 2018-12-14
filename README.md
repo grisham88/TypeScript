@@ -2474,46 +2474,48 @@ console.log(joe);
 - Im Gegensatz zu Klassen kann mittels Interface keine Instanz erzeugt werden
 - Möglichkeit Interfaces vom gleichen Namen mehrfach anzulegen, das Abgeleitete Objekt erhält dann Kombination aller Interfaces
 - https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c
-```typescript
-// Structural Type speichern:
-type TPerson = {
-    vorname: string,
-    nachname: string,
-    alter?: number,
-    hallo: () => void
-};
+    - Structural Type
+        ```typescript
+        type TPerson = {
+            vorname: string,
+            nachname: string,
+            alter?: number,
+            hallo: () => void
+        };
 
-let popeye: TPerson;
-popeye = {
-    vorname: "popeye",
-    nachname: "Pan",
-    alter: 40,
-    hallo: function () {
-        console.log("Hallo")
-    }
-}
+        let popeye: TPerson;
+        popeye = {
+            vorname: "popeye",
+            nachname: "Pan",
+            alter: 40,
+            hallo: function () {
+                console.log("Hallo")
+            }
+        }
+        ```
 
-// Interface
-interface IPerson {
-    vorname: string,
-    nachname: string,
-    alter?: number,
-    hallo: () => void
-}
+    - Interface
+        ```typescript
+        interface IPerson {
+            vorname: string,
+            nachname: string,
+            alter?: number,
+            hallo: () => void
+        }
 
-interface IPerson {
-    haustier: string
-}
+        interface IPerson {
+            haustier: string
+        }
 
-let pete: IPerson = {
-    vorname: "Pete",
-    nachname: "Pan",
-    hallo: function () {
-        console.log("Hallo")
-    },
-    haustier: 'Dackel'
-};
-```
+        let pete: IPerson = {
+            vorname: "Pete",
+            nachname: "Pan",
+            hallo: function () {
+                console.log("Hallo")
+            },
+            haustier: 'Dackel'
+        };
+        ```
 
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
 - Beschreibung eines Objekts (Aufbau)
