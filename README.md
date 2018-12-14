@@ -2522,6 +2522,8 @@ console.log(joe);
 - Es kann eine Instanz davon erzeugt werden
 - Properties von Classes müssen im Konstruktor zugewiesen werden
 - Mittels public im Konstruktor wird das Property automatisch für die Klasse erzeugt, sodass keine seperate Deklarierung und Zuweisung mehr notwendig ist
+Beispiele:
+- Klasse anlegen und nutzen
     ```typescript
     class Person {
         // Interface
@@ -2561,7 +2563,7 @@ console.log(joe);
     //Abfrage ist möglich
     ```
 
-    Ableitung einer Klasse (Erweiterung)
+- Ableitung einer Klasse (Erweiterung)
     ```typescript
     class Fahrer extends Person {
         hallo() {
@@ -2578,6 +2580,83 @@ console.log(joe);
 
     fritz.idMelden();
     // Zugriff möglich
+    ```
+- Nutzung von Interfaces um nur bestimmte Properties nutzen zu müssen
+    ```typescript
+    class Person2 {
+        // Interface
+        vorname: string;
+        public nachname: string;
+        public haustier = "Dackel";
+
+        // ab hier normal weiter:
+        constructor(vorname: string,
+            nachname: string,
+            public alter: number,
+            private konto: number,
+            protected id: number) {
+
+            this.vorname = vorname;
+            this.nachname = nachname;
+        }
+        hallo() {
+            console.log('Hallo');
+        }
+        get kontostand() {
+            return this.konto;
+        }
+    }
+    interface IPerson2 {
+        vorname: string;
+        nachname: string;
+        haustier?: string;
+    }
+
+    function personAusgeben(person: IPerson2) {
+        let vn = person.vorname;
+        let nn = person.nachname;
+        console.log(vn + ' ' + nn);
+    }
+
+    let max = new Person2('Max', 'Muster', 30, 1000, 1);
+    personAusgeben(max);
+
+    //Möglichkeit ohne das ganze Objekt mitzugeben, die Funktion nutzen zu können
+    personAusgeben({ vorname: 'Meike', nachname: 'Müller' });
+    ```
+- Klasse deklarieren mittels Interface
+    ```typescript
+    interface IPerson3 {
+        vorname: string;
+        nachname: string;
+        hallo: () => void;
+        haustier?: string;
+    }
+
+    // Interface kann anderes Interface erweitern
+    interface IFahrer extends IPerson3 {
+        klasse: String;
+        auto: string;
+    }
+
+    let hans: IFahrer;
+
+    // Class kann Interface implementieren
+    class Person3 implements IPerson3 {
+        constructor(public vorname: string, public nachname: string) { }
+        hallo() {
+            console.log('Hi!');
+        }
+    }
+
+    // ... oder eine andere Class implementieren
+    class Person4 implements Person3 {
+        haustier = "Dackel";
+        constructor(public vorname: string, public nachname: string) { }
+        hallo() {
+            console.log('Hi!');
+        }
+    }
     ```
 
 ###  10.5. <a name='Generics'></a>Generics
