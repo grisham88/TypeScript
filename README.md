@@ -100,7 +100,7 @@ Angular bietet somit auch die Vorzüge von ES6:
 * mit Rechtsklick "Open with Code"
 * Nun ist das Repository mit git verknüpft und alle Änderungen sind direkt commit und pushbar 
     * Über die Source control (Link in Visual Studio Code) sieht man alle offenen Dateien die geändert wurden
-    * Mit Button "V" können diese direkt commited werden oder einzeln zum Commit freigegeben werden
+    * Mit Button "V" (Haken) können diese direkt commited werden oder einzeln zum Commit freigegeben werden
     * Beim ... kann dann push ausgeführt werden -> Git wird nach Git Hub aktualisiert
 
 ##  4. <a name='HilfsfunktionenfrVSCode'></a>Hilfsfunktionen für VS Code
@@ -2522,6 +2522,7 @@ console.log(joe);
 - Es kann eine Instanz davon erzeugt werden
 - Properties von Classes müssen im Konstruktor zugewiesen werden
 - Mittels public im Konstruktor wird das Property automatisch für die Klasse erzeugt, sodass keine seperate Deklarierung und Zuweisung mehr notwendig ist
+
 Beispiele:
 - Klasse anlegen und nutzen
     ```typescript
@@ -2549,7 +2550,7 @@ Beispiele:
     }
 
     let tom: Person; 
-    tom = new Person('Tom','Jones',33, 10000, 1);
+    tom = new Person('Tom', 'Jones', 33, 10000, 1);
     tom.vorname = 'Tim';
     // Property 'vorname' is private and only accessible within class 'Person'.
     
@@ -2581,6 +2582,7 @@ Beispiele:
     fritz.idMelden();
     // Zugriff möglich
     ```
+
 - Nutzung von Interfaces um nur bestimmte Properties nutzen zu müssen
     ```typescript
     class Person2 {
@@ -2624,39 +2626,104 @@ Beispiele:
     //Möglichkeit ohne das ganze Objekt mitzugeben, die Funktion nutzen zu können
     personAusgeben({ vorname: 'Meike', nachname: 'Müller' });
     ```
-- Klasse deklarieren mittels Interface
+
+- Klasse deklarieren/instanzieren mittels Interface
     ```typescript
     interface IPerson3 {
         vorname: string;
         nachname: string;
         hallo: () => void;
-        haustier?: string;
     }
+    ```
 
-    // Interface kann anderes Interface erweitern
-    interface IFahrer extends IPerson3 {
-        klasse: String;
-        auto: string;
+    - Interface kann anderes Interface erweitern
+        ```typescript
+        interface IFahrer extends IPerson3 {
+            klasse: String;
+            auto: string;
+        }
+
+        interface IFon {
+            fon: number;
+        }
+        interface IHaustier {
+            haustier: string;
+        }
+
+        let hans: IFahrer;
+        ```
+
+    - Class kann Interface implementieren
+        ```typescript
+        class Person3 implements IPerson3 {
+            constructor(public vorname: string, public nachname: string) { }
+            hallo() {
+                console.log('Hi!');
+            }
+        }
+        ```
+
+    - Eine andere Class/Interface implementieren, bzw. auch mehrere Interfaces
+        ```typescript
+        class Person4 implements Person3, IHaustier, IFon {
+            haustier = "Dackel";
+            fon = 23456;
+            constructor(public vorname: string, public nachname: string) { }
+            hallo() {
+                console.log('Hi!');
+            }
+        }
+        ```
+
+- Abstract classes
+    - Von Abstract classes ist keine Instanzierung möglich, jedoch kann man dieses als Bauplanvorlage nutzen
+    - Abgeleitete Klassen müssen alle Methoden implementieren und im constructor auf die Abstract Klasse zugreifen mittels super();
+        ```typescript
+        abstract class Mensch {
+            constructor(public anzahlBeine = 2) { }
+            //Abstract methods enthalten keinen Code, dienen nur als Muss-Vorlage
+            abstract gruessen(): string
+            hallo() {
+                console.log(this.gruessen(), 'Ich habe', this.anzahlBeine, 'Beine');
+            }
+        }
+        
+        let markus = new Mensch(3);
+        // Cannot create an instance of an abstract class.
+        ```
+
+- Static Members in Classes
+    ```typescript
+    class Student extends Mensch {
+        static spezies = "Mensch";
+        public faecher: string[] = [];
+
+        constructor(public vorname: string, public nachname: string) {
+            // Auf Anforderung der abstract class:
+            super();
+        }
+        getSpezies() {
+            console.log('Ich bin ein ', Student.spezies)
+        }
+        // Auf Anforderung der abstract class:
+        gruessen() {
+            return 'Hallo';
+        }
     }
-
-    let hans: IFahrer;
-
-    // Class kann Interface implementieren
-    class Person3 implements IPerson3 {
-        constructor(public vorname: string, public nachname: string) { }
-        hallo() {
-            console.log('Hi!');
+    
+    class Lehrer extends Mensch {
+        gruessen() {
+            return 'Salve!';
         }
     }
 
-    // ... oder eine andere Class implementieren
-    class Person4 implements Person3 {
-        haustier = "Dackel";
-        constructor(public vorname: string, public nachname: string) { }
-        hallo() {
-            console.log('Hi!');
-        }
-    }
+    // Abstract class kann konkrete Members beitragen
+    let sylvia = new Student('Sylvia', 'Schmidt');
+    // sylvia.spezies;
+    // Property 'spezies' is a static member of type 'Student'
+    sylvia.getSpezies;
+    // Zugriff nur über Methode möglich
+    sylvia.gruessen();
     ```
 
 ###  10.5. <a name='Generics'></a>Generics

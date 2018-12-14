@@ -2,13 +2,19 @@ interface IPerson3 {
     vorname: string;
     nachname: string;
     hallo: () => void;
-    haustier?: string;
 }
 
 // Interface kann anderes Interface erweitern
 interface IFahrer extends IPerson3 {
     klasse: String;
     auto: string;
+}
+
+interface IFon {
+    fon: number;
+}
+interface IHaustier {
+    haustier: string;
 }
 
 let hans: IFahrer;
@@ -21,9 +27,11 @@ class Person3 implements IPerson3 {
     }
 }
 
-// ... oder eine andere Class implementieren
-class Person4 implements Person3 {
+// ... oder eine andere Class/Interface implementieren,
+// bzw. auch mehrere Interfaces
+class Person4 implements Person3, IHaustier, IFon {
     haustier = "Dackel";
+    fon = 23456;
     constructor(public vorname: string, public nachname: string) { }
     hallo() {
         console.log('Hi!');
