@@ -56,7 +56,7 @@ let infoSpeicher = makeSpeicher<Info>({ name: 'Info', wert: 'Sensation' });
 let newInfo:Info = {name:'Test', wert:'Testinfo'};
 infoSpeicher.push(newInfo)
 
-infoSpeicher.push({irgendwas:'Ho', name:'Fehler', wert:'Falsch'})
+// infoSpeicher.push({irgendwas:'Ho', name:'Fehler', wert:'Falsch'})
 // Argument of type '{ irgendwas: string; name: string; wert: string; }' 
 // is not assignable to parameter of type 'Info'.  Object literal may only specify known properties,
 // and 'irgendwas' does not exist in type 'Info'.
