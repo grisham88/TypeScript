@@ -28,3 +28,7 @@ console.log('prop a aus toolObject', propA);
 console.log(tools);
 // Defaultimport
 console.log(toolset);
+
+//Verzeichnisimport
+console.log(myTool1);
+console.log(myTool1Variant);
