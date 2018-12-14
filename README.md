@@ -44,6 +44,14 @@ Angular bietet somit auch die Vorzüge von ES6:
 	* 9.8. [Vererbung](#Vererbung)
 	* 9.9. [Module (Webpack und TypeScript)](#ModuleWebpackundTypeScript)
 	* 9.10. [Observables](#Observables)
+        * 9.10.1. [Nutzung von Observables](#NutzungvonObservables)
+        * 9.10.2. [Nutzung des Observables mittels Objectabfrage auf den Observable](#NutzungdesObservablesmittelsObjectabfrageaufdenObservable)
+        * 9.10.3. [Eingrenzung des gewünschten Streams mittels .pipe und take](#EingrenzungdesgewünschtenStreamsmittelspipeundtake)
+        * 9.10.4. [Observable wird über from() direkt für ein Object/Funktion erzeugt](#ObservablewirdüberfromdirektfürObjectFunktionerzeugt)
+        * 9.10.5. [Eingrenzung des gewünschten Streams mittels .pipe und startsWith/endsWith](#EingrenzungStreamsmittelspipeundstartsWithendsWith)
+        * 9.10.6. [Eventstream bilden](#Eventstreambilden)
+        * 9.10.7. [DOM-Events abonnieren](#DOMEventsabonnieren)
+        DOMEventsabonnieren
 * 10. [Typescript](#Typescript)
 	* 10.1. [Decorators](#Decorators)
         * 10.1.1. [Class Decorator](#ClassDecorator)
@@ -1840,7 +1848,7 @@ import { myTool1 } from './tools';
 import { myTool1Variant } from './tools/tool1'
 ```
 
-###  9.10. <a name='Observables'></a>Observables
+### 9.10. <a name='Observables'></a>Observables
 - https://angular.io/guide/observables
 - https://angular.io/guide/observables-in-angular
 - https://www.learnrxjs.io/
@@ -1865,11 +1873,14 @@ import { myTool1Variant } from './tools/tool1'
         Abfragen der Fehlernachricht, falls vorhanden
 - Paralleles Abfragen des Observables/Streams möglich
 
-Beispiel Nutzung von Observables in einer .ts-Datei
+#### 9.10.1 <a name='NutzungvonObservables'></a>Nutzung von Observables 
 ```typescript
-import { Observable, from } from 'rxjs'
-import { take } from 'rxjs/operators';
+// Creators:
+import { Observable, from, timer } from 'rxjs';
+// Operators:
+import { take, startWith, timestamp } from 'rxjs/operators';
 
+// ### Observable, Observer, Subscription:
 let myObservable = new Observable(function (observer) {
     // Stream bilden
     observer.next(1);
@@ -1932,7 +1943,7 @@ console.log('Subscription:', subscription1);
 // _subscriptions:null
 ```
 
-- Nutzung des Observables mittels Objectabfrage auf den Observable  
+#### 9.10.2 <a name='NutzungdesObservablesmittelsObjectabfrageaufdenObservable'></a>Nutzung des Observables mittels Objectabfrage auf den Observable
 - Paralleles Abfragen des Streams möglich
     ```typescript
     let subscription2 = myObservable.subscribe({
@@ -1956,38 +1967,173 @@ console.log('Subscription:', subscription1);
     // Uncaught Havarie!
     ```
 
-- Eingrenzung des gewünschten Streams mittels .pipe und take
-    ```typescript
-    let subscription3 = myObservable
-        .pipe(
-            take(4)
-        )
-        .subscribe(
-            //Analog zu next: val => ...
-            val => console.log('Subscribe 3:', val)
-            // Subscribe 3: 1
-            // Subscribe 3: 2
-            // Subscribe 3: 3
-            // Subscribe 3: 4
-        );
+#### 9.10.3 <a name='EingrenzungdesgewünschtenStreamsmittelspipeundtake'></a>Eingrenzung des gewünschten Streams mittels .pipe und take
+```typescript
+// Creators:
+import { Observable } from 'rxjs';
+// Operators:
+import { take } from 'rxjs/operators';
 
-    // -> Paralleles Abfragen des Streams möglich
-    ```
+let subscription3 = myObservable
+.pipe(
+    take(4)
+)
+.subscribe(
+    //Analog zu next: val => ...
+    val => console.log('Subscribe 3:', val)
+    // Subscribe 3: 1
+    // Subscribe 3: 2
+    // Subscribe 3: 3
+    // Subscribe 3: 4
+);
+```
+früher (RxJs 5/5.5) waren Operators in Observable INTEGRIERT:
+```typescript
+// myObservable
+//    .take(4)
+//    .filter()
+//   .map()
+//    .subscribe()
+//
+// -> schlecht (bzw. nicht) tree-shakeable!!!
+```
 
-- Observable wird über from() direkt für ein Object/Funktion erzeugt:
+#### 9.10.4 <a name='ObservablewirdüberfromdirektfürObjectFunktionerzeugt'></a>Observable wird über from() direkt für ein Object/Funktion erzeugt
+- früher als "Observable.from()" bekannt
     ```typescript
+    // Creators:
     import { Observable, from } from 'rxjs'
 
     let blumenArray = ['Rosen', 'Tulpen', 'Nelken', 'Geranien']
 
     from(blumenArray)
+    .subscribe(
+        //Ohne konkretes Ansprechen von next, error, complete
+        //  ist ein Zugriff mittels Reihenfolge möglich
+        val => console.log('onNext:', val),
+        err => console.log('onError:', err),
+        () => console.log('onComplete: Array durchlaufen')
+    );
+    // onNext: Rosen
+    // onNext: Tulpen
+    // onNext: Nelken
+    // onNext: Geranien
+    // onComplete: Array durchlaufen
+    ```
+
+#### 9.10.5 <a name='EingrenzungStreamsmittelspipeundstartsWithendsWith'></a>Eingrenzung des gewünschten Streams mittels .pipe und startsWith/endsWith
+- Dem Stream kann damit zu Beginn/Ende etwas angehangen werden
+    ```typescript
+    // Creators:
+    import { Observable } from 'rxjs';
+    // Operators:
+    import { startWith } from 'rxjs/operators';
+
+    let blumenArray = ['Rosen', 'Tulpen', 'Nelken', 'Geranien']
+
+    from(blumenArray)
+        .pipe(
+            startWith('Danke für die Blumen!')
+        )
         .subscribe(
-            val => console.log(val)
+            val => console.log('onNext:', val),
+            err => console.log('onError:', err),
+            () => console.log('onComplete: Array durchlaufen')
         );
-    // Rosen
-    // Tulpen
-    // Nelken
-    // Geranien
+    // onNext: Danke für die Blumen!
+    // onNext: Rosen
+    // onNext: Tulpen
+    // onNext: Nelken
+    // onNext: Geranien
+    // onComplete: Array durchlaufen
+    ```
+    
+#### 9.10.6 <a name='Eventstreambilden'></a>Eventstream bilden
+```typescript
+// Creators:
+import { Observable, timer } from 'rxjs';
+// Operators:
+import {  timestamp } from 'rxjs/operators';
+
+let timerSubscription = timer(5000, 1000)
+.pipe(
+    timestamp()
+)
+.subscribe(
+    val => console.log(val)
+);
+
+setTimeout(function() {
+    console.log("Unsubscribe der timerSubscription!");
+    timerSubscription.unsubscribe();
+}, 15000)
+
+// Timestamp {value: 0, timestamp: 1544781361221}
+// Timestamp {value: 1, timestamp: 1544781362223}
+// Timestamp {value: 2, timestamp: 1544781363223}
+// Timestamp {value: 3, timestamp: 1544781364223}
+// Timestamp {value: 4, timestamp: 1544781365223}
+// Timestamp {value: 5, timestamp: 1544781366231}
+// Timestamp {value: 6, timestamp: 1544781367231}
+// Timestamp {value: 7, timestamp: 1544781368232}
+// Timestamp {value: 8, timestamp: 1544781369232}
+// Timestamp {value: 9, timestamp: 1544781370227}
+// Unsubscribe der timerSubscription!
+```
+
+#### 9.10.7 <a name='DOMEventsabonnieren'></a>DOM-Events abonnieren
+- im HTML
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Observables...</title>
+    </head>
+    <body>
+        <h1>Observables...</h1> 
+        <p>
+            <button id="btn">Klick das Observable!</button>
+        </p>
+        <p>User: <input type="text" id="user"></p>
+        <!-- für Webpack! -->
+        <script src="app.js"></script>
+    </body>
+    </html>
+    ```
+- in .ts-Datei
+    ```typescript
+    // Creators:
+    import { Observable } from 'rxjs';
+    // Operators:
+    import {  filter } from 'rxjs/operators';
+
+    // Markierung des Elements mit einem Type (MUSS gemacht werden)
+    let myBtn = document.getElementById('btn') as HTMLElement;
+
+    fromEvent(myBtn, 'click')
+        .pipe(
+            filter((e: any) => e.clientX > 80)
+        ).subscribe(
+            (event: any) => console.log('Klick auf Btn:', event.clientX)
+        )
+    // Klick auf Btn: 134 
+
+    // Markierung des Elements mit einem Type (MUSS gemacht werden)
+    let myInput = document.querySelector('#user') as HTMLInputElement;
+
+    fromEvent(myInput, 'keyup')
+    .pipe()
+    .subscribe(
+        (evt:any) => console.log('Eingabe:', evt.target.value)
+    )
+    // Eingabe: 
+    // Eingabe: W
+    // Eingabe: Wi
+    // Eingabe: Wil
+    // Eingabe: Willi
     ```
 
 ##  10. <a name='Typescript'></a>Typescript
@@ -2028,7 +2174,7 @@ Einbinden des Scripts (.js generiert aus .ts) in der HTML-Datei
 
 Beispiele .ts
 
-#### 10.1.1 <a name='>ClassDecorator'></a>Class Decorator
+#### 10.1.1 <a name='ClassDecorator'></a>Class Decorator
 ```typescript
 function personDecorator(myClass: any) {
     console.log('Ich dekoriere....:s', myClass);
@@ -2054,7 +2200,7 @@ function nochEinDecorator(myClass: any) {
 }
 ```
 
-#### 10.1.2 <a name='>MethodDecorator'></a>Method Decorator
+#### 10.1.2 <a name='MethodDecorator'></a>Method Decorator
 ```typescript
 function halloDecorator(a, b, descriptor) {
     console.log('Method Decorator - Prototype d. Class:', a,
@@ -2078,7 +2224,7 @@ function halloDecorator(a, b, descriptor) {
 }
 ```
 
-#### 10.1.3 <a name='>NutzungderDecorators'></a>Nutzung der Decorators
+#### 10.1.3 <a name='NutzungderDecorators'></a>Nutzung der Decorators
 ```typescript
 // ClassDecorator
 // Klasse/Methoden werden immer modifiziert 
@@ -2122,5 +2268,4 @@ console.log(joe);
 ###  10.2. <a name='Types'></a>Types
 ###  10.3. <a name='Interfaces'></a>Interfaces
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
-
 ###  10.5. <a name='Generics'></a>Generics

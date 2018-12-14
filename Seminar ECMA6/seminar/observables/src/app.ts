@@ -5,9 +5,12 @@
 // Observables verwenden (Creator importieren):
 console.log('Los gehts...')
 
-import { Observable, from } from 'rxjs'
-import { take } from 'rxjs/operators';
+// Creators:
+import { Observable, from, timer, fromEvent } from 'rxjs';
+// Operators:
+import { take, startWith, timestamp, filter } from 'rxjs/operators';
 
+// ### Observable, Observer, Subscription:
 let myObservable = new Observable(function (observer) {
     // Stream bilden
     observer.next(1);
@@ -105,16 +108,99 @@ let subscription3 = myObservable
         // Subscribe 3: 4
     );
 
+// früher (RxJs 5/5.5):
+// myObservable
+//    .take(4)
+//    .filter()
+//    .map()
+//    .subscribe()
+
 console.log('#################  Observable aus Array #################')
 
 let blumenArray = ['Rosen', 'Tulpen', 'Nelken', 'Geranien']
 
 // Observable wird über from() direkt für ein Object/Funktion erzeugt:
+// früher als: Observable.from()
 from(blumenArray)
+    .subscribe(
+        // Ohne konkretes Ansprechen von next, error, complete
+        // ist ein Zugriff mittels Reihenfolge möglich
+        val => console.log('onNext:', val),
+        err => console.log('onError:', err),
+        () => console.log('onComplete: Array durchlaufen')
+    );
+// onNext: Rosen
+// onNext: Tulpen
+// onNext: Nelken
+// onNext: Geranien
+// onComplete: Array durchlaufen
+
+from(blumenArray)
+    .pipe(
+        startWith('Danke für die Blumen!')
+    )
+    .subscribe(
+        val => console.log('onNext:', val),
+        err => console.log('onError:', err),
+        () => console.log('onComplete: Array durchlaufen')
+    );
+// onNext: Danke für die Blumen!
+// onNext: Rosen
+// onNext: Tulpen
+// onNext: Nelken
+// onNext: Geranien
+// onComplete: Array durchlaufen
+
+console.log('########### Eventstream bilden ############');
+
+let timerSubscription = timer(5000, 1000)
+    .pipe(
+        timestamp()
+    )
     .subscribe(
         val => console.log(val)
     );
-// Rosen
-// Tulpen
-// Nelken
-// Geranien
+
+setTimeout(function () {
+    console.log("Unsubscribe der timerSubscription!");
+    timerSubscription.unsubscribe();
+}, 15000)
+
+// Timestamp {value: 0, timestamp: 1544781361221}
+// Timestamp {value: 1, timestamp: 1544781362223}
+// Timestamp {value: 2, timestamp: 1544781363223}
+// Timestamp {value: 3, timestamp: 1544781364223}
+// Timestamp {value: 4, timestamp: 1544781365223}
+// Timestamp {value: 5, timestamp: 1544781366231}
+// Timestamp {value: 6, timestamp: 1544781367231}
+// Timestamp {value: 7, timestamp: 1544781368232}
+// Timestamp {value: 8, timestamp: 1544781369232}
+// Timestamp {value: 9, timestamp: 1544781370227}
+// Unsubscribe der timerSubscription!
+
+console.log('########### DOM-Events abonnieren #########')
+
+// Markierung des Elements mit einem Type (MUSS gemacht werden)
+let myBtn = document.getElementById('btn') as HTMLElement;
+
+fromEvent(myBtn, 'click')
+    .pipe(
+        filter((e: any) => e.clientX > 80)
+    ).subscribe(
+        (event: any) => console.log('Klick auf Btn:', event.clientX)
+    )
+// Klick auf Btn: 134
+
+// Markierung des Elements mit einem Type (MUSS gemacht werden)
+let myInput = document.querySelector('#user') as HTMLInputElement;
+
+fromEvent(myInput, 'keyup')
+.pipe()
+.subscribe(
+    (evt:any) => console.log('Eingabe:', evt.target.value)
+)
+// Eingabe: 
+// Eingabe: W
+// Eingabe: Wi
+// Eingabe: Wil
+// Eingabe: Willi
