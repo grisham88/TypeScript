@@ -2378,7 +2378,48 @@ console.log(joe);
             nachname: 'Chan'
         };
         ```
+- Value Types
+    ```typescript
+    // das ist einer!
+    let zweiundvierzig: 42;
+    zweiundvierzig = 42;
+    zweiundvierzig = 17;
+    //  Type '17' is not assignable to type '42'.
+
+    let numBool: number | boolean | null;
+
+    type numBoolNull = number | boolean | null;
+
+    let numBool2: numBoolNull;
+
+    type ampel = 'rot' | 'gelb' | 'grün';
+    type zahlangabe = 'nix' | 'nada' | number | null;
+
+    let color: ampel;
+    color = 'rot'; // ok!
+    ```
+- Functions
+    - Returnwert der Function muss angegeben werden um den Rückgabewert eindeutig speichern zu können
+    - Alternativ wird der Rückgabewert automatisch durch die Input-Typen festgestellt
+    ```typescript
+    function addiere(a: number, b: number) {
+        return a + b;
+    }
+    // oder
+    function addiere2(a: number, b: number): number {
+        return a + b;
+    }
+
+    let erg = addiere(7, 8);
+    let erg2 = addiere2(7, 8);
+    ```
 
 ###  10.3. <a name='Interfaces'></a>Interfaces
+- Beschreibung eines Objekts (Aufbau)
+- Im Gegensatz zu Klassen kann mittels Interface keine Instanz erzeugt werden
+
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
+- Beschreibung eines Objekts (Aufbau)
+- Es kann eine Instanz davon erzeugt werden
+
 ###  10.5. <a name='Generics'></a>Generics
