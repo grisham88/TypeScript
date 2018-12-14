@@ -3,7 +3,7 @@
 // das ist einer!
 let zweiundvierzig: 42;
 zweiundvierzig = 42;
-zweiundvierzig = 17;
+// zweiundvierzig = 17;
 //  Type '17' is not assignable to type '42'.
 
 let numBool: number | boolean | null;

@@ -8,7 +8,7 @@ array1.push('egal');
 
 // TypeInference
 let array2 = ['Rosen'];
-array2.push(42);
+// array2.push(42);
 // Argument of type '42' is not assignable to parameter of type 'string'.
 array2.push('Tulpen');
 

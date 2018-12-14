@@ -6,7 +6,7 @@ a = 'Hallo';
 a = false;
 
 let b = 13;
-b = 'Na?';
+// b = 'Na?';
 // Type '"Na?"' is not assignable to type 'number'.
 
 // Möglichkeit einen Typ zu annotieren (Ein Typ ohne Zuweisung festlegen)
