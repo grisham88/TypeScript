@@ -2265,6 +2265,69 @@ console.log(joe);
 ```
 
 ###  10.2. <a name='Types'></a>Types
+- Erste direkte Zuweisung bestimmt den Typ der Variable
+- Weist man nicht direkt zu, sondern später, wir der Typ any gesetzt
+- Der Typ lässt sich nicht mehr ändern
+- In TypeScript hat eine Variable IMMER einen Type
+- Deklarationsarten
+    - TypeInference
+        ```typescript
+        let a;
+        a = 12;
+        a = 'Hallo';
+        a = false;
+
+        let b = 13;
+        b = 'Na?';
+        // Type '"Na?"' is not assignable to type 'number'.
+        ```
+    - Annotation
+    - Möglichkeit einen Typ zu annotieren (Ein Typ ohne Zuweisung festlegen)
+        ```typescript
+        // generic Type
+        let c: string;
+        c = 'Ein String';
+
+        let e: number = 5;
+
+        // Union Type (Setzt sich aus mehreren Generics zusammen)
+        let d: boolean|number = true;
+        d = 17;
+        
+        // Zuweisung von null/undefined muss explizit erlaubt werden
+        let e: number | null | undefined = 5;
+        e = null;
+        e = undefined;
+        ```
+- Arrays
+    - ohne Typzuweisung (Type any)
+        ```typescript
+        let array1 = [];
+        array1.push(42);
+        array1.push(true);
+        array1.push('egal');
+        ```
+    - mit Typzuweisung
+        - TypeInference
+            ```typescript
+            let array2 = ['Rosen'];
+            array2.push(42);
+            // Argument of type '42' is not assignable
+            // to parameter of type 'string'.        
+            array2.push('Tulpen');
+            
+            //Mehrere Generics
+            let array3 = [42, true];
+            ```
+        - Annotation
+            ```typescript
+            let array4: string[] = [];
+            let array5: (number | string | null)[] = [];
+            array5.push(null);
+            
+            let array6: Array<string | boolean> = [];
+            ```
+
 ###  10.3. <a name='Interfaces'></a>Interfaces
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
 ###  10.5. <a name='Generics'></a>Generics
