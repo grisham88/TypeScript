@@ -2327,6 +2327,57 @@ console.log(joe);
             
             let array6: Array<string | boolean> = [];
             ```
+- Objects
+    - ohne Strukturvorgabe
+        ```typescript
+        let myObj = {};
+        myObj.x = "X"; // hmm...
+        // Property 'x' does not exist on type '{}'.
+        ```
+    - mit Strukturvorgabe und nachträglicher Erweiterung
+        ```typescript
+        let tim = {
+        vorname: 'Tim',
+        nachname: 'Thaler'
+        }
+
+        tim.nachname = 'Joe';
+
+        tim = {
+            vorname: 'Joe',
+            nachname: 'Cool',
+            alter: 42 // geht nicht
+            // Object literal may only specify known properties, and 'alter'
+            // does not exist in type '{ vorname: string; nachname: string; }'.
+        }
+        ```
+    - Annotation mit structural Type
+        ```typescript
+        let joe: {
+            vorname:string,
+            nachname:string
+        };
+
+        // MUSS komplett initialisiert werden!
+        joe = {
+            vorname:'Joe',
+            nachname:'Cool'
+        };
+        joe.nachname = 'Cooler';
+        ```
+    - Annotation (Structural Type speichern)
+        ```typescript
+        type typePerson = {
+            vorname: string,
+            nachname: string
+        };
+
+        let jack: typePerson;
+        jack = {
+            vorname: 'Jack',
+            nachname: 'Chan'
+        };
+        ```
 
 ###  10.3. <a name='Interfaces'></a>Interfaces
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
