@@ -7,7 +7,7 @@ Angular bietet somit auch die Vorzüge von ES6:
 - Generatoren im Stil von Python
 - Reflexion
 
-## Inhalt
+##  Inhalt
 <!-- vscode-markdown-toc -->
 * 1. [Markdown (.md) Formatierungsregeln](#Markdown.mdFormatierungsregeln)
 * 2. [Visual Studio Code](#VisualStudioCode)
@@ -21,9 +21,9 @@ Angular bietet somit auch die Vorzüge von ES6:
 	* 6.2. [Tag 2](#Tag2)
 	* 6.3. [Tag 3](#Tag3)
 * 7. [Installation TypeScript](#InstallationTypeScript)
-    * 7.1  [package.json](#package.json)
+	* 7.1. [package.json](#package.json)
 	* 7.2. [Bootstrap](#Bootstrap)
-    * 7.3  [node_modules](#node_modules)
+	* 7.3. [node_modules](#node_modules)
 * 8. [Installation Webpack](#InstallationWebpack)
 * 9. [ECMA-6](#ECMA-6)
 	* 9.1. [Emmet Cheatsheets](#EmmetCheatsheets)
@@ -41,30 +41,30 @@ Angular bietet somit auch die Vorzüge von ES6:
 	* 9.5. [fetch-API](#fetch-API)
 	* 9.6. [Generatoren](#Generatoren)
 	* 9.7. [class-Keyword vs. Konstruktor](#class-Keywordvs.Konstruktor)
-	* 9.8. [Vererbung](#Vererbung)
+	* 9.8. [Classes und Vererbung](#ClassesundVererbung)
 	* 9.9. [Module (Webpack und TypeScript)](#ModuleWebpackundTypeScript)
 	* 9.10. [Observables](#Observables)
-        * 9.10.1. [Nutzung von Observables](#NutzungvonObservables)
-        * 9.10.2. [Nutzung des Observables mittels Objectabfrage auf den Observable](#NutzungdesObservablesmittelsObjectabfrageaufdenObservable)
-        * 9.10.3. [Eingrenzung des gewünschten Streams mittels .pipe und take](#EingrenzungdesgewünschtenStreamsmittelspipeundtake)
-        * 9.10.4. [Observable wird über from() direkt für ein Object/Funktion erzeugt](#ObservablewirdüberfromdirektfürObjectFunktionerzeugt)
-        * 9.10.5. [Eingrenzung des gewünschten Streams mittels .pipe und startsWith/endsWith](#EingrenzungStreamsmittelspipeundstartsWithendsWith)
-        * 9.10.6. [Eventstream bilden](#Eventstreambilden)
-        * 9.10.7. [DOM-Events abonnieren](#DOMEventsabonnieren)
+		* 9.10.1. [Nutzung von Observables](#NutzungvonObservables)
+		* 9.10.2. [Nutzung des Observables mittels Objectabfrage auf den Observable](#NutzungdesObservablesmittelsObjectabfrageaufdenObservable)
+		* 9.10.3. [Eingrenzung des gewünschten Streams mittels .pipe und take](#EingrenzungdesgewnschtenStreamsmittels.pipeundtake)
+		* 9.10.4. [Observable wird über from() direkt für ein Object/Funktion erzeugt](#ObservablewirdberfromdirektfreinObjectFunktionerzeugt)
+		* 9.10.5. [Eingrenzung des gewünschten Streams mittels .pipe und startsWith/endsWith](#EingrenzungdesgewnschtenStreamsmittels.pipeundstartsWithendsWith)
+		* 9.10.6. [Eventstream bilden](#Eventstreambilden)
+		* 9.10.7. [DOM-Events abonnieren](#DOM-Eventsabonnieren)
 * 10. [Typescript](#Typescript)
 	* 10.1. [Decorators](#Decorators)
-        * 10.1.1. [Class Decorator](#ClassDecorator)
+		* 10.1.1. [Class Decorator](#ClassDecorator)
 		* 10.1.2. [Method Decorator](#MethodDecorator)
 		* 10.1.3. [Nutzung der Decorators](#NutzungderDecorators)
 	* 10.2. [Types](#Types)
-	* 10.3. [Interface vs. Structural Type](#InterfacevsStructuralType)
+	* 10.3. [Interface vs. Structural Type](#Interfacevs.StructuralType)
 	* 10.4. [TS-Classes](#TS-Classes)
 	* 10.5. [Generics](#Generics)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
 	autoSave=true
-	/vscode-markdown-toc-config -->
+	/vscode-markdown-toc-config --> 
     Table of Content über Extension Markdown TOC von Joffrey Kern
 <!-- /vscode-markdown-toc -->
 
@@ -196,18 +196,18 @@ Dadurch wird eine ausführbare .js-Datei erzeugt
     "Hallo, hier ist NPM!!"
     ```
 
-###  7.1 <a name='package.json'></a>package.json
+###  7.1. <a name='package.json'></a>package.json
 Eingabe im Terminal um die package.json zu erzeugen
 ```html
 npm init --yes
 ```
 
-###  7.2 <a name='Bootstrap'></a>Bootstrap
+###  7.2. <a name='Bootstrap'></a>Bootstrap
 ```html
 npm install bootstrap
 ```
 
-### 7.3 <a name='node_modules'></a>node_modules
+###  7.3. <a name='node_modules'></a>node_modules
 Über die package.json wird mittels unten aufgeführten Befehl im Terminal, die node_modules frisch geladen, auch bei nicht vorhandenem Ordner
 ```html
 npm install
@@ -1638,7 +1638,7 @@ Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
 </script>
 ```
 
-###  9.8. <a name='Vererbung'></a>Classes und Vererbung
+###  9.8. <a name='ClassesundVererbung'></a>Classes und Vererbung
 - Beim Vererben muss darauf geachtet werden, welcher Konstruktor die abzuleitende Klasse besitzt (siehe Beispiel)
 - Soll die abgeleitet Klasse eine Methode überschreiben und möchte die Ursprungsmethode ebenfalls nutzen, so muss diese explizit mit "super...." aufgerufen werden
 ```html
@@ -1847,7 +1847,7 @@ import { myTool1 } from './tools';
 import { myTool1Variant } from './tools/tool1'
 ```
 
-### 9.10. <a name='Observables'></a>Observables
+###  9.10. <a name='Observables'></a>Observables
 - https://angular.io/guide/observables
 - https://angular.io/guide/observables-in-angular
 - https://www.learnrxjs.io/
@@ -1872,7 +1872,7 @@ import { myTool1Variant } from './tools/tool1'
         Abfragen der Fehlernachricht, falls vorhanden
 - Paralleles Abfragen des Observables/Streams möglich
 
-#### 9.10.1 <a name='NutzungvonObservables'></a>Nutzung von Observables 
+####  9.10.1. <a name='NutzungvonObservables'></a>Nutzung von Observables 
 ```typescript
 // Creators:
 import { Observable, from, timer } from 'rxjs';
@@ -1942,7 +1942,7 @@ console.log('Subscription:', subscription1);
 // _subscriptions:null
 ```
 
-#### 9.10.2 <a name='NutzungdesObservablesmittelsObjectabfrageaufdenObservable'></a>Nutzung des Observables mittels Objectabfrage auf den Observable
+####  9.10.2. <a name='NutzungdesObservablesmittelsObjectabfrageaufdenObservable'></a>Nutzung des Observables mittels Objectabfrage auf den Observable
 - Paralleles Abfragen des Streams möglich
     ```typescript
     let subscription2 = myObservable.subscribe({
@@ -1966,7 +1966,7 @@ console.log('Subscription:', subscription1);
     // Uncaught Havarie!
     ```
 
-#### 9.10.3 <a name='EingrenzungdesgewünschtenStreamsmittelspipeundtake'></a>Eingrenzung des gewünschten Streams mittels .pipe und take
+####  9.10.3. <a name='EingrenzungdesgewnschtenStreamsmittels.pipeundtake'></a>Eingrenzung des gewünschten Streams mittels .pipe und take
 ```typescript
 // Creators:
 import { Observable } from 'rxjs';
@@ -1997,7 +1997,7 @@ früher (RxJs 5/5.5) waren Operators in Observable INTEGRIERT:
 // -> schlecht (bzw. nicht) tree-shakeable!!!
 ```
 
-#### 9.10.4 <a name='ObservablewirdüberfromdirektfürObjectFunktionerzeugt'></a>Observable wird über from() direkt für ein Object/Funktion erzeugt
+####  9.10.4. <a name='ObservablewirdberfromdirektfreinObjectFunktionerzeugt'></a>Observable wird über from() direkt für ein Object/Funktion erzeugt
 - früher als "Observable.from()" bekannt
     ```typescript
     // Creators:
@@ -2020,7 +2020,7 @@ früher (RxJs 5/5.5) waren Operators in Observable INTEGRIERT:
     // onComplete: Array durchlaufen
     ```
 
-#### 9.10.5 <a name='EingrenzungStreamsmittelspipeundstartsWithendsWith'></a>Eingrenzung des gewünschten Streams mittels .pipe und startsWith/endsWith
+####  9.10.5. <a name='EingrenzungdesgewnschtenStreamsmittels.pipeundstartsWithendsWith'></a>Eingrenzung des gewünschten Streams mittels .pipe und startsWith/endsWith
 - Dem Stream kann damit zu Beginn/Ende etwas angehangen werden
     ```typescript
     // Creators:
@@ -2047,7 +2047,7 @@ früher (RxJs 5/5.5) waren Operators in Observable INTEGRIERT:
     // onComplete: Array durchlaufen
     ```
     
-#### 9.10.6 <a name='Eventstreambilden'></a>Eventstream bilden
+####  9.10.6. <a name='Eventstreambilden'></a>Eventstream bilden
 ```typescript
 // Creators:
 import { Observable, timer } from 'rxjs';
@@ -2080,7 +2080,7 @@ setTimeout(function() {
 // Unsubscribe der timerSubscription!
 ```
 
-#### 9.10.7 <a name='DOMEventsabonnieren'></a>DOM-Events abonnieren
+####  9.10.7. <a name='DOM-Eventsabonnieren'></a>DOM-Events abonnieren
 - im HTML
     ```html
     <!DOCTYPE html>
@@ -2173,7 +2173,7 @@ Einbinden des Scripts (.js generiert aus .ts) in der HTML-Datei
 
 Beispiele .ts
 
-#### 10.1.1 <a name='ClassDecorator'></a>Class Decorator
+####  10.1.1. <a name='ClassDecorator'></a>Class Decorator
 ```typescript
 function personDecorator(myClass: any) {
     console.log('Ich dekoriere....:s', myClass);
@@ -2199,7 +2199,7 @@ function nochEinDecorator(myClass: any) {
 }
 ```
 
-#### 10.1.2 <a name='MethodDecorator'></a>Method Decorator
+####  10.1.2. <a name='MethodDecorator'></a>Method Decorator
 ```typescript
 function halloDecorator(a, b, descriptor) {
     console.log('Method Decorator - Prototype d. Class:', a,
@@ -2223,7 +2223,7 @@ function halloDecorator(a, b, descriptor) {
 }
 ```
 
-#### 10.1.3 <a name='NutzungderDecorators'></a>Nutzung der Decorators
+####  10.1.3. <a name='NutzungderDecorators'></a>Nutzung der Decorators
 ```typescript
 // ClassDecorator
 // Klasse/Methoden werden immer modifiziert 
@@ -2469,7 +2469,7 @@ console.log(joe);
         //testerg2 ist vom Typ number
         ```
 
-###  10.3. <a name='InterfacevsStructuralType'></a>Interface vs. Structural Type
+###  10.3. <a name='Interfacevs.StructuralType'></a>Interface vs. Structural Type
 - Beschreibung eines Objekts (Aufbau)
 - Im Gegensatz zu Klassen kann mittels Interface keine Instanz erzeugt werden
 - Möglichkeit Interfaces vom gleichen Namen mehrfach anzulegen, das Abgeleitete Objekt erhält dann Kombination aller Interfaces
