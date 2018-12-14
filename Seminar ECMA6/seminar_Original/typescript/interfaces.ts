@@ -10,10 +10,10 @@ type TPerson = {
 
 // Interface
 interface IPerson {
-    vorname:string,
-    nachname:string,
-    alter?:number,
-    hallo: ()=>void
+    vorname:string;
+    nachname:string;
+    alter?:number;
+    hallo: ()=>void;
 }
 interface IPerson {
     haustier:string;
