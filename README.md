@@ -2426,7 +2426,6 @@ console.log(joe);
         let addArrow = (a: number, b: number): number => a + b
         ```
     - Function-Types
-        - 
         ```typescript
         let addierer: (val1: number, val2: number) => number = (a, b) => a + b;
         addierer = (a, b) => a + b;
@@ -2449,7 +2448,7 @@ console.log(joe);
         function test(val:number): number;
         function test(val:string): string;
         function test(val:boolean): boolean;,
-        
+
         // Implementierungssignatur
         function test(val:number|string|boolean): string|number|boolean {
             switch(typeof val) {
