@@ -46,6 +46,9 @@ Angular bietet somit auch die Vorzüge von ES6:
 	* 9.10. [Observables](#Observables)
 * 10. [Typescript](#Typescript)
 	* 10.1. [Decorators](#Decorators)
+        * 10.1.1. [Class Decorator](#ClassDecorator)
+		* 10.1.2. [Method Decorator](#MethodDecorator)
+		* 10.1.3. [Nutzung der Decorators](#NutzungderDecorators)
 	* 10.2. [Types](#Types)
 	* 10.3. [Interfaces](#Interfaces)
 	* 10.4. [TS-Classes](#TS-Classes)
@@ -1974,7 +1977,7 @@ console.log('Subscription:', subscription1);
 - Observable wird über from() direkt für ein Object/Funktion erzeugt:
     ```typescript
     import { Observable, from } from 'rxjs'
-    
+
     let blumenArray = ['Rosen', 'Tulpen', 'Nelken', 'Geranien']
 
     from(blumenArray)
@@ -2023,9 +2026,10 @@ Einbinden des Scripts (.js generiert aus .ts) in der HTML-Datei
 </head>
 ```
 
-Beispiel .ts
+Beispiele .ts
+
+#### 10.1.1 <a name='>Class Decorator'></a>Class Decorator
 ```typescript
-// Class Decorator
 function personDecorator(myClass: any) {
     console.log('Ich dekoriere....:s', myClass);
 
@@ -2048,8 +2052,10 @@ function personDecorator(myClass: any) {
 function nochEinDecorator(myClass: any) {
     console.log('Ich dekoriere auch!');
 }
+```
 
-// Method Decorator
+#### 10.1.2 <a name='>Method Decorator'></a>Method Decorator
+```typescript
 function halloDecorator(a, b, descriptor) {
     console.log('Method Decorator - Prototype d. Class:', a,
         'propertyKey:', b,
@@ -2070,7 +2076,10 @@ function halloDecorator(a, b, descriptor) {
         configurable: true
     }
 }
+```
 
+#### 10.1.3 <a name='>Nutzung der Decorators'></a>Nutzung der Decorators
+```typescript
 // ClassDecorator
 // Klasse/Methoden werden immer modifiziert 
 // und nicht erst durch Instanzierungen bzw. Aufrufe
