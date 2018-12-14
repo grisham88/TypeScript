@@ -51,7 +51,6 @@ Angular bietet somit auch die Vorzüge von ES6:
         * 9.10.5. [Eingrenzung des gewünschten Streams mittels .pipe und startsWith/endsWith](#EingrenzungStreamsmittelspipeundstartsWithendsWith)
         * 9.10.6. [Eventstream bilden](#Eventstreambilden)
         * 9.10.7. [DOM-Events abonnieren](#DOMEventsabonnieren)
-        DOMEventsabonnieren
 * 10. [Typescript](#Typescript)
 	* 10.1. [Decorators](#Decorators)
         * 10.1.1. [Class Decorator](#ClassDecorator)
