@@ -38,6 +38,11 @@ Angular bietet somit auch die Vorzüge von ES6:
 		* 9.3.1. [Functions](#Functions)
 		* 9.3.2. [Arrow-Functions](#Arrow-Functions)
 	* 9.4. [Promises -> Chains](#Promises-Chains)
+		* 9.4.1. [Promises](#Promises)
+		* 9.4.2. [Ausführung mit mehreren Promises hintereinandergeschalten (Nutzung eigener Promises):](#AusfhrungmitmehrerenPromiseshintereinandergeschaltenNutzungeigenerPromises:)
+		* 9.4.3. [Mehrere Promises durch direkte Hintereinanderschaltung (Promise-Chain/)](#MehrerePromisesdurchdirekteHintereinanderschaltungPromise-Chain)
+		* 9.4.4. [Resolve Funktion des Promise kann direkt angesprochen werden mit einem Rückgabewert](#ResolveFunktiondesPromisekanndirektangesprochenwerdenmiteinemRckgabewert)
+		* 9.4.5. [Promises zu einem XMLHttpRequest (Ajax)](#PromiseszueinemXMLHttpRequestAjax)
 	* 9.5. [fetch-API](#fetch-API)
 	* 9.6. [Generatoren](#Generatoren)
 	* 9.7. [class-Keyword vs. Konstruktor](#class-Keywordvs.Konstruktor)
@@ -1001,6 +1006,9 @@ In computing and telecommunications, the payload is the part of transmitted data
     - Observable mit .subscribe (cb) als Rückgabewert
 - In Skripten wird erst der ganze Code durchlaufen, sodass Funktionen in Funktionen frühestens nach dem kompletten Durchlauf gestartet werden.
 
+Beispiele:
+
+####  9.4.1. <a name='Promises'></a>Promises
 ```html
 <script>
     let prom1 = new Promise(function (resolve, reject) {
@@ -1060,7 +1068,7 @@ In computing and telecommunications, the payload is the part of transmitted data
 </script>
 ```
 
-Ausführung mit mehreren Promises hintereinandergeschalten (Nutzung eigener Promises):  
+####  9.4.2. <a name='AusfhrungmitmehrerenPromiseshintereinandergeschaltenNutzungeigenerPromises:'></a>Ausführung mit mehreren Promises hintereinandergeschalten (Nutzung eigener Promises):  
 ```html
 <script>
     let prom1Level1 = new Promise(function (resolve, reject) {
@@ -1126,7 +1134,7 @@ Ausführung mit mehreren Promises hintereinandergeschalten (Nutzung eigener Prom
 </script>
 ```
 
-Mehrere Promises durch direkte Hintereinanderschaltung (Promise-Chain/)
+####  9.4.3. <a name='MehrerePromisesdurchdirekteHintereinanderschaltungPromise-Chain'></a>Mehrere Promises durch direkte Hintereinanderschaltung (Promise-Chain/)
 ```html
 <script>
     // Level 1
@@ -1174,7 +1182,7 @@ Mehrere Promises durch direkte Hintereinanderschaltung (Promise-Chain/)
 </script>
 ```
 
-Resolve Funktion des Promise kann direkt angesprochen werden mit einem Rückgabewert
+####  9.4.4. <a name='ResolveFunktiondesPromisekanndirektangesprochenwerdenmiteinemRckgabewert'></a>Resolve Funktion des Promise kann direkt angesprochen werden mit einem Rückgabewert
 ```html
 <script>
     Promise.resolve(42).then(function(val){
@@ -1184,7 +1192,7 @@ Resolve Funktion des Promise kann direkt angesprochen werden mit einem Rückgabe
 </script>
 ```
 
-Promises zu einem XMLHttpRequest (Ajax)
+####  9.4.5. <a name='PromiseszueinemXMLHttpRequestAjax'></a>Promises zu einem XMLHttpRequest (Ajax)
 ```html
 <script>
     new Promise(function (resolve, reject) {
