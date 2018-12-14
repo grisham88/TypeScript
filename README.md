@@ -57,7 +57,7 @@ Angular bietet somit auch die Vorzüge von ES6:
 		* 10.1.2. [Method Decorator](#MethodDecorator)
 		* 10.1.3. [Nutzung der Decorators](#NutzungderDecorators)
 	* 10.2. [Types](#Types)
-	* 10.3. [Interfaces](#Interfaces)
+	* 10.3. [Interface vs. Structural Type](#InterfacevsStructuralType)
 	* 10.4. [TS-Classes](#TS-Classes)
 	* 10.5. [Generics](#Generics)
 
@@ -2469,9 +2469,51 @@ console.log(joe);
         //testerg2 ist vom Typ number
         ```
 
-###  10.3. <a name='Interfaces'></a>Interfaces
+###  10.3. <a name='InterfacevsStructuralType'></a>Interface vs. Structural Type
 - Beschreibung eines Objekts (Aufbau)
 - Im Gegensatz zu Klassen kann mittels Interface keine Instanz erzeugt werden
+- Möglichkeit Interfaces vom gleichen Namen mehrfach anzulegen, das Abgeleitete Objekt erhält dann Kombination aller Interfaces
+- https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c
+```typescript
+// Structural Type speichern:
+type TPerson = {
+    vorname: string,
+    nachname: string,
+    alter?: number,
+    hallo: () => void
+};
+
+let popeye: TPerson;
+popeye = {
+    vorname: "popeye",
+    nachname: "Pan",
+    alter: 40,
+    hallo: function () {
+        console.log("Hallo")
+    }
+}
+
+// Interface
+interface IPerson {
+    vorname: string,
+    nachname: string,
+    alter?: number,
+    hallo: () => void
+}
+
+interface IPerson {
+    haustier: string
+}
+
+let pete: IPerson = {
+    vorname: "Pete",
+    nachname: "Pan",
+    hallo: function () {
+        console.log("Hallo")
+    },
+    haustier: 'Dackel'
+};
+```
 
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
 - Beschreibung eines Objekts (Aufbau)
