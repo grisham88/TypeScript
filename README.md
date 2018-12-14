@@ -41,6 +41,10 @@ Angular bietet somit auch die Vorzüge von ES6:
 	* 9.5. [fetch-API](#fetch-API)
 	* 9.6. [Generatoren](#Generatoren)
 	* 9.7. [class-Keyword vs. Konstruktor](#class-Keywordvs.Konstruktor)
+		* 9.7.1. [class vs. Konstruktor](#classvs.Konstruktor)
+		* 9.7.2. [Properties in Class](#PropertiesinClass)
+		* 9.7.3. [Properties in Class mittels Symbols (AccessorSpeicher-Key)](#PropertiesinClassmittelsSymbolsAccessorSpeicher-Key)
+		* 9.7.4. [Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)](#PropertiesinClassmittelsGlobalenSymbolsAccessorSpeicher-Key)
 	* 9.8. [Classes und Vererbung](#ClassesundVererbung)
 	* 9.9. [Module (Webpack und TypeScript)](#ModuleWebpackundTypeScript)
 	* 9.10. [Observables](#Observables)
@@ -64,9 +68,10 @@ Angular bietet somit auch die Vorzüge von ES6:
 <!-- vscode-markdown-toc-config
 	numbering=true
 	autoSave=true
-	/vscode-markdown-toc-config --> 
-    Table of Content über Extension Markdown TOC von Joffrey Kern
+	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
+ 
+Table of Content über Extension Markdown TOC von Joffrey Kern
 
 ##  1. <a name='Markdown.mdFormatierungsregeln'></a>Markdown (.md) Formatierungsregeln
 * [Markdown Tutorial Git](http://agea.github.io/tutorial.md/)
@@ -1397,7 +1402,9 @@ Aufruf mehrerer Promises mit Promise.all()
 
 ###  9.7. <a name='class-Keywordvs.Konstruktor'></a>class-Keyword vs. Konstruktor
 
-Klassen in TypeScript dürfen nur Concise Methods enthalten, oder Properties über den constructor zur Verfügung stellen
+Klassen in TypeScript dürfen nur Concise Methods enthalten, oder Properties über den constructor zur Verfügung stellen  
+Beispiele:  
+####  9.7.1. <a name='classvs.Konstruktor'></a>class vs. Konstruktor
 ```html
 <script>
     let PersonConstructor = function (vorname) {
@@ -1454,7 +1461,7 @@ Klassen in TypeScript dürfen nur Concise Methods enthalten, oder Properties üb
 </script>
 ```
 
-Beispiel mit Properties in Class
+####  9.7.2. <a name='PropertiesinClass'></a>Properties in Class
 ```html
 <script>
     let PersonConstructor = function (vorname) {
@@ -1522,7 +1529,7 @@ Beispiel mit Properties in Class
 </script>
 ```
 
-Beispiel mit Properties in Class mittels Symbols (AccessorSpeicher-Key)
+####  9.7.3. <a name='PropertiesinClassmittelsSymbolsAccessorSpeicher-Key'></a>Properties in Class mittels Symbols (AccessorSpeicher-Key)
 ```html
 <script>
     "use strict";
@@ -1576,7 +1583,7 @@ Beispiel mit Properties in Class mittels Symbols (AccessorSpeicher-Key)
 </script>
 ```
 
-Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
+####  9.7.4. <a name='PropertiesinClassmittelsGlobalenSymbolsAccessorSpeicher-Key'></a>Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
 ```html
 <script>
     "use strict";
@@ -1641,93 +1648,96 @@ Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
 ###  9.8. <a name='ClassesundVererbung'></a>Classes und Vererbung
 - Beim Vererben muss darauf geachtet werden, welcher Konstruktor die abzuleitende Klasse besitzt (siehe Beispiel)
 - Soll die abgeleitet Klasse eine Methode überschreiben und möchte die Ursprungsmethode ebenfalls nutzen, so muss diese explizit mit "super...." aufgerufen werden
-```html
-<script>
-    "use strict";
+    ```html
+    <script>
+        "use strict";
 
-    class Person {
-        constructor(vorname) {
-            this.vorname = vorname;
-            this[Symbol.for('haustier')] = "Dackel";
-        }
-        hallo() {
-            console.log('Hallo, ich bin', this.vorname,
-                '. Ich habe einen', this.haustier);
-        }
-        get haustier() {
-            return this[Symbol.for('haustier')];
-        }
-        set haustier(neuesHaustier) {
-            this[Symbol.for('haustier')] = neuesHaustier
-        }
-    };
+        class Person {
+            constructor(vorname) {
+                this.vorname = vorname;
+                this[Symbol.for('haustier')] = "Dackel";
+            }
+            hallo() {
+                console.log('Hallo, ich bin', this.vorname,
+                    '. Ich habe einen', this.haustier);
+            }
+            get haustier() {
+                return this[Symbol.for('haustier')];
+            }
+            set haustier(neuesHaustier) {
+                this[Symbol.for('haustier')] = neuesHaustier
+            }
+        };
 
-    let peter = new Person("Peter");
-    console.log(peter);
-    // Person
-    // vorname:"Peter"
-    // Symbol(haustier):"Kaiman"
-    // haustier:(...)
-    // __proto__:
-    // constructor:class Person
-    // hallo:ƒ hallo()
-    // haustier:(...)
-    // get haustier:ƒ haustier()
-    // set haustier:ƒ haustier(neuesHaustier)
-    // __proto__:Object
+        let peter = new Person("Peter");
+        console.log(peter);
+        // Person
+        // vorname:"Peter"
+        // Symbol(haustier):"Kaiman"
+        // haustier:(...)
+        // __proto__:
+        // constructor:class Person
+        // hallo:ƒ hallo()
+        // haustier:(...)
+        // get haustier:ƒ haustier()
+        // set haustier:ƒ haustier(neuesHaustier)
+        // __proto__:Object
 
-    peter.hallo();
-    // Hallo, ich bin Peter . Ich habe einen Dackel
-
-    // Klasse kann von Klasse "erben":
-    class Fahrer extends Person {
-        // implizit (solange hier NICHTS ist):
-        // ruft Konstruktor der Superklasse
-        // Aber:
-        constructor(fuehrerschein, ...rest) {
-            // Wird explizit ein Konstruktor gesetzt, so muss mit super() 
-            // der Konstruktor der Abzuleitenden Klasse aufgerufen werden
-            // und die notwendigen Parameter des super-Konstruktors mitgegeben werden
-            // Konstruktor - Parameter der Subklasse zuerst übergeben, 
-            // dann der Superclass mittels Spread ...
-            super(...rest);
-            this.auto = "BMW";
-            this.fuehrerschein = fuehrerschein;
+        peter.hallo();
+        // Hallo, ich bin Peter . Ich habe einen Dackel
+    </script>
+    ```
+    Klasse kann von Klasse "erben":
+    ```typescript
+    <script>
+        class Fahrer extends Person {
+            // implizit (solange hier NICHTS ist):
+            // ruft Konstruktor der Superklasse
+            // Aber:
+            constructor(fuehrerschein, ...rest) {
+                // Wird explizit ein Konstruktor gesetzt, so muss mit super() 
+                // der Konstruktor der Abzuleitenden Klasse aufgerufen werden
+                // und die notwendigen Parameter des super-Konstruktors mitgegeben werden
+                // Konstruktor - Parameter der Subklasse zuerst übergeben, 
+                // dann der Superclass mittels Spread ...
+                super(...rest);
+                this.auto = "BMW";
+                this.fuehrerschein = fuehrerschein;
+            }
+            fahren() {
+                console.log('Ich fahre Auto...');
+            }
+            hallo() {
+                // Methode der Superclass ebenfalls aufrufen (Explizit)
+                super.hallo();
+                console.log("Ich bin ein Fahrer und fahre", this.auto);
+            }
         }
-        fahren() {
-            console.log('Ich fahre Auto...');
-        }
-        hallo() {
-            // Methode der Superclass ebenfalls aufrufen (Explizit)
-            super.hallo();
-            console.log("Ich bin ein Fahrer und fahre", this.auto);
-        }
-    }
 
-    let fritz = new Fahrer("Klasse 1", 'Fritz');
-    console.log(fritz);
-    // Fahrer {vorname: "Fritz", auto: "BMW", fuehrerschein: "Klasse 1", Symbol(haustier): "Dackel"}
-    // auto:"BMW"
-    // fuehrerschein:"Klasse 1"
-    // vorname:"Fritz"
-    // Symbol(haustier):"Dackel"
-    // haustier:(...)
-    // __proto__:Person
-    // constructor:class Fahrer
-    // fahren:ƒ fahren()
-    // haustier:(...)
-    // __proto__:
-    // constructor:class Person
-    // hallo:ƒ hallo()
-    // haustier:(...)
-    // get haustier:ƒ haustier()
-    // set haustier:ƒ haustier(neuesHaustier)
+        let fritz = new Fahrer("Klasse 1", 'Fritz');
+        console.log(fritz);
+        // Fahrer {vorname: "Fritz", auto: "BMW", fuehrerschein: "Klasse 1", Symbol(haustier): "Dackel"}
+        // auto:"BMW"
+        // fuehrerschein:"Klasse 1"
+        // vorname:"Fritz"
+        // Symbol(haustier):"Dackel"
+        // haustier:(...)
+        // __proto__:Person
+        // constructor:class Fahrer
+        // fahren:ƒ fahren()
+        // haustier:(...)
+        // __proto__:
+        // constructor:class Person
+        // hallo:ƒ hallo()
+        // haustier:(...)
+        // get haustier:ƒ haustier()
+        // set haustier:ƒ haustier(neuesHaustier)
 
-    fritz.hallo();
-    // Hallo, ich bin Fritz . Ich habe einen Dackel
-    // Ich bin ein Fahrer und fahre BMW
-</script>
-```
+        fritz.hallo();
+        // Hallo, ich bin Fritz . Ich habe einen Dackel
+        // Ich bin ein Fahrer und fahre BMW
+    </script>
+    ```
 
 ###  9.9. <a name='ModuleWebpackundTypeScript'></a>Module (Webpack und TypeScript)
 - https://developers.google.com/web/fundamentals/primers/modules
@@ -1931,7 +1941,8 @@ console.log('Subscription:', subscription1);
 // Subscription: 
 // Subscriber {closed: true, _parent: null, _parents: null, _subscriptions: null, syncErrorValue: null, …}
 // closed:true
-// destination:SafeSubscriber {closed: true, _parent: null, _parents: null, _subscriptions: null, syncErrorValue: null, …}
+// destination:SafeSubscriber {closed: true, _parent: null, _parents: null, 
+// _subscriptions: null, syncErrorValue: null, …}
 // isStopped:true
 // syncErrorThrowable:true
 // syncErrorThrown:false
