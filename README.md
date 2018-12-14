@@ -52,6 +52,14 @@ Angular bietet somit auch die Vorzüge von ES6:
 		* 9.7.4. [Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)](#PropertiesinClassmittelsGlobalenSymbolsAccessorSpeicher-Key)
 	* 9.8. [Classes und Vererbung](#ClassesundVererbung)
 	* 9.9. [Module (Webpack und TypeScript)](#ModuleWebpackundTypeScript)
+		* 9.9.1. [Modules (Export, einzelne Parameter)](#ModulesExporteinzelneParameter)
+		* 9.9.2. [Modules (DefaultExport)](#ModulesDefaultExport)
+		* 9.9.3. [Modules (Import BY Name und Nutzung)](#ModulesImportBYNameundNutzung)
+		* 9.9.4. [Modules (Import BY Alias und Nutzung)](#ModulesImportBYAliasundNutzung)
+		* 9.9.5. [Modules (Import des ganzen Moduls Nutzung)](#ModulesImportdesganzenModulsNutzung)
+		* 9.9.6. [Modules (Import des Default Exports Nutzung)](#ModulesImportdesDefaultExportsNutzung)
+		* 9.9.7. [Zusammenfassung mehrer Module für den Import in ein Module mittels barrels (dieses als index.ts deklarieren)](#ZusammenfassungmehrerModulefrdenImportineinModulemittelsbarrelsdiesesalsindex.tsdeklarieren)
+		* 9.9.8. [Import der gesammelten Module über Verzeichnis](#ImportdergesammeltenModuleberVerzeichnis)
 	* 9.10. [Observables](#Observables)
 		* 9.10.1. [Nutzung von Observables](#NutzungvonObservables)
 		* 9.10.2. [Nutzung des Observables mittels Objectabfrage auf den Observable](#NutzungdesObservablesmittelsObjectabfrageaufdenObservable)
@@ -66,8 +74,21 @@ Angular bietet somit auch die Vorzüge von ES6:
 		* 10.1.2. [Method Decorator](#MethodDecorator)
 		* 10.1.3. [Nutzung der Decorators](#NutzungderDecorators)
 	* 10.2. [Types](#Types)
+		* 10.2.1. [Deklarationsarten](#Deklarationsarten)
+		* 10.2.2. [Arrays](#Arrays-1)
+		* 10.2.3. [Objects](#Objects)
+		* 10.2.4. [Value Types](#ValueTypes)
+		* 10.2.5. [Function Types (Typisierung)](#FunctionTypesTypisierung)
 	* 10.3. [Interface vs. Structural Type](#Interfacevs.StructuralType)
+		* 10.3.1. [Structural Type](#StructuralType)
+		* 10.3.2. [Interface](#Interface)
 	* 10.4. [TS-Classes](#TS-Classes)
+		* 10.4.1. [Klasse anlegen und nutzen](#Klasseanlegenundnutzen)
+		* 10.4.2. [Ableitung einer Klasse (Erweiterung)](#AbleitungeinerKlasseErweiterung)
+		* 10.4.3. [Nutzung von Interfaces um nur bestimmte Properties nutzen zu müssen](#NutzungvonInterfacesumnurbestimmtePropertiesnutzenzumssen)
+		* 10.4.4. [Klasse deklarieren/instanzieren mittels Interface](#KlassedeklariereninstanzierenmittelsInterface)
+		* 10.4.5. [Abstract classes](#Abstractclasses)
+		* 10.4.6. [Static Members in Classes](#StaticMembersinClasses)
 	* 10.5. [Generics](#Generics)
 
 <!-- vscode-markdown-toc-config
@@ -707,9 +728,7 @@ npm install webpack-dev-server -g
 ```
 
 ##### Payload
-```html
 In computing and telecommunications, the payload is the part of transmitted data that is the actual intended message. Headers and metadata are sent only to enable payload delivery. In the context of a computer virus or worm, the payload is the portion of the malware which performs malicious action.
-```
 
 ##### Symbols
 - https://developer.mozilla.org/en-US/docs/Glossary/Symbol
@@ -1758,7 +1777,8 @@ Beispiele:
     ```
 - Mittels Webpack Server, wird direkt jede Änderung sofort kompiliert und auf der Oberfläche zur Verfügung gestellt
 
-Beispiel eines Modules (Export, einzelne Parameter)
+Beispiele:
+####  9.9.1. <a name='ModulesExporteinzelneParameter'></a>Modules (Export, einzelne Parameter)
  ```typescript
 console.log('Modul 1');
 
@@ -1786,7 +1806,7 @@ let zweiteZahl = 4;
 export { ersteZahl, zweiteZahl }
 ```
 
-Beispiel eines Modules (DefaultExport)
+####  9.9.2. <a name='ModulesDefaultExport'></a>Modules (DefaultExport)
 - https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/export
     ```typescript
     console.log('Modul 3');
@@ -1811,7 +1831,7 @@ Beispiel eines Modules (DefaultExport)
     export default normalTools;
     ```
 
-Beispiel eines Modules (Import BY Name und Nutzung)
+####  9.9.3. <a name='ModulesImportBYNameundNutzung'></a>Modules (Import BY Name und Nutzung)
  ```typescript
 import { value1, toolObject, toolFunction } from './modul1';
 
@@ -1821,7 +1841,7 @@ let propA = toolObject.a;
 console.log('prop a aus toolObject', propA);
 ```
 
-Beispiel eines Modules (Import BY Alias und Nutzung)
+####  9.9.4. <a name='ModulesImportBYAliasundNutzung'></a>Modules (Import BY Alias und Nutzung)
  ```typescript
 import { value2 as value2Modul1 } from './modul1';
 
@@ -1829,7 +1849,7 @@ let value2 = 'Ich bin schon belegt!'; // !!!
 console.log('Alias:', value2Modul1);
 ```
 
-Beispiel eines Modules (Import des ganzen Moduls Nutzung)
+####  9.9.5. <a name='ModulesImportdesganzenModulsNutzung'></a>Modules (Import des ganzen Moduls Nutzung)
  ```typescript
 // ICH WILL ALLES! Namespacing mit Aliasobjekt
 import * as tools from './modul2';
@@ -1838,7 +1858,7 @@ import * as tools from './modul2';
 console.log(tools);
 ```
 
-Beispiel eines Modules (Import des Default Exports Nutzung)
+####  9.9.6. <a name='ModulesImportdesDefaultExportsNutzung'></a>Modules (Import des Default Exports Nutzung)
  ```typescript
 //Defaultimport
 import toolset from './modul3';
@@ -1847,7 +1867,7 @@ import toolset from './modul3';
 console.log(toolset);
 ```
 
-Zusammenfassung mehrer Module für den Import in ein Module mittels barrels (dieses als index.ts deklarieren)
+####  9.9.7. <a name='ZusammenfassungmehrerModulefrdenImportineinModulemittelsbarrelsdiesesalsindex.tsdeklarieren'></a>Zusammenfassung mehrer Module für den Import in ein Module mittels barrels (dieses als index.ts deklarieren)
  ```typescript
 import { myTool1 } from './tool1';
 import { myTool2 } from './tool2';
@@ -1856,7 +1876,8 @@ export { myTool3 } from './tool3';
 
 export { myTool1, myTool2 }
 ```
-Import der gesammelten Module über Verzeichnis
+
+####  9.9.8. <a name='ImportdergesammeltenModuleberVerzeichnis'></a>Import der gesammelten Module über Verzeichnis
 ```typescript
 // Import aus Verzeichnis (Barrel):
 import { myTool1 } from './tools';
@@ -2288,253 +2309,254 @@ console.log(joe);
 - Weist man nicht direkt zu, sondern später, wir der Typ any gesetzt
 - Der Typ lässt sich nicht mehr ändern
 - In TypeScript hat eine Variable IMMER einen Type
-- Deklarationsarten
-    - TypeInference
-        ```typescript
-        let a;
-        a = 12;
-        a = 'Hallo';
-        a = false;
+####  10.2.1. <a name='Deklarationsarten'></a>Deklarationsarten
+- TypeInference
+    ```typescript
+    let a;
+    a = 12;
+    a = 'Hallo';
+    a = false;
 
-        let b = 13;
-        b = 'Na?';
-        // Type '"Na?"' is not assignable to type 'number'.
-        ```
-    - Annotation
-    - Möglichkeit einen Typ zu annotieren (Ein Typ ohne Zuweisung festlegen)
-        ```typescript
-        // generic Type
-        let c: string;
-        c = 'Ein String';
+    let b = 13;
+    b = 'Na?';
+    // Type '"Na?"' is not assignable to type 'number'.
+    ```
+- Annotation
+- Möglichkeit einen Typ zu annotieren (Ein Typ ohne Zuweisung festlegen)
+    ```typescript
+    // generic Type
+    let c: string;
+    c = 'Ein String';
 
         let e: number = 5;
 
-        // Union Type (Setzt sich aus mehreren Generics zusammen)
-        let d: boolean|number = true;
-        d = 17;
+    // Union Type (Setzt sich aus mehreren Generics zusammen)
+    let d: boolean|number = true;
+    d = 17;
         
-        // Zuweisung von null/undefined muss explizit erlaubt werden
-        let e: number | null | undefined = 5;
-        e = null;
-        e = undefined;
-        ```
-- Arrays
-    - ohne Typzuweisung (Type any)
+    // Zuweisung von null/undefined muss explizit erlaubt werden
+    let e: number | null | undefined = 5;
+    e = null;
+    e = undefined;
+    ```
+
+####  10.2.2. <a name='Arrays-1'></a>Arrays
+- ohne Typzuweisung (Type any)
+    ```typescript
+    let array1 = [];
+    array1.push(42);
+    array1.push(true);
+    array1.push('egal');
+    ```
+- mit Typzuweisung
+    - TypeInference
         ```typescript
-        let array1 = [];
-        array1.push(42);
-        array1.push(true);
-        array1.push('egal');
-        ```
-    - mit Typzuweisung
-        - TypeInference
-            ```typescript
-            let array2 = ['Rosen'];
-            array2.push(42);
-            // Argument of type '42' is not assignable
-            // to parameter of type 'string'.        
-            array2.push('Tulpen');
+        let array2 = ['Rosen'];
+        array2.push(42);
+        // Argument of type '42' is not assignable
+        // to parameter of type 'string'.        
+        array2.push('Tulpen');
             
-            //Mehrere Generics
-            let array3 = [42, true];
-            ```
-        - Annotation
-            ```typescript
-            let array4: string[] = [];
-            let array5: (number | string | null)[] = [];
-            array5.push(null);
-            
-            let array6: Array<string | boolean> = [];
-            ```
-- Objects
-    - ohne Strukturvorgabe
-        ```typescript
-        let myObj = {};
-        myObj.x = "X"; // hmm...
-        // Property 'x' does not exist on type '{}'.
+        //Mehrere Generics
+        let array3 = [42, true];
         ```
-    - mit Strukturvorgabe und nachträglicher Erweiterung
+    - Annotation
         ```typescript
-        let tim = {
+        let array4: string[] = [];
+        let array5: (number | string | null)[] = [];
+        array5.push(null);
+            
+        let array6: Array<string | boolean> = [];
+        ```
+####  10.2.3. <a name='Objects'></a>Objects
+- ohne Strukturvorgabe
+    ```typescript
+    let myObj = {};
+    myObj.x = "X"; // hmm...
+    // Property 'x' does not exist on type '{}'.
+    ```
+- mit Strukturvorgabe und nachträglicher Erweiterung
+    ```typescript
+    let tim = {
         vorname: 'Tim',
         nachname: 'Thaler'
-        }
+    }
 
-        tim.nachname = 'Joe';
+    tim.nachname = 'Joe';
 
-        tim = {
-            vorname: 'Joe',
-            nachname: 'Cool',
-            alter: 42 // geht nicht
+    tim = {
+        vorname: 'Joe',
+        nachname: 'Cool',
+        alter: 42 // geht nicht
             // Object literal may only specify known properties, and 'alter'
             // does not exist in type '{ vorname: string; nachname: string; }'.
-        }
-        ```
-    - Annotation mit structural Type
-        ```typescript
-        let joe: {
-            vorname:string,
-            nachname:string
-        };
-
-        // MUSS komplett initialisiert werden!
-        joe = {
-            vorname:'Joe',
-            nachname:'Cool'
-        };
-        joe.nachname = 'Cooler';
-        ```
-    - Annotation (Structural Type speichern)
-        ```typescript
-        type typePerson = {
-            vorname: string,
-            nachname: string
-        };
-
-        let jack: typePerson;
-        jack = {
-            vorname: 'Jack',
-            nachname: 'Chan'
-        };
-        ```
-- Value Types
-    ```typescript
-    // das ist einer!
-    let zweiundvierzig: 42;
-    zweiundvierzig = 42;
-    zweiundvierzig = 17;
-    //  Type '17' is not assignable to type '42'.
-
-    let numBool: number | boolean | null;
-
-    type numBoolNull = number | boolean | null;
-
-    let numBool2: numBoolNull;
-
-    type ampel = 'rot' | 'gelb' | 'grün';
-    type zahlangabe = 'nix' | 'nada' | number | null;
-
-    let color: ampel;
-    color = 'rot'; // ok!
+    }
     ```
-- Function Types (Typisierung)
-    - https://www.typescriptlang.org/docs/handbook/functions.html
-    - Returnwert der Function muss angegeben werden um den Rückgabewert eindeutig speichern zu können
-    - http://www.albertgao.xyz/2016/08/11/how-to-declare-a-function-type-variable-in-typescript/
-    - Alternativ wird der Rückgabewert automatisch durch die Input-Typen festgestellt
-        ```typescript
-        function addiere(a: number, b: number) {
-            return a + b;
-        }
-        // oder
-        function addiere2(a: number, b: number): number {
-            return a + b;
-        }
+- Annotation mit structural Type
+    ```typescript
+    let joe: {
+        vorname:string,
+        nachname:string
+    };
 
-        let erg = addiere(7, 8);
-        let erg2 = addiere2(7, 8);    
-        ```
-    - returnType void
-        ```typescript
-        function log() {
-            console.log('Ausloggen!');
-        }
-        ```
-    - Arrow-Function mit Rückgabetyp
-        ```typescript
-        let addArrow = (a: number, b: number): number => a + b
-        ```
-    - Function-Types
-        ```typescript
-        let addierer: (val1: number, val2: number) => number = (a, b) => a + b;
-        addierer = (a, b) => a + b;
-        ```
-    - Function mit Optionalem Parameter -> ?, oder Default-Parameter -> =
-        ```typescript
-        function addiereMehr(a: number, b: number = 0, c?: number): number {
-            if (c) {
-                return a + b + c;
-            }
-            return a + b;
-        }
-        erg = addiereMehr(6, 9, 4);
-        erg = addiereMehr(6, 9);
-        erg = addiereMehr(6);
-        ```
-    - Signaturen
-        ```typescript
-        // Signaturoverload:
-        function test(val:number): number;
-        function test(val:string): string;
-        function test(val:boolean): boolean;,
+    // MUSS komplett initialisiert werden!
+    joe = {
+        vorname:'Joe',
+        nachname:'Cool'
+    };
+    joe.nachname = 'Cooler';
+    ```
+- Annotation (Structural Type speichern)
+    ```typescript
+    type typePerson = {
+        vorname: string,
+        nachname: string
+    };
 
-        // Implementierungssignatur
-        function test(val:number|string|boolean): string|number|boolean {
-            switch(typeof val) {
-                case 'string':
-                    return 'Teststring';
-                case 'number':
-                    return 42;
-                case 'boolean':
-                    return true;
-                default:
-                    return 'Das war falsch';
-            }
-        }
+    let jack: typePerson;
+    jack = {
+        vorname: 'Jack',
+        nachname: 'Chan'
+    };
+    ```
+####  10.2.4. <a name='ValueTypes'></a>Value Types
+```typescript
+// das ist einer!
+let zweiundvierzig: 42;
+zweiundvierzig = 42;
+zweiundvierzig = 17;
+//  Type '17' is not assignable to type '42'.
 
-        let testerg = test('Beispiel');
-        //testerg ist vom Typ string
-        let testerg2 = test(17);
-        //testerg2 ist vom Typ number
-        ```
+let numBool: number | boolean | null;
+
+type numBoolNull = number | boolean | null;
+
+let numBool2: numBoolNull;
+
+type ampel = 'rot' | 'gelb' | 'grün';
+type zahlangabe = 'nix' | 'nada' | number | null;
+
+let color: ampel;
+color = 'rot'; // ok!
+```
+####  10.2.5. <a name='FunctionTypesTypisierung'></a>Function Types (Typisierung)
+- https://www.typescriptlang.org/docs/handbook/functions.html
+- Returnwert der Function muss angegeben werden um den Rückgabewert eindeutig speichern zu können
+- http://www.albertgao.xyz/2016/08/11/how-to-declare-a-function-type-variable-in-typescript/
+- Alternativ wird der Rückgabewert automatisch durch die Input-Typen festgestellt
+    ```typescript
+    function addiere(a: number, b: number) {
+        return a + b;
+    }
+    // oder
+    function addiere2(a: number, b: number): number {
+        return a + b;
+    }
+
+    let erg = addiere(7, 8);
+    let erg2 = addiere2(7, 8);    
+    ```
+- returnType void
+    ```typescript
+    function log() {
+        console.log('Ausloggen!');
+    }
+    ```
+- Arrow-Function mit Rückgabetyp
+    ```typescript
+    let addArrow = (a: number, b: number): number => a + b
+    ```
+- Function-Types
+    ```typescript
+    let addierer: (val1: number, val2: number) => number = (a, b) => a + b;
+    addierer = (a, b) => a + b;
+    ```
+- Function mit Optionalem Parameter -> ?, oder Default-Parameter -> =
+    ```typescript
+    function addiereMehr(a: number, b: number = 0, c?: number): number {
+        if (c) {
+            return a + b + c;
+        }
+        return a + b;
+    }
+    erg = addiereMehr(6, 9, 4);
+    erg = addiereMehr(6, 9);
+    erg = addiereMehr(6);
+    ```
+- Signaturen
+    ```typescript
+    // Signaturoverload:
+    function test(val:number): number;
+    function test(val:string): string;
+    function test(val:boolean): boolean;,
+
+    // Implementierungssignatur
+    function test(val:number|string|boolean): string|number|boolean {
+        switch(typeof val) {
+            case 'string':
+                return 'Teststring';
+            case 'number':
+                return 42;
+            case 'boolean':
+                return true;
+            default:
+                return 'Das war falsch';
+        }
+    }
+
+    let testerg = test('Beispiel');
+    //testerg ist vom Typ string
+    let testerg2 = test(17);
+    //testerg2 ist vom Typ number
+    ```
 
 ###  10.3. <a name='Interfacevs.StructuralType'></a>Interface vs. Structural Type
 - Beschreibung eines Objekts (Aufbau)
 - Im Gegensatz zu Klassen kann mittels Interface keine Instanz erzeugt werden
 - Möglichkeit Interfaces vom gleichen Namen mehrfach anzulegen, das Abgeleitete Objekt erhält dann Kombination aller Interfaces
 - https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c
-    - Structural Type
-        ```typescript
-        type TPerson = {
-            vorname: string,
-            nachname: string,
-            alter?: number,
-            hallo: () => void
-        };
+####  10.3.1. <a name='StructuralType'></a>Structural Type
+```typescript
+type TPerson = {
+    vorname: string,
+    nachname: string,
+    alter?: number,
+    hallo: () => void
+};
 
-        let popeye: TPerson;
-        popeye = {
-            vorname: "popeye",
-            nachname: "Pan",
-            alter: 40,
-            hallo: function () {
-                console.log("Hallo")
-            }
-        }
-        ```
+let popeye: TPerson;
+popeye = {
+    vorname: "popeye",
+    nachname: "Pan",
+    alter: 40,
+    hallo: function () {
+        console.log("Hallo")
+    }
+}
+```
 
-    - Interface
-        ```typescript
-        interface IPerson {
-            vorname: string,
-            nachname: string,
-            alter?: number,
-            hallo: () => void
-        }
+####  10.3.2. <a name='Interface'></a>Interface
+```typescript
+interface IPerson {
+    vorname: string,
+    nachname: string,
+    alter?: number,
+    hallo: () => void
+}
 
-        interface IPerson {
-            haustier: string
-        }
+interface IPerson {
+    haustier: string
+}
 
-        let pete: IPerson = {
-            vorname: "Pete",
-            nachname: "Pan",
-            hallo: function () {
-                console.log("Hallo")
-            },
-            haustier: 'Dackel'
-        };
-        ```
+let pete: IPerson = {
+    vorname: "Pete",
+    nachname: "Pan",
+    hallo: function () {
+        console.log("Hallo")
+    },
+    haustier: 'Dackel'
+};
+```
 
 ###  10.4. <a name='TS-Classes'></a>TS-Classes
 - Beschreibung eines Objekts (Aufbau)
@@ -2543,207 +2565,208 @@ console.log(joe);
 - Mittels public im Konstruktor wird das Property automatisch für die Klasse erzeugt, sodass keine seperate Deklarierung und Zuweisung mehr notwendig ist
 
 Beispiele:
-- Klasse anlegen und nutzen
-    ```typescript
-    class Person {
-        // Interface
-        private vorname: string;
-        public nachname: string;
-        public haustier = '';
 
-        // ab hier normal weiter:
-        constructor(vorname: string,
-            nachname: string,
-            public alter: number,
-            private konto: number,
-            protected id: number) {
-            this.vorname = vorname;
-            this.nachname = nachname;
-        }
-        hallo() {
-            console.log('Hallo');
-        }
-        get kontostand() {
-            return this.konto;
-        }
+####  10.4.1. <a name='Klasseanlegenundnutzen'></a>Klasse anlegen und nutzen
+```typescript
+class Person {
+    // Interface
+    private vorname: string;
+    public nachname: string;
+    public haustier = '';
+
+    // ab hier normal weiter:
+    constructor(vorname: string,
+        nachname: string,
+        public alter: number,
+        private konto: number,
+        protected id: number) {
+        this.vorname = vorname;
+        this.nachname = nachname;
     }
+    hallo() {
+        console.log('Hallo');
+    }
+    get kontostand() {
+        return this.konto;
+    }
+}
 
-    let tom: Person; 
-    tom = new Person('Tom', 'Jones', 33, 10000, 1);
-    tom.vorname = 'Tim';
-    // Property 'vorname' is private and only accessible within class 'Person'.
+let tom: Person; 
+tom = new Person('Tom', 'Jones', 33, 10000, 1);
+tom.vorname = 'Tim';
+// Property 'vorname' is private and only accessible within class 'Person'.
     
-    tom.alter = 35;
-    tom.haustier = 'Dackel';
-    // Zuweisung ist möglich (public)
-    tom.konto = 5000;
-    // Property 'konto' is private and only accessible within class 'Person'.
+tom.alter = 35;
+tom.haustier = 'Dackel';
+// Zuweisung ist möglich (public)
+tom.konto = 5000;
+// Property 'konto' is private and only accessible within class 'Person'.
     
-    let kontostand = tom.kontostand;
-    //Abfrage ist möglich
+let kontostand = tom.kontostand;
+//Abfrage ist möglich
+```
+
+####  10.4.2. <a name='AbleitungeinerKlasseErweiterung'></a>Ableitung einer Klasse (Erweiterung)
+```typescript
+class Fahrer extends Person {
+    hallo() {
+        console.log('Ich hab einen', this.haustier);
+    }
+    idMelden() {
+        console.log('Mein ID ist', this.id)
+    }
+}
+
+let fritz = new Fahrer('Fritz', 'Fischer', 18, 5000, 2);
+// console.log(fritz.id);
+// Property 'id' is protected and only accessible within class 'Person' and its subclasses.
+
+fritz.idMelden();
+// Zugriff möglich
+```
+
+####  10.4.3. <a name='NutzungvonInterfacesumnurbestimmtePropertiesnutzenzumssen'></a>Nutzung von Interfaces um nur bestimmte Properties nutzen zu müssen
+```typescript
+class Person2 {
+    // Interface
+    vorname: string;
+    public nachname: string;
+    public haustier = "Dackel";
+
+    // ab hier normal weiter:
+    constructor(vorname: string,
+        nachname: string,
+        public alter: number,
+        private konto: number,
+        protected id: number) {
+
+        this.vorname = vorname;
+        this.nachname = nachname;
+    }
+    hallo() {
+        console.log('Hallo');
+    }
+    get kontostand() {
+        return this.konto;
+    }
+}
+interface IPerson2 {
+    vorname: string;
+    nachname: string;
+    haustier?: string;
+}
+
+function personAusgeben(person: IPerson2) {
+    let vn = person.vorname;
+    let nn = person.nachname;
+    console.log(vn + ' ' + nn);
+}
+
+let max = new Person2('Max', 'Muster', 30, 1000, 1);
+personAusgeben(max);
+
+//Möglichkeit ohne das ganze Objekt mitzugeben, die Funktion nutzen zu können
+personAusgeben({ vorname: 'Meike', nachname: 'Müller' });
+```
+
+####  10.4.4. <a name='KlassedeklariereninstanzierenmittelsInterface'></a>Klasse deklarieren/instanzieren mittels Interface
+```typescript
+interface IPerson3 {
+    vorname: string;
+    nachname: string;
+    hallo: () => void;
+}
+```
+
+- Interface kann anderes Interface erweitern
+    ```typescript
+    interface IFahrer extends IPerson3 {
+        klasse: String;
+        auto: string;
+    }
+
+    interface IFon {
+        fon: number;
+    }
+    interface IHaustier {
+        haustier: string;
+    }
+
+    let hans: IFahrer;
     ```
 
-- Ableitung einer Klasse (Erweiterung)
+- Class kann Interface implementieren
     ```typescript
-    class Fahrer extends Person {
+    class Person3 implements IPerson3 {
+        constructor(public vorname: string, public nachname: string) { }
         hallo() {
-            console.log('Ich hab einen', this.haustier);
-        }
-        idMelden() {
-            console.log('Mein ID ist', this.id)
+            console.log('Hi!');
         }
     }
-
-    let fritz = new Fahrer('Fritz', 'Fischer', 18, 5000, 2);
-    // console.log(fritz.id);
-    // Property 'id' is protected and only accessible within class 'Person' and its subclasses.
-
-    fritz.idMelden();
-    // Zugriff möglich
     ```
 
-- Nutzung von Interfaces um nur bestimmte Properties nutzen zu müssen
+- Eine andere Class/Interface implementieren, bzw. auch mehrere Interfaces
     ```typescript
-    class Person2 {
-        // Interface
-        vorname: string;
-        public nachname: string;
-        public haustier = "Dackel";
-
-        // ab hier normal weiter:
-        constructor(vorname: string,
-            nachname: string,
-            public alter: number,
-            private konto: number,
-            protected id: number) {
-
-            this.vorname = vorname;
-            this.nachname = nachname;
-        }
+    class Person4 implements Person3, IHaustier, IFon {
+        haustier = "Dackel";
+        fon = 23456;
+        constructor(public vorname: string, public nachname: string) { }
         hallo() {
-            console.log('Hallo');
-        }
-        get kontostand() {
-            return this.konto;
+            console.log('Hi!');
         }
     }
-    interface IPerson2 {
-        vorname: string;
-        nachname: string;
-        haustier?: string;
-    }
-
-    function personAusgeben(person: IPerson2) {
-        let vn = person.vorname;
-        let nn = person.nachname;
-        console.log(vn + ' ' + nn);
-    }
-
-    let max = new Person2('Max', 'Muster', 30, 1000, 1);
-    personAusgeben(max);
-
-    //Möglichkeit ohne das ganze Objekt mitzugeben, die Funktion nutzen zu können
-    personAusgeben({ vorname: 'Meike', nachname: 'Müller' });
     ```
 
-- Klasse deklarieren/instanzieren mittels Interface
+####  10.4.5. <a name='Abstractclasses'></a>Abstract classes
+- Von Abstract classes ist keine Instanzierung möglich, jedoch kann man dieses als Bauplanvorlage nutzen
+- Abgeleitete Klassen müssen alle Methoden implementieren und im constructor auf die Abstract Klasse zugreifen mittels super();
     ```typescript
-    interface IPerson3 {
-        vorname: string;
-        nachname: string;
-        hallo: () => void;
+    abstract class Mensch {
+        constructor(public anzahlBeine = 2) { }
+        //Abstract methods enthalten keinen Code, dienen nur als Muss-Vorlage
+        abstract gruessen(): string
+        hallo() {
+            console.log(this.gruessen(), 'Ich habe', this.anzahlBeine, 'Beine');
+        }
     }
-    ```
-
-    - Interface kann anderes Interface erweitern
-        ```typescript
-        interface IFahrer extends IPerson3 {
-            klasse: String;
-            auto: string;
-        }
-
-        interface IFon {
-            fon: number;
-        }
-        interface IHaustier {
-            haustier: string;
-        }
-
-        let hans: IFahrer;
-        ```
-
-    - Class kann Interface implementieren
-        ```typescript
-        class Person3 implements IPerson3 {
-            constructor(public vorname: string, public nachname: string) { }
-            hallo() {
-                console.log('Hi!');
-            }
-        }
-        ```
-
-    - Eine andere Class/Interface implementieren, bzw. auch mehrere Interfaces
-        ```typescript
-        class Person4 implements Person3, IHaustier, IFon {
-            haustier = "Dackel";
-            fon = 23456;
-            constructor(public vorname: string, public nachname: string) { }
-            hallo() {
-                console.log('Hi!');
-            }
-        }
-        ```
-
-- Abstract classes
-    - Von Abstract classes ist keine Instanzierung möglich, jedoch kann man dieses als Bauplanvorlage nutzen
-    - Abgeleitete Klassen müssen alle Methoden implementieren und im constructor auf die Abstract Klasse zugreifen mittels super();
-        ```typescript
-        abstract class Mensch {
-            constructor(public anzahlBeine = 2) { }
-            //Abstract methods enthalten keinen Code, dienen nur als Muss-Vorlage
-            abstract gruessen(): string
-            hallo() {
-                console.log(this.gruessen(), 'Ich habe', this.anzahlBeine, 'Beine');
-            }
-        }
         
-        let markus = new Mensch(3);
-        // Cannot create an instance of an abstract class.
-        ```
-
-- Static Members in Classes
-    ```typescript
-    class Student extends Mensch {
-        static spezies = "Mensch";
-        public faecher: string[] = [];
-
-        constructor(public vorname: string, public nachname: string) {
-            // Auf Anforderung der abstract class:
-            super();
-        }
-        getSpezies() {
-            console.log('Ich bin ein ', Student.spezies)
-        }
-        // Auf Anforderung der abstract class:
-        gruessen() {
-            return 'Hallo';
-        }
-    }
-    
-    class Lehrer extends Mensch {
-        gruessen() {
-            return 'Salve!';
-        }
-    }
-
-    // Abstract class kann konkrete Members beitragen
-    let sylvia = new Student('Sylvia', 'Schmidt');
-    // sylvia.spezies;
-    // Property 'spezies' is a static member of type 'Student'
-    sylvia.getSpezies;
-    // Zugriff nur über Methode möglich
-    sylvia.gruessen();
+    let markus = new Mensch(3);
+    // Cannot create an instance of an abstract class.
     ```
+
+####  10.4.6. <a name='StaticMembersinClasses'></a>Static Members in Classes
+```typescript
+class Student extends Mensch {
+    static spezies = "Mensch";
+    public faecher: string[] = [];
+
+    constructor(public vorname: string, public nachname: string) {
+        // Auf Anforderung der abstract class:
+        super();
+    }
+    getSpezies() {
+        console.log('Ich bin ein ', Student.spezies)
+    }
+    // Auf Anforderung der abstract class:
+    gruessen() {
+        return 'Hallo';
+    }
+}
+    
+class Lehrer extends Mensch {
+    gruessen() {
+        return 'Salve!';
+    }
+}
+
+// Abstract class kann konkrete Members beitragen
+let sylvia = new Student('Sylvia', 'Schmidt');
+// sylvia.spezies;
+// Property 'spezies' is a static member of type 'Student'
+sylvia.getSpezies;
+// Zugriff nur über Methode möglich
+sylvia.gruessen();
+```
 
 ###  10.5. <a name='Generics'></a>Generics
 - https://www.typescriptlang.org/docs/handbook/generics.html
