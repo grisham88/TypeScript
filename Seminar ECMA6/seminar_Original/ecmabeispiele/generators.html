@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Generatoren</title>
+    <script>
+        // Iterable -> Iterator
+        let myArray = [1,2,3,4];
+        let myIterator = myArray.entries();
+        console.log(myIterator)
+        // Dies ist eine Datenreihe, die schrittweise abgearbeitet wird
+        // Mit next() wird zum nächsten Item weitergegangen
+    
+
+        // Generatorfunction -> Generator
+        function * myGeneratorFunction(){
+            // Dies ist ein Anwendungsblock, der schrittweise abgearbeitet wird.
+            // Haltepunkte (Ausgabe) werden mit 'yield' markiert
+            // Mit next() wird weitergegangen
+            console.log("Das ist der erste Streich. Und nun der Wert.");
+            yield 1;
+            console.log("Das ist der zweite Streich. Und nun der Wert.");
+            yield 2;
+            console.log("Das ist der dritte Streich. Und nun der Wert.");
+            yield 3;
+            console.log("Das ist der erste Streich. Und der letzte.");
+            return 42; // Endstation!
+        }
+
+        // Generator
+        let myGenerator = myGeneratorFunction();
+        console.log(myGenerator)
+        let valueObj1 = myGenerator.next();
+        console.log(valueObj1);
+        let valueObj2 = myGenerator.next();
+        console.log(valueObj2);
+        let valueObj3 = myGenerator.next();
+        console.log(valueObj3);
+        let valueObj4 = myGenerator.next();
+        console.log(valueObj4);
+
+        let myGenerator2 = myGeneratorFunction();
+        // was geht? Spread!
+        console.log(...myGenerator2);
+        let myGenerator3 = myGeneratorFunction();
+        // was geht noch? for..of
+        for(let val of myGenerator3) {
+            console.log(val)
+        }
+
+    </script>
+</head>
+<body>
+    <h1>Generators</h1>
+</body>
+</html>

@@ -891,7 +891,7 @@ In computing and telecommunications, the payload is the part of transmitted data
 - Originalkontext (this) bleibt bestehen
 - Keine Übergabe des Kontexts (this) mittels .call möglich
 ```html
-<script>    
+<script>
     "use strict";
     console.log('global:', this);
     // global: Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
@@ -1113,7 +1113,7 @@ Ausführung mit mehreren Promises hintereinandergeschalten (Nutzung eigener Prom
 
 Mehrere Promises durch direkte Hintereinanderschaltung (Promise-Chain/)
 ```html
-<script>    
+<script>
     // Level 1
     new Promise(function (resolve, reject) {
         console.log('Konstruiere Promise:', arguments);
@@ -1230,7 +1230,7 @@ Promises zu einem XMLHttpRequest (Ajax)
 - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 - Ablösung von XML-HTTP Request Objekt
 ```html
-<script>    
+<script>
     let myFetch = fetch('data/santa.json');
     console.log(myFetch);
 
@@ -1296,6 +1296,94 @@ Aufruf mehrerer Promises mit Promise.all()
 ```
 
 ###  9.6. <a name='Generatoren'></a>Generatoren
+- https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/function*
+- Generators dienen dazu, Asynchrone Strukturen abzuarbeiten
+- Generator verhält sich ähnlich wie ein Iterator (kann mit next zum nächsten Wert im Generator springen)
+
+```html
+<script>    
+    // Iterable -> Iterator
+    let myArray = [1, 2, 3, 4];
+    let myIterator = myArray.entries();
+    console.log(myIterator)
+    // Array Iterator
+    // __proto__:Array Iterator
+    // next:ƒ next()
+    // Symbol(Symbol.toStringTag):"Array Iterator"
+    // __proto__:Object
+
+    // Dies ist eine Datenreihe, die schrittweise abgearbeitet wird
+    // Mit next() wird zum nächsten Item weitergegangen
+
+    // Generatorfunction -> Generator
+    function* myGeneratorFunction() {
+        // Dies ist ein Anwendungsblock, der schrittweise abgearbeitet wird.
+        // Haltepunkte (Ausgabe) werden mit 'yield' markiert
+        // Mit next() wird weitergegangen
+        console.log("Das ist der erste Streich. Und nun der Wert.");
+        yield 1;
+        console.log("Das ist der zweite Streich. Und nun der Wert.");
+        yield 2;
+        console.log("Das ist der dritte Streich. Und nun der Wert.");
+        yield 3;
+        console.log("Das ist der vierte Streich. Und der letzte.");
+        return 42; // Endstation!
+    }
+
+    // Generator
+    let myGenerator = myGeneratorFunction();
+    console.log(myGenerator)
+    // myGeneratorFunction {<suspended>}
+    // __proto__:Generator
+    // [[GeneratorStatus]]:"closed"
+    // [[GeneratorFunction]]:ƒ * myGeneratorFunction()
+    // [[GeneratorReceiver]]:Window
+    // [[GeneratorLocation]]:generators.html:24
+
+    let valueObj1 = myGenerator.next();
+    console.log(valueObj1);
+    // Das ist der erste Streich. Und nun der Wert.
+    // {value: 1, done: false}
+
+    let valueObj2 = myGenerator.next();
+    console.log(valueObj2);
+    // Das ist der zweite Streich. Und nun der Wert.
+    // {value: 2, done: false}
+
+    let valueObj3 = myGenerator.next();
+    console.log(valueObj3);
+    // Das ist der dritte Streich. Und nun der Wert.
+    // {value: 3, done: false}
+
+    let valueObj4 = myGenerator.next();
+    console.log(valueObj4);
+    // Das ist der vierte Streich. Und der letzte.
+    // {value: 42, done: true}
+
+    let myGenerator2 = myGeneratorFunction();
+    // was geht? Spread!
+    console.log(...myGenerator2);
+    // Das ist der erste Streich. Und nun der Wert.
+    // Das ist der zweite Streich. Und nun der Wert.
+    // Das ist der dritte Streich. Und nun der Wert.
+    // Das ist der vierte Streich. Und der letzte.
+    // 1 2 3
+
+    let myGenerator3 = myGeneratorFunction();
+    // was geht noch? for..of
+    for (let val of myGenerator3) {
+        console.log(val)
+    }
+    // Das ist der erste Streich. Und nun der Wert.
+    // 1
+    // Das ist der zweite Streich. Und nun der Wert.
+    // 2
+    // Das ist der dritte Streich. Und nun der Wert.
+    // 3
+    // Das ist der vierte Streich. Und der letzte.
+</script>
+```
+
 ###  9.7. <a name='class-Keywordvs.Konstruktor'></a>class-Keyword vs. Konstruktor
 
 Klassen in TypeScript dürfen nur Concise Methods enthalten, oder Properties über den constructor zur Verfügung stellen
@@ -1425,7 +1513,7 @@ Beispiel mit Properties in Class
 
 Beispiel mit Properties in Class mittels Symbols (AccessorSpeicher-Key)
 ```html
-<script>    
+<script>
     "use strict";
 
     // Symbol als AccessorSpeicher-Key
@@ -1479,7 +1567,7 @@ Beispiel mit Properties in Class mittels Symbols (AccessorSpeicher-Key)
 
 Beispiel mit Properties in Class mittels Globalen Symbols (AccessorSpeicher-Key)
 ```html
-<script>    
+<script>
     "use strict";
 
     // global Symbol!! Entsteht "durch Gebrauch"...
@@ -1747,6 +1835,7 @@ import { myTool1 } from './tools';
 import { myTool1Variant } from './tools/tool1'
 ```
 ###  9.10. <a name='Observables'></a>Observables
+- Arbeitet auf einer Sequenz von Objekten
 
 ##  10. <a name='Typescript'></a>Typescript
 - https://www.typescriptlang.org/
